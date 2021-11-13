@@ -33,7 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 
   //404 page for all other routes
   app.use("/", (req, res) => {
-    res.status(404).render("404/404");
+    res.status(404).render("404/404", {
+      title: "404",
+      message: "Page not found",
+    });
   });
 })();
 

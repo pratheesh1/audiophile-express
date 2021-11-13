@@ -1,0 +1,33 @@
+{{! Star }}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {{! custom css }}
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    {{! additional css }}
+    {{#block "css"}}{{/block}}
+
+
+    {{! custom title }}
+    <title>{{#block "title"}}{{/block}}</title>
+</head>
+
+<body>
+    {{! custom content }}
+    {{#block "content"}}{{/block}}
+
+    {{! custom scripts }}
+    <script src="/scripts/index.js"></script>
+
+    {{! additional scripts }}
+    {{#block "scripts"}}{{/block}}
+
+</body>
+
+</html>
+{{! End }}

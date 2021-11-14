@@ -9,6 +9,11 @@
     {{! custom css }}
     <link rel="stylesheet" href="/styles/index.css" />
 
+    {{! font awesome css }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     {{! additional css }}
     {{#block "css"}}{{/block}}
 
@@ -17,7 +22,7 @@
     <title>{{#block "title"}}{{/block}}</title>
 </head>
 
-<body>
+<body class="relative">
     {{! custom content }}
     {{#block "content"}}{{/block}}
 
@@ -29,6 +34,12 @@
     {{! additional scripts }}
     {{#block "scripts"}}{{/block}}
 
+    <div class="m-1 absolute bottom-0 md:top-4 right-5">
+        <div class="container">
+            <input type="checkbox" id="theme-toggle" class="cursor-pointer inline-block h-6 w-6">
+            <label for="theme-toggle" class="cursor-pointer inline-block h-8 w-8"></label>
+        </div>
+    </div>
 </body>
 
 </html>

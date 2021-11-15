@@ -14,7 +14,6 @@ window.addEventListener("DOMContentLoaded", () => {
     toggleTheme.checked = false;
   }
 
-  localStorage.removeItem("theme");
   toggleTheme.addEventListener("change", () => {
     localStorage.theme = "light" ? "dark" : "light";
     document.body.classList.toggle("dark");

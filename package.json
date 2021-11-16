@@ -16,6 +16,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "hbs": "^4.1.2",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
@@ -33,7 +34,6 @@
     "displayBadge": true,
     "displayFilename": true,
     "displayLabel": true,
-    "displayTimestamp": true,
-    "uppercaseLabel": true
+    "displayTimestamp": true
   }
 }

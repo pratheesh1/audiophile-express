@@ -13,7 +13,7 @@ const options = {
     success: {
       badge: emoji.get("sweat_smile"),
       color: "green",
-      label: "Success",
+      label: "success",
       logLevel: "info",
     },
     info: {
@@ -39,6 +39,12 @@ const options = {
       color: "cyan",
       label: "i did it!",
       logLevel: "info",
+    },
+    error: {
+      badge: emoji.get("tired_face"),
+      color: "red",
+      label: "error",
+      logLevel: "error",
     },
   },
 };

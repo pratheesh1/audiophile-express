@@ -35,9 +35,9 @@
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-90">
                 <div class="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">
-                    <a href="#" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">Join
-                        Slack</a>
+                    <a href="/products" @click="isOpen = false"
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">
+                        All Products</a>
                     <a href="#" @click="isOpen = false"
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">Browse
                         Topics</a>
@@ -73,7 +73,7 @@
 
                     {{!-- button for dropdown menu --}}
                     <button @click="dropdownIsOpen = ! dropdownIsOpen"
-                        class="relative z-10 block p-2 text-gray-700 bg-gray-200 border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
+                        class="relative z-10 ml-2 block p-2 text-gray-700 bg-gray-200 border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
                         <svg class="w-5 h-5 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"

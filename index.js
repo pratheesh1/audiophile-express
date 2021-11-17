@@ -33,20 +33,32 @@ app.use(express.urlencoded({ extended: true }));
 const httpRoutes = {
   users: require("./routes/http/user.http.routes"),
 };
+const apiRoutes = {
+  products: require("./routes/api/product.api.routes"),
+};
 
 async function main() {
-  //routes
+  //http routes
   app.use("/users", httpRoutes.users);
+  //api routes
+  app.all("/api/*", express.json());
+  app.use("/api/products", apiRoutes.products);
+}
+main();
 
-  //404 page for all other routes
-  app.use("/", (req, res) => {
+//404 page for all other routes
+app.use("/", (req, res) => {
+  if (req.url.includes("/api")) {
+    res.status(404).json({
+      message: "Requested resource not found!",
+    });
+  } else {
     res.status(404).render("404/404", {
       title: "404",
       message: "Page not found",
     });
-  });
-}
-main();
+  }
+});
 
 //use error handler
 app.use(errorHandler);

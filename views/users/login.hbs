@@ -28,13 +28,14 @@ Login
                         <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none text-black"
                             type="password" name="password" placeholder="password">
                     </div>
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mt-2">
                         <div>
                             <input class="cursor-pointer" type="checkbox" name="rememberme">
                             <span class="text-sm">Remember Me</span>
                         </div>
-                        <span class="text-sm text-blue-700 dark:text-blue-400 hover:underline cursor-pointer">Forgot
-                            password?</span>
+                        <a class="text-sm text-blue-700 dark:text-blue-400 hover:underline cursor-pointer"
+                            href="/users/reset">Forgot
+                            password?</a>
                     </div>
                     <div>
                         <button
@@ -42,7 +43,7 @@ Login
                         </button>
                     </div>
                 </form>
-                <a class="mt-8 text-gray-900 dark:text-white" href="#"> Dont have an account? <span
+                <a class="mt-8 text-gray-900 dark:text-white" href="/users/register"> Dont have an account? <span
                         class="cursor-pointer hover:underline text-sm text-blue-600 dark:text-blue-400">
                         Register now!</span></a>
             </div>

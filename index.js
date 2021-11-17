@@ -29,8 +29,14 @@ wax.setLayoutPath(path.join(__dirname, "views/layouts"));
 //enable forms
 app.use(express.urlencoded({ extended: true }));
 
-(async function () {
+//set-up routes
+const httpRoutes = {
+  users: require("./routes/http/user.http.routes"),
+};
+
+async function main() {
   //routes
+  app.use("/users", httpRoutes.users);
 
   //404 page for all other routes
   app.use("/", (req, res) => {
@@ -39,7 +45,8 @@ app.use(express.urlencoded({ extended: true }));
       message: "Page not found",
     });
   });
-})();
+}
+main();
 
 //use error handler
 app.use(errorHandler);

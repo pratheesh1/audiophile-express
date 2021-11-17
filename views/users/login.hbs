@@ -1,0 +1,59 @@
+{{#extends 'base'}}
+
+{{#block 'title'}}
+Login
+{{/block}}
+
+{{#block 'content'}}
+{{>navbar this}}
+
+{{!-- code adapted from: https://tailwindcomponents.com/component/login-form-16 --}}
+<div class="h-full bg-login-light dark:bg-login-dark bg-no-repeat bg-cover bg-center">
+    <div class="flex justify-end">
+        <div
+            class="bg-gradient-to-r from-transparent to-black min-h-screen w-full md:w-1/2 flex justify-center items-center">
+            <div class="p-6 lg:p-10 bg-gray-100 dark:bg-gray-600 rounded-xl">
+
+                <form class="text-gray-900 dark:text-white">
+                    <div>
+                        <h1 class="text-2xl font-bold">Login to your account</h1>
+                    </div>
+                    <div class="my-3">
+                        <label class="block text-md mb-2" for="email">Email</label>
+                        <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none text-black" type="email"
+                            name="password" placeholder="email">
+                    </div>
+                    <div class="mt-5">
+                        <label class="block text-md mb-2" for="password">Password</label>
+                        <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none text-black"
+                            type="password" name="password" placeholder="password">
+                    </div>
+                    <div class="flex justify-between">
+                        <div>
+                            <input class="cursor-pointer" type="checkbox" name="rememberme">
+                            <span class="text-sm">Remember Me</span>
+                        </div>
+                        <span class="text-sm text-blue-700 dark:text-blue-400 hover:underline cursor-pointer">Forgot
+                            password?</span>
+                    </div>
+                    <div>
+                        <button
+                            class="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100">Login
+                        </button>
+                    </div>
+                </form>
+                <a class="mt-8 text-gray-900 dark:text-white" href="#"> Dont have an account? <span
+                        class="cursor-pointer hover:underline text-sm text-blue-600 dark:text-blue-400">
+                        Register now!</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{{>footer}}
+
+
+{{/block}}
+
+{{/extends}}

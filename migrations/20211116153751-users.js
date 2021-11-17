@@ -19,7 +19,6 @@ exports.up = function (db) {
     id: { type: "int", primaryKey: true, autoIncrement: true, unsigned: true },
     firstName: { type: "string", notNull: true },
     lastName: { type: "string", notNull: true },
-    userName: { type: "string", notNull: true },
     email: { type: "string", notNull: true },
     phone: { type: "string", notNull: true },
     password: { type: "string", notNull: true },

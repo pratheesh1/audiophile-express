@@ -12,6 +12,12 @@ module.exports = {
     extend: {
       colors: { ...supportedColors },
     },
+    backgroundImage: {
+      "login-dark":
+        "url('https://images.unsplash.com/photo-1510133744874-096621a0e01e')",
+      "login-light":
+        "url('https://images.unsplash.com/photo-1583248881102-32809a3f6130')",
+    },
   },
   variants: {
     extend: {},

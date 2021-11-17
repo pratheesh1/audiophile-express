@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "user": { "ENV": "DB_USER" },
+    "password": { "ENV": "DB_PASSWORD" },
+    "host": { "ENV": "DB_HOST" },
+    "database": { "ENV": "DB_NAME" },
+    "driver": { "ENV": "DB_DRIVER" },
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {{!-- adapted from https://merakiui.com and https://alpinetoolbox.com/examples/navbar --}}
-<nav class="bg-gray-300 shadow-sm dark:bg-gray-800">
+<nav class="bg-gray-200 shadow-xl dark:bg-gray-800">
     <div class="container px-6 py-4 mx-auto">
         <div class="md:flex md:items-center md:justify-between" x-data="{ isOpen: false }"
             @keydown.escape="isOpen = false">
@@ -71,7 +71,7 @@
 
                     {{!-- button for dropdown menu --}}
                     <button @click="dropdownIsOpen = ! dropdownIsOpen"
-                        class="relative z-10 block p-2 text-gray-700 bg-gray-300 border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
+                        class="relative z-10 block p-2 text-gray-700 bg-gray-200 border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
                         <svg class="w-5 h-5 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"

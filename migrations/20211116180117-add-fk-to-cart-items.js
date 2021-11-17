@@ -15,22 +15,44 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  return db.addForeignKey(
-    "cart_items",
-    "products",
-    "fk_cart_items_products",
-    {
-      productId: "id",
-    },
-    {
-      onDelete: "CASCADE",
-      onUpdate: "RESTRICT",
-    }
-  );
+  return db
+    .addForeignKey(
+      "cart_items",
+      "products",
+      "fk_cart_items_products",
+      {
+        productId: "id",
+      },
+      {
+        onDelete: "CASCADE",
+        onUpdate: "RESTRICT",
+      }
+    )
+    .then(() => {
+      db.addForeignKey(
+        "cart_items",
+        "product_variants",
+        "fk_cart_items_product_variants",
+        {
+          productVariantId: "id",
+        },
+        {
+          onDelete: "CASCADE",
+          onUpdate: "RESTRICT",
+        }
+      );
+    });
 };
 
 exports.down = function (db) {
-  return db.removeForeignKey("cart_items", "fk_cart_items_products");
+  return db
+    .removeForeignKey("cart_items", "fk_cart_items_products")
+    .then(() => {
+      return db.removeForeignKey(
+        "cart_items",
+        "fk_cart_items_product_variants"
+      );
+    });
 };
 
 exports._meta = {

@@ -49,6 +49,22 @@ exports.up = function (db) {
         },
       },
     },
+    productVariantId: {
+      type: "int",
+      unsigned: true,
+      notNull: false,
+      foreignKey: {
+        name: "fk_order_items_product_variants",
+        table: "product_variants",
+        rules: {
+          onDelete: "RESTRICT",
+          onUpdate: "RESTRICT",
+        },
+        mapping: {
+          productVariantId: "id",
+        },
+      },
+    },
     quantity: { type: "int", unsigned: true, notNull: true },
     cost: { type: "int", unsigned: true, notNull: true },
   });

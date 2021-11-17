@@ -10,8 +10,15 @@
     "watch": "chokidar './views/**/**/**/**/**' './forms/**/**/**/**/**' './public/styles/tailwind.css' -c \"npm run build:css\"",
     "dev": "concurrently \"npm run build:css\" \"npm run watch\" \"npm run start-dev\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "e-commerce",
+    "express",
+    "node",
+    "tailwind",
+    "tailwindcss",
+    "audio shop"
+  ],
+  "author": "pratheesh soman",
   "license": "ISC",
   "dependencies": {
     "bookshelf": "^1.2.0",

@@ -34,6 +34,7 @@ exports.up = function (db) {
       },
     },
     productId: { type: "int", unsigned: true, notNull: true },
+    productVariantId: { type: "int", unsigned: true, notNull: false },
     quantity: { type: "int", unsigned: true, notNull: true },
     originalPrice: { type: "int", unsigned: true, notNull: true },
   });

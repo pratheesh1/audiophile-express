@@ -87,6 +87,7 @@ exports.addNewImpedanceRange = async (req, res) => {
   const { name } = req.body;
   if (name) {
     const impedanceRange = await addImpedanceRange(name);
+    console.log(impedanceRange);
     return res.status(200).json({
       status: "success",
       data: impedanceRange,

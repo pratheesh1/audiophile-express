@@ -104,14 +104,14 @@ exports.getImpedanceRanges = async () => {
   }
 };
 
-exports.addImpedanceRange = async (impedanceRange) => {
+exports.addImpedanceRange = async (value) => {
   try {
     await yup
-      .string()
-      .required(`'${impedanceRange}' is required!`)
-      .validate(impedanceRange);
+      .number("Impedance value must be a number")
+      .required(`'${value}' is required!`)
+      .validate(value);
     const impedanceRange = new ImpedanceRange({
-      impedanceValue: impedanceRange,
+      impedanceValue: value,
     });
     await impedanceRange.save();
     return impedanceRange;

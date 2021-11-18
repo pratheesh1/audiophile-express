@@ -1,5 +1,6 @@
 const { consoleLog } = require("../signale.config");
 const yup = require("yup");
+const { v4: uuidv4 } = require("uuid");
 const { getHashedPassword } = require("../utils");
 //import models
 const { User, EmailValidator, UserType, Address } = require("../models");
@@ -58,7 +59,8 @@ exports.addUser = async (data) => {
       password: getHashedPassword(data.password),
     });
     await user.save();
-    return user;
+    const token = uuidv4();
+    return { user, token: token };
   } catch (error) {
     consoleLog.error(error.message);
     throw error;

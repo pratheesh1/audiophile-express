@@ -2,6 +2,7 @@
 const { tailwindForm, createRegistrationForm } = require("../../forms");
 //import dal
 const { getUser, addUser } = require("../../repositories/user.repositories");
+const { sendConfirmationEmail } = require("../../utils/nodemailer.config");
 
 //get login form
 exports.getLoginForm = (req, res) => {
@@ -49,6 +50,11 @@ exports.postSignupForm = (req, res) => {
           form: form.toHTML(tailwindForm),
         });
       } else {
+        sendConfirmationEmail(
+          newUser.user.get("firstName"),
+          newUser.user.get("email"),
+          newUser.token
+        );
         res.redirect(req.session.urlToGoBack || "/users/profile");
       }
     },

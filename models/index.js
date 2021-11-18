@@ -3,16 +3,25 @@ const bookshelf = require("../bookshelf");
 //model table categories
 const Category = bookshelf.model("Category", {
   tableName: "categories",
+  product() {
+    return this.hasMany("Product", "categoryId");
+  },
 });
 
 //model table brands
 const Brand = bookshelf.model("Brand", {
   tableName: "brands",
+  product() {
+    return this.hasMany("Product", "brandId");
+  },
 });
 
 //model table frequency_responses
 const FrequencyResponse = bookshelf.model("FrequencyResponse", {
   tableName: "frequency_responses",
+  product() {
+    return this.hasMany("Product", "frequencyResponseId");
+  },
 });
 
 //model table product_variants
@@ -20,6 +29,12 @@ const ProductVariant = bookshelf.model("ProductVariant", {
   tableName: "product_variants",
   product() {
     return this.belongsTo("Product", "productId");
+  },
+  cartItem() {
+    return this.hasMany("CartItem", "productVariantId");
+  },
+  orderItem() {
+    return this.hasMany("OrderItem", "productVariantId");
   },
 });
 
@@ -34,21 +49,33 @@ const EmailValidator = bookshelf.model("EmailValidator", {
 //model table user_types
 const UserType = bookshelf.model("UserType", {
   tableName: "user_types",
+  user() {
+    return this.hasMany("User", "userTypeId");
+  },
 });
 
 //model table statuses
 const Status = bookshelf.model("Status", {
   tableName: "statuses",
+  order() {
+    return this.hasMany("Order", "statusId");
+  },
 });
 
 //model table countries
 const Country = bookshelf.model("Country", {
   tableName: "countries",
+  address() {
+    return this.hasMany("Address", "countryId");
+  },
 });
 
 //model table custom_tags
 const CustomTag = bookshelf.model("CustomTag", {
   tableName: "custom_tags",
+  productCustomTag() {
+    return this.belongsTo("ProductCustomTag", "customTagId");
+  },
 });
 
 //model table addresses
@@ -57,25 +84,43 @@ const Address = bookshelf.model("Address", {
   country() {
     return this.belongsTo("Country", "countryId");
   },
+  user() {
+    return this.hasOne("User", "addressId");
+  },
+  order() {
+    return this.hasMany("Order", "addressId");
+  },
 });
 
 //model table users
 const User = bookshelf.model("User", {
   tableName: "users",
   address() {
-    return this.hasOne("Address");
+    return this.belongsTo("Address", "addressId");
   },
   userType() {
     return this.belongsTo("UserType", "userTypeId");
   },
-  status() {
-    return this.belongsTo("Status", "isVerified");
+  cart() {
+    return this.hasOne("Cart", "cartId");
+  },
+  product() {
+    return this.hasMany("Product", "productId");
+  },
+  order() {
+    return this.hasMany("Order", "orderId");
+  },
+  emailValidator() {
+    return this.hasOne("EmailValidator", "userId");
   },
 });
 
 //model table impedance_ranges
 const ImpedanceRange = bookshelf.model("ImpedanceRange", {
   tableName: "impedance_ranges",
+  product() {
+    return this.hasMany("Product", "impedanceRangeId");
+  },
 });
 
 //model table carts
@@ -83,6 +128,9 @@ const Cart = bookshelf.model("Cart", {
   tableName: "carts",
   user() {
     return this.belongsTo("User", "userId");
+  },
+  cartItem() {
+    return this.hasMany("CartItem", "cartId");
   },
 });
 
@@ -107,7 +155,7 @@ const Order = bookshelf.model("Order", {
     return this.belongsTo("Status", "statusId");
   },
   address() {
-    return this.belongsTo("Address", "addressId");
+    return this.belongsTo("Address", "AddressId");
   },
   user() {
     return this.belongsTo("User", "userId");
@@ -128,6 +176,18 @@ const Product = bookshelf.model("Product", {
   },
   impedanceRange() {
     return this.belongsTo("ImpedanceRange", "impedanceRangeId");
+  },
+  user() {
+    return this.belongsTo("User", "userId");
+  },
+  productVariant() {
+    return this.hasMany("ProductVariant", "productId");
+  },
+  customTag() {
+    return this.hasMany("ProductCustomTag", "productId");
+  },
+  orderItem() {
+    return this.hasMany("OrderItem", "productId");
   },
 });
 

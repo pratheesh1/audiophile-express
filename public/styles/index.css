@@ -1510,6 +1510,10 @@ video {
 		justify-content: space-between;
 	}
 
+	.md\:rounded-xl {
+		border-radius: 0.75rem;
+	}
+
 	.md\:text-left {
 		text-align: left;
 	}
@@ -1542,10 +1546,6 @@ video {
 
 	.lg\:p-10 {
 		padding: 2.5rem;
-	}
-
-	.lg\:p-16 {
-		padding: 4rem;
 	}
 
 	.lg\:text-5xl {

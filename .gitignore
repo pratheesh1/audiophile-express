@@ -4,6 +4,6 @@ build
 notes.sql
 test
 .vscode
-sessions/*
+sessions
 .DS_Store
 test

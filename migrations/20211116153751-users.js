@@ -20,7 +20,7 @@ exports.up = function (db) {
     firstName: { type: "string", notNull: true },
     lastName: { type: "string", notNull: true },
     email: { type: "string", notNull: true },
-    phone: { type: "string", notNull: true },
+    phone: { type: "string", notNull: false },
     password: { type: "string", notNull: true },
     addressId: {
       type: "int",

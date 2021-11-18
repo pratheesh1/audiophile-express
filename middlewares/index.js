@@ -1,4 +1,5 @@
 const { consoleLog } = require("../signale.config");
+const csrf = require("csurf");
 
 //middleware to handle errors
 exports.errorHandler = (err, req, res, next) => {
@@ -31,3 +32,25 @@ function handleApiError(err, req, res) {
     });
   }
 }
+
+//use csrf
+const csrfProtection = csrf();
+exports.csrfMiddleWare = (req, res, next) => {
+  if (
+    req.url.includes("/checkout/process_payment") ||
+    req.url.includes("/api")
+  ) {
+    next();
+  } else {
+    csrfProtection(req, res, next);
+  }
+};
+//handle csrf errors
+exports.handleCsrfErr = (err, req, res, next) => {
+  if (err && err.code === "EBADCSRFTOKEN") {
+    req.flash("info", "The form has expired! Please try again.");
+    res.redirect("back");
+  } else {
+    next();
+  }
+};

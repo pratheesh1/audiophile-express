@@ -24,8 +24,12 @@
 
 <body class="relative">
     {{! custom content }}
+    {{>navbar}}
+    {{>alert}}
     {{#block "content"}}{{/block}}
+    {{>footer}}
 
+    {{! custom js }}
     {{! custom scripts }}
     <script src="/scripts/index.js"></script>
     {{! alpine js }}

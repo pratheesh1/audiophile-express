@@ -5,7 +5,6 @@ Login
 {{/block}}
 
 {{#block 'content'}}
-{{>navbar this}}
 
 {{!-- code adapted from: https://tailwindcomponents.com/component/login-form-16 --}}
 <div class="h-full bg-login-light dark:bg-login-dark bg-no-repeat bg-cover bg-center">
@@ -14,7 +13,9 @@ Login
             class="bg-gradient-to-r from-transparent to-black min-h-screen w-full md:w-1/2 flex justify-center items-center">
             <div class="p-6 lg:p-10 bg-gray-100 dark:bg-gray-600 rounded-xl">
 
-                <form class="text-gray-900 dark:text-white">
+                <form class="text-gray-900 dark:text-white" action="/users/login" method="post">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
                     <div>
                         <h1 class="text-2xl font-bold">Login to your account</h1>
                     </div>
@@ -43,7 +44,7 @@ Login
                         </button>
                     </div>
                 </form>
-                <a class="mt-8 text-gray-900 dark:text-white" href="/users/register"> Dont have an account? <span
+                <a class="mt-8 text-gray-900 dark:text-white" href="/users/register"> Don't have an account? <span
                         class="cursor-pointer hover:underline text-sm text-blue-600 dark:text-blue-400">
                         Register now!</span></a>
             </div>
@@ -51,9 +52,6 @@ Login
     </div>
 </div>
 </div>
-
-{{>footer}}
-
 
 {{/block}}
 

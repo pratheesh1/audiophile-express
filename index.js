@@ -3,20 +3,69 @@ const morgan = require("morgan");
 const path = require("path");
 const hbs = require("hbs");
 const wax = require("wax-on");
+const session = require("express-session");
+const flash = require("connect-flash");
+const FileStore = require("session-file-store")(session);
+const cors = require("cors");
 require("dotenv").config();
+const { consoleLog } = require("./signale.config");
 //handle async/await errors
 require("express-async-errors");
 //export error handler
-const { errorHandler } = require("./middlewares");
+const {
+  errorHandler,
+  csrfMiddleWare,
+  handleCsrfErr,
+} = require("./middlewares");
 
 // Initialize Express
 const app = express();
-//use main process custom logger
-const { consoleLog } = require("./signale.config");
-
+//enable forms
+app.use(express.urlencoded({ extended: true }));
 //use morgan to log requests to the console
 app.use(morgan("dev"));
-//static folder
+//enable cors for all requests
+app.use(cors());
+//set-up session
+app.use(
+  session({
+    name: "session-id",
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+  })
+);
+
+//set-up flash
+app.use(flash());
+//register flash middleware
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.info = req.flash("info");
+  next();
+});
+
+//share user data to all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
+//use csrf protection
+app.use(csrfMiddleWare);
+//handle csrf error
+app.use(handleCsrfErr);
+//share csrf token to all views
+app.use((req, res, next) => {
+  if (req.csrfToken) {
+    res.locals.csrfToken = req.csrfToken();
+  }
+  next();
+});
+
+//static files
 app.use(express.static(path.join(__dirname, "/public")));
 
 //set-up view engine
@@ -25,9 +74,6 @@ app.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname, "views/partials"));
 wax.on(hbs.handlebars);
 wax.setLayoutPath(path.join(__dirname, "views/layouts"));
-
-//enable forms
-app.use(express.urlencoded({ extended: true }));
 
 //set-up routes
 const httpRoutes = {

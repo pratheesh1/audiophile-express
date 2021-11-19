@@ -78,6 +78,7 @@ wax.setLayoutPath(path.join(__dirname, "views/layouts"));
 //set-up routes
 const httpRoutes = {
   users: require("./routes/http/user.http.routes"),
+  products: require("./routes/http/product.http.routes"),
 };
 const apiRoutes = {
   products: require("./routes/api/product.api.routes"),
@@ -86,6 +87,7 @@ const apiRoutes = {
 async function main() {
   //http routes
   app.use("/users", httpRoutes.users);
+  app.use("/products", httpRoutes.products);
   //api routes
   app.all("/api/*", express.json());
   app.use("/api/products", apiRoutes.products);

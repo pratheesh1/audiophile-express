@@ -14,9 +14,16 @@ const {
 } = require("../models");
 
 //category
-exports.getCategories = async () => {
+exports.getCategories = async (form = false) => {
   try {
-    return await Category.fetchAll();
+    const categories = await Category.collection().orderBy("name").fetch();
+    if (form) {
+      return categories.map((category) => [
+        category.get("id"),
+        category.get("name"),
+      ]);
+    }
+    return categories;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;
@@ -39,9 +46,13 @@ exports.addCategory = async (name) => {
 };
 
 //brand
-exports.getBrands = async () => {
+exports.getBrands = async (form = false) => {
   try {
-    return await Brand.fetchAll();
+    const brands = await Brand.collection().orderBy("brandName").fetch();
+    if (form) {
+      return brands.map((brand) => [brand.get("id"), brand.get("brandName")]);
+    }
+    return brands;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;
@@ -68,9 +79,18 @@ exports.addBrand = async (brandName, url) => {
 };
 
 //frequency response
-exports.getFrequencyResponses = async () => {
+exports.getFrequencyResponses = async (form = false) => {
   try {
-    return await FrequencyResponse.fetchAll();
+    const frequencyResponses = await FrequencyResponse.collection()
+      .orderBy("frequencyResponse")
+      .fetch();
+    if (form) {
+      return frequencyResponses.map((frequencyResponse) => [
+        frequencyResponse.get("id"),
+        frequencyResponse.get("frequencyResponse"),
+      ]);
+    }
+    return frequencyResponses;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;
@@ -95,9 +115,18 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
 };
 
 //impedance range
-exports.getImpedanceRanges = async () => {
+exports.getImpedanceRanges = async (form = true) => {
   try {
-    return await ImpedanceRange.fetchAll();
+    const impedanceRanges = await ImpedanceRange.collection()
+      .orderBy("impedanceValue")
+      .fetch();
+    if (form) {
+      return impedanceRanges.map((impedanceRange) => [
+        impedanceRange.get("id"),
+        impedanceRange.get("impedanceValue"),
+      ]);
+    }
+    return impedanceRanges;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;
@@ -115,6 +144,35 @@ exports.addImpedanceRange = async (value) => {
     });
     await impedanceRange.save();
     return impedanceRange;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+//product
+const productSchema = yup.object().shape({
+  name: yup.string().required("Product name is required"),
+  description: yup.string().required("Product description is required"),
+  baseCost: yup.number().required("Product base cost is required"),
+  brandId: yup.number(),
+  categoryId: yup.number().required("Product category is required"),
+  imagUrl: yup.string().url("Product image url is not valid"),
+  imageThumbnailUrl: yup.string().url("Product image thumbnail is not valid"),
+  stock: yup.number().required("Product stock is required"),
+  userId: yup.number().required("Product user is required"),
+  sku: yup.string("Product sku is not valid"),
+  frequencyResponseId: yup.number("Frequency response is not valid"),
+  bluetooth: yup.number("Product bluetooth is not valid"),
+  impedanceRangeId: yup.number("Product impedance range is not valid"),
+});
+
+exports.addProduct = async (newProduct) => {
+  try {
+    await productSchema.validate(newProduct);
+    const product = new Product(newProduct);
+    await product.save();
+    return product;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;

@@ -6,10 +6,83 @@ Home
 
 {{#block 'content'}}
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
-  {{> sidebar }}
-  <div>
-    Hello
+  {{> sidebar this}}
+  <div class="w-full overflow-y-scroll lg:pt-5 dark:bg-gray-500">
+    <div class="flex items-center justify-center">
+      <div class="container">
+        <table class="w-full sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+          <thead>
+            <tr
+              class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex flex-col flex-nowrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+              <th class="p-3 text-left font-normal">ID</th>
+              <th class="p-3 text-left font-normal">Title</th>
+              <th class="p-3 text-left font-normal">Cost</th>
+              <th class="p-3 text-left font-normal">Image</th>
+              <th class="p-3 text-left font-normal">Property</th>
+              <th class="p-3 text-left font-normal">Tags</th>
+              <th class="p-3 text-left font-normal">Stock</th>
+              <th class="p-3 text-left font-normal">View</th>
+              <th class="p-3 text-left font-normal">Edit</th>
+              <th class="p-3 text-left font-normal">Delete</th>
+            </tr>
+          </thead>
+          <tbody class="flex-1 sm:flex-none font-extralight">
+            {{#each posters}}
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border hover:bg-gray-100 p-3">{{this.id}}</td>
+              <td class="border hover:bg-gray-100 p-3">{{this.title}}</td>
+              <td class="border hover:bg-gray-100 p-3">{{this.cost}}</td>
+              <td class="border hover:bg-gray-100 p-3">
+                {{#if this.image_url_thumb}}
+                <img src="{{this.image_url_thumb}}" alt="poster" class="w-full" />
+                {{else}}
+                No Image
+                {{/if}}
+              </td>
+              <td class="border hover:bg-gray-100 p-3">{{this.mediaProperty.name}}</td>
+              <td class="border hover:bg-gray-100 p-3">
+                <ul>
+                  {{#each this.tags}}
+                  <span
+                    class="inline-flex items-center justify-center px-2 py-1 my-1 text-xs font-bold leading-none text-indigo-100 bg-indigo-700 rounded-full">
+                    <li>
+                      {{this.name}}
+                    </li>
+                  </span>
+                  {{/each}}
+                </ul>
+              </td>
+              <td class="border hover:bg-gray-100 p-3">{{this.stock}}</td>
+              <td class="border bg-yellow-200 hover:bg-green-400 hover:font-normal p-3">
+                <a href="/posters/{{this.id}}">
+                  View
+                </a>
+              </td>
+              <td class="border bg-yellow-200 hover:bg-blue-400 hover:font-normal p-3">
+                <a href="/posters/{{this.id}}/edit">
+                  Edit
+                </a>
+              </td>
+              <td class="border bg-yellow-200 hover:bg-red-400 hover:font-normal p-3">
+                <a href="/posters/{{this.id}}/delete">
+                  Delete
+                </a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <div class="container p-1 mt-4 flex justify-end">
+          <a href="/products/add"
+            class="px-3 py-2 m-1 text-sm bg-green-400 rounded-full text-white hover:text-black hover:bg-green-200">
+            Add New Listing
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+</div>
 </div>
 
 

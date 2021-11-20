@@ -1,3 +1,6 @@
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+
 class apiError extends Error {
   constructor(message, status) {
     super(message);
@@ -6,9 +9,25 @@ class apiError extends Error {
 }
 
 //generate hashed password
-const crypto = require("crypto");
 const getHashedPassword = (password) => {
   return crypto.createHash("sha256").update(password).digest("base64");
 };
 
-module.exports = { apiError, getHashedPassword };
+//generate token
+const generateToken = (data, secret, expiresIn) => {
+  return jwt.sign(data, secret, {
+    expiresIn: expiresIn,
+  });
+};
+
+//verify token
+const verifyToken = (token, secret) => {
+  return jwt.verify(token, secret);
+};
+
+module.exports = {
+  apiError,
+  getHashedPassword,
+  generateToken,
+  verifyToken,
+};

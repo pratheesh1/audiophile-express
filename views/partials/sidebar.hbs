@@ -51,6 +51,23 @@
                 </svg>
             </button>
         </div>
-        {{{ filterMenu }}}
+        <form method="get">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            <h3 class="m-1 mt-3 pl-3 font-serif font-bold">Advanced Filter: </h3>
+            <div class="m-1 pl-3 pr-2 flex">
+                <button type="submit" class="text-white bg-green-400 active:bg-green-700 px-2 rounded-full">Filter
+                    Posters</button>
+                <a href="/posters" class="text-white bg-blue-400 active:bg-blue-700 px-2 ml-2 rounded-full">Reset</a>
+            </div>
+            <div class="m-1 pl-3 pr-2 font-light text-sm">Enter filter and click
+                <b>Filter Posters</b>
+                to filter. Click
+                <b>Reset</b>
+                to reset filters.
+            </div>
+            <div class="overflow-x-scroll">
+                {{{form}}}
+            </div>
+        </form>
     </nav>
 </div>

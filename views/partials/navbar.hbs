@@ -1,5 +1,5 @@
 {{!-- adapted from https://merakiui.com and https://alpinetoolbox.com/examples/navbar --}}
-<nav class="bg-gray-200 shadow-xl dark:bg-gray-800 h-auto pb-1 sm:pb-0">
+<nav class="bg-gray-300 shadow-xl dark:bg-gray-800 h-auto pb-1 sm:pb-0">
     <div class="container px-6 py-4 mx-auto">
         <div class="md:flex md:items-center md:justify-between" x-data="{ isOpen: false }"
             @keydown.escape="isOpen = false">
@@ -36,16 +36,16 @@
                 x-transition:leave-end="opacity-0 transform scale-90">
                 <div class="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">
                     <a href="/products" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">
-                        All Products</a>
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
+                        Your Listings</a>
+                    <a href="/products/home" @click="isOpen = false"
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">All
+                        Listings</a>
                     <a href="#" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">Browse
-                        Topics</a>
-                    <a href="#" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">Random
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Random
                         Item</a>
                     <a href="#" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700">Experts</a>
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Experts</a>
                 </div>
 
                 <div class="flex items-center mt-4 md:mt-0 relative" x-data="{ dropdownIsOpen : false }"
@@ -85,7 +85,7 @@
                     </button>
                     {{else}}
                     <a href="/users/login"
-                        class="block text-md px-4 py-2 rounded text-gray-100 ml-2 font-bold mt-4 lg:mt-0 transition transform hover:-translate-y-1 hover:bg-gray-600 hover:border hover:rounded-xl motion-reduce:transition-none motion-reduce:transform-none">Login</a>
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Login</a>
                     {{/if}}
 
                     {{!-- Dropdown menu --}}

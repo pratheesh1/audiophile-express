@@ -1,7 +1,6 @@
 const { consoleLog } = require("../signale.config");
 const yup = require("yup");
-const { v4: uuidv4 } = require("uuid");
-const { getHashedPassword } = require("../utils");
+const { getHashedPassword, generateToken, verifyToken } = require("../utils");
 //import models
 const { User, EmailValidator, UserType, Address } = require("../models");
 
@@ -62,7 +61,19 @@ exports.addUser = async (data) => {
       password: getHashedPassword(data.password),
     });
     await user.save();
-    const token = uuidv4();
+    const token = generateToken(
+      {
+        email: user.get("email"),
+      },
+      process.env.JWT_EMAIL_TOKEN,
+      "1d"
+    );
+    const emailToken = new EmailValidator({
+      userId: user.get("id"),
+      validator: token,
+      createdAt: new Date(),
+    });
+    emailToken.save();
     return { user, token: token };
   } catch (error) {
     consoleLog.error(error.message);

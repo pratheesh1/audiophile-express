@@ -16,10 +16,12 @@ exports.postLoginForm = async (req, res) => {
     const user = await getUser(email, password);
     if (user) {
       req.session.user = user;
+      req.flash("success", `Login successful! Welcome back ${user.firstName}.`);
       res.redirect(req.session.urlToGoBack || "/users/profile");
+    } else {
+      req.flash("error", "Invalid email or password! Please try again!");
+      res.redirect("/users/login");
     }
-    req.flash("error", "Invalid email or password! Please try again!");
-    res.redirect("/users/login");
   } catch (error) {
     req.flash("error", "Invalid email or password! Please try again!");
     res.redirect("/users/login");

@@ -2,9 +2,9 @@
 {{!-- tailwind components adapted from: https://tailwindcomponents.com/component/alerts-components --}}
 {{#if success}}
 {{#each success}}
-<div class='w-screen grid grid-cols-12' x-data="{showSuccessAlert: true}" :class="{hidden: !showSuccessAlert}">
-    <div
-        class="col-span-11 w-screen alert flex flex-row items-center bg-green-200 p-5 rounded border-b-2 border-green-300">
+<div class='w-full grid grid-cols-12 bg-green-200 p-5 border-b-2 border-green-300' x-data="{showSuccessAlert: true}"
+    :class="{hidden: !showSuccessAlert}">
+    <div class="col-span-11 w-full alert flex flex-row items-center">
         <div
             class="alert-icon flex items-center bg-green-100 border-2 border-green-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
             <span class="text-green-500">
@@ -15,7 +15,7 @@
                 </svg>
             </span>
         </div>
-        <div class="alert-content ml-4">
+        <div class="alert-content pl-4">
             <div class="alert-title font-semibold text-lg text-green-800">
                 Success
             </div>
@@ -35,8 +35,9 @@
 
 {{#if error}}
 {{#each error}}
-<div class='w-screen grid grid-cols-12' x-data="{showErrAlert: true}" :class="{hidden: !showErrAlert}">
-    <div class="col-span-11 w-screen alert flex flex-row items-center bg-red-200 p-5 rounded border-b-2 border-red-300">
+<div class='w-full grid grid-cols-12 bg-red-200 p-5 border-b-2 border-red-300' x-data="{showErrAlert: true}"
+    :class="{hidden: !showErrAlert}">
+    <div class="col-span-11 w-full alert flex flex-row items-center">
         <div
             class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
             <span class="text-red-500">
@@ -47,7 +48,7 @@
                 </svg>
             </span>
         </div>
-        <div class="alert-content ml-4">
+        <div class="alert-content pl-4">
             <div class="alert-title font-semibold text-lg text-red-800">
                 Error
             </div>
@@ -67,9 +68,9 @@
 
 {{#if info}}
 {{#each info}}
-<div class='w-screen grid grid-cols-12' x-data="{showInfoAlert: true}" :class="{hidden: !showInfoAlert}">
-    <div
-        class="col-span-11 w-screen alert flex flex-row items-center bg-blue-200 p-5 rounded border-b-2 border-blue-300">
+<div class='w-full grid grid-cols-12 bg-blue-200 p-5 border-b-2 border-blue-300' x-data="{showInfoAlert: true}"
+    :class="{hidden: !showInfoAlert}">
+    <div class="col-span-11 w-full alert flex flex-row items-center">
         <div
             class="alert-icon flex items-center bg-blue-100 border-2 border-blue-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
             <span class="text-blue-500">
@@ -80,7 +81,7 @@
                 </svg>
             </span>
         </div>
-        <div class="alert-content ml-4">
+        <div class="alert-content pl-4">
             <div class="alert-title font-semibold text-lg text-blue-800">
                 Info
             </div>

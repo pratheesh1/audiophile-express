@@ -27,9 +27,12 @@ exports.getUser = async (email, password) => {
     await yup.string().required().validate(password);
 
     const user = await this.getUserByEmail(email);
-    if (user.get("password") === getHashedPassword(password)) {
-      //if password is correct add user to session
-      return user;
+    if (user) {
+      if (user.get("password") === getHashedPassword(password)) {
+        //if password is correct add user to session
+        const { password, ...userData } = user.toJSON();
+        return userData;
+      }
     } else {
       return false;
     }

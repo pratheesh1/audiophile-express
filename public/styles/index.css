@@ -926,14 +926,14 @@ video {
 .rounded-md {
 	border-radius: 0.375rem;
 }
+.rounded {
+	border-radius: 0.25rem;
+}
 .rounded-lg {
 	border-radius: 0.5rem;
 }
 .rounded-xl {
 	border-radius: 0.75rem;
-}
-.rounded {
-	border-radius: 0.25rem;
 }
 .border-2 {
 	border-width: 2px;
@@ -1109,13 +1109,13 @@ video {
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
 }
-.py-2 {
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
-}
 .px-4 {
 	padding-left: 1rem;
 	padding-right: 1rem;
+}
+.py-2 {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
 .py-3 {
 	padding-top: 0.75rem;
@@ -1266,6 +1266,10 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(63, 63, 70, var(--tw-text-opacity));
 }
+.text-gray-100 {
+	--tw-text-opacity: 1;
+	color: rgba(244, 244, 245, var(--tw-text-opacity));
+}
 .text-gray-900 {
 	--tw-text-opacity: 1;
 	color: rgba(24, 24, 27, var(--tw-text-opacity));
@@ -1369,9 +1373,23 @@ video {
   }
 }
 /* end of css for toggle button */
+.hover\:-translate-y-1:hover {
+	--tw-translate-y: -0.25rem;
+	transform: var(--tw-transform);
+}
+.hover\:rounded-xl:hover {
+	border-radius: 0.75rem;
+}
+.hover\:border:hover {
+	border-width: 1px;
+}
 .hover\:bg-gray-300:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
+}
+.hover\:bg-gray-600:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(82, 82, 91, var(--tw-bg-opacity));
 }
 .hover\:bg-gray-100:hover {
 	--tw-bg-opacity: 1;
@@ -1434,6 +1452,16 @@ video {
 }
 .focus\:ring-opacity-40:focus {
 	--tw-ring-opacity: 0.4;
+}
+@media (prefers-reduced-motion: reduce) {
+
+	.motion-reduce\:transform-none {
+		transform: none;
+	}
+
+	.motion-reduce\:transition-none {
+		transition-property: none;
+	}
 }
 .dark .dark\:bg-gray-600 {
 	--tw-bg-opacity: 1;

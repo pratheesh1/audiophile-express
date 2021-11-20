@@ -1,9 +1,11 @@
 {{! flash messages }}
 {{!-- tailwind components adapted from: https://tailwindcomponents.com/component/alerts-components --}}
+
+{{!-- flash message for success --}}
 {{#if success}}
 {{#each success}}
-<div class='w-full grid grid-cols-12 bg-green-200 p-5 border-b-2 border-green-300' x-data="{showSuccessAlert: true}"
-    :class="{hidden: !showSuccessAlert}">
+<div class='w-full grid grid-cols-12 bg-green-200 px-5 py-2 border-b-2 border-green-300'
+    x-data="{showSuccessAlert: true}" :class="{hidden: !showSuccessAlert}">
     <div class="col-span-11 w-full alert flex flex-row items-center">
         <div
             class="alert-icon flex items-center bg-green-100 border-2 border-green-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
@@ -33,9 +35,11 @@
 {{/each}}
 {{/if}}
 
+
+{{!-- flash message for error --}}
 {{#if error}}
 {{#each error}}
-<div class='w-full grid grid-cols-12 bg-red-200 p-5 border-b-2 border-red-300' x-data="{showErrAlert: true}"
+<div class='w-full grid grid-cols-12 bg-red-200 px-5 py-2 border-b-2 border-red-300' x-data="{showErrAlert: true}"
     :class="{hidden: !showErrAlert}">
     <div class="col-span-11 w-full alert flex flex-row items-center">
         <div
@@ -66,9 +70,11 @@
 {{/each}}
 {{/if}}
 
+
+{{!-- flash message for info --}}
 {{#if info}}
 {{#each info}}
-<div class='w-full grid grid-cols-12 bg-blue-200 p-5 border-b-2 border-blue-300' x-data="{showInfoAlert: true}"
+<div class='w-full grid grid-cols-12 bg-blue-200 px-5 py-2 border-b-2 border-blue-300' x-data="{showInfoAlert: true}"
     :class="{hidden: !showInfoAlert}">
     <div class="col-span-11 w-full alert flex flex-row items-center">
         <div

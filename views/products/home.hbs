@@ -15,26 +15,26 @@ Home
             <tr
               class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex flex-col flex-nowrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
               <th class="p-3 text-left font-normal">ID</th>
-              <th class="p-3 text-left font-normal">Title</th>
-              <th class="p-3 text-left font-normal">Cost</th>
-              <th class="p-3 text-left font-normal">Image</th>
-              <th class="p-3 text-left font-normal">Property</th>
-              <th class="p-3 text-left font-normal">Tags</th>
-              <th class="p-3 text-left font-normal">Stock</th>
-              <th class="p-3 text-left font-normal">View</th>
-              <th class="p-3 text-left font-normal">Edit</th>
-              <th class="p-3 text-left font-normal">Delete</th>
+              <th class="p-3 text-left font-normal border-l">Title</th>
+              <th class="p-3 text-left font-normal border-l">Cost</th>
+              <th class="p-3 text-left font-normal border-l">Image</th>
+              <th class="p-3 text-left font-normal border-l">Property</th>
+              <th class="p-3 text-left font-normal border-l">Tags</th>
+              <th class="p-3 text-left font-normal border-l">Stock</th>
+              <th class="p-3 text-left font-normal border-l">View</th>
+              <th class="p-3 text-left font-normal border-l">Edit</th>
+              <th class="p-3 text-left font-normal border-l">Delete</th>
             </tr>
           </thead>
           <tbody class="flex-1 sm:flex-none font-extralight">
-            {{#each posters}}
+            {{#each products}}
             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
               <td class="border hover:bg-gray-100 p-3">{{this.id}}</td>
-              <td class="border hover:bg-gray-100 p-3">{{this.title}}</td>
-              <td class="border hover:bg-gray-100 p-3">{{this.cost}}</td>
+              <td class="border hover:bg-gray-100 p-3">{{this.name}}</td>
+              <td class="border hover:bg-gray-100 p-3">{{this.baseCost}}</td>
               <td class="border hover:bg-gray-100 p-3">
-                {{#if this.image_url_thumb}}
-                <img src="{{this.image_url_thumb}}" alt="poster" class="w-full" />
+                {{#if this.imageThumbnailUrl}}
+                <img src="{{this.imageThumbnailUrl}}" alt="listed product" />
                 {{else}}
                 No Image
                 {{/if}}
@@ -53,22 +53,23 @@ Home
                 </ul>
               </td>
               <td class="border hover:bg-gray-100 p-3">{{this.stock}}</td>
-              <td class="border bg-yellow-200 hover:bg-green-400 hover:font-normal p-3">
-                <a href="/posters/{{this.id}}">
+              <td class="border bg-yellow-200 hover:bg-green-400 cursor-pointer p-3">
+                <a href="/products/{{this.id}}">
                   View
                 </a>
               </td>
-              <td class="border bg-yellow-200 hover:bg-blue-400 hover:font-normal p-3">
-                <a href="/posters/{{this.id}}/edit">
+              <td class="border bg-yellow-200 hover:bg-blue-400 cursor-pointer p-3">
+                <a href="/products/{{this.id}}/edit">
                   Edit
                 </a>
               </td>
-              <td class="border bg-yellow-200 hover:bg-red-400 hover:font-normal p-3">
-                <a href="/posters/{{this.id}}/delete">
+              <td class="border bg-yellow-200 hover:bg-red-400 cursor-pointer p-3">
+                <button class="text-red-500 hover:text-red-700" onclick="openModal({{this.id}})">
                   Delete
-                </a>
+                </button>
               </td>
             </tr>
+            {{>delete this}}
             {{/each}}
           </tbody>
         </table>
@@ -82,10 +83,21 @@ Home
     </div>
   </div>
 </div>
-</div>
-</div>
 
 
-{{/block}}
+{{#block "scripts"}}
+{{!-- #modal-<id> = main modal #modal-bg-<id> = modal background #modal-body-<id> = modal body --}}
+      <script>
+        function openModal(id) {
+          document.getElementById(`modal-${id}`).classList.remove("hidden");
+        }
 
-{{/extends}}
+        function closeModal(id) {
+          document.getElementById(`modal-${id}`).classList.add("hidden");
+        }
+      </script>
+
+      {{/block}}
+      {{/block}}
+
+      {{/extends}}

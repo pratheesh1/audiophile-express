@@ -198,18 +198,16 @@ const createAddProductForm = (
       },
     }),
     imageUrl: fields.string({
-      validators: [validators.url("Image URL is invalid!")],
-      widget: widgets.text({ classes: [width] }),
+      widget: widgets.text({ classes: ["hidden"] }),
       errorAfterField: true,
       cssClasses: {
-        label: labelClasses,
+        label: ["hidden"],
       },
     }),
     imageThumbnailUrl: fields.string({
-      validators: [validators.url("Image Thumbnail URL is invalid!")],
-      widget: widgets.text({ classes: [width] }),
+      widget: widgets.text({ classes: ["hidden"] }),
       cssClasses: {
-        label: labelClasses,
+        label: ["hidden"],
       },
     }),
     stock: fields.string({

@@ -178,3 +178,52 @@ exports.addProduct = async (newProduct) => {
     throw error;
   }
 };
+
+exports.getProducts = async () => {
+  try {
+    const products = await Product.collection().fetch({
+      withRelated: [
+        "brand",
+        "category",
+        "frequencyResponse",
+        "impedanceRange",
+        "productVariant",
+        "customTag",
+      ],
+    });
+    return products;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.getProductById = async (id) => {
+  try {
+    const product = await Product.where({ id: id }).fetch({
+      withRelated: [
+        "brand",
+        "category",
+        "frequencyResponse",
+        "impedanceRange",
+        "productVariant",
+        "customTag",
+      ],
+    });
+    return product;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.deleteProductById = async (id) => {
+  try {
+    const product = await this.getProductById(id);
+    await product.destroy();
+    return true;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};

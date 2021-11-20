@@ -35,10 +35,10 @@
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-90">
                 <div class="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">
-                    <a href="/products" @click="isOpen = false"
+                    <a href="/products/home" @click="isOpen = false"
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
                         Your Listings</a>
-                    <a href="/products/home" @click="isOpen = false"
+                    <a href="/products" @click="isOpen = false"
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">All
                         Listings</a>
                     <a href="#" @click="isOpen = false"
@@ -105,7 +105,7 @@
                         <a href="#" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             Settings </a>
-                        <a href="#" @click="dropdownIsOpen = false"
+                        <a href="/users/logout" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             Sign Out </a>
                     </div>

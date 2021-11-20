@@ -83,14 +83,19 @@ const httpRoutes = {
 const apiRoutes = {
   products: require("./routes/api/product.api.routes"),
 };
+const cloudinaryRoutes = require("./routes/cloudinary.routes");
 
 async function main() {
   //http routes
   app.use("/users", httpRoutes.users);
   app.use("/products", httpRoutes.products);
+
   //api routes
   app.all("/api/*", express.json());
   app.use("/api/products", apiRoutes.products);
+
+  //other routes
+  app.use("/cloudinary", cloudinaryRoutes);
 }
 main();
 

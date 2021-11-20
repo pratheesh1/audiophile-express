@@ -7,6 +7,8 @@ const {
   getFrequencyResponses,
   getImpedanceRanges,
   addProduct,
+  getProducts,
+  deleteProductById,
 } = require("../../repositories/product.repositories");
 
 //get form selection fields
@@ -34,6 +36,10 @@ exports.getAddProduct = async (req, res) => {
   );
   res.render("products/add", {
     form: form.toHTML(tailwindForm),
+    //pass in cloudinary config to form
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_PRESET,
   });
 };
 
@@ -55,9 +61,10 @@ exports.postAddProduct = async (req, res) => {
           formData[key] = form.data[key];
         }
       }
-      formData["userId"] = 5;
+      formData["userId"] = req.session.user.id;
       await addProduct(formData);
-      res.redirect("/products");
+      req.flash("success", "New product listing added successfully.");
+      res.redirect("/products/home");
     },
     error: (form) => {
       res.render("products/add", {
@@ -67,7 +74,19 @@ exports.postAddProduct = async (req, res) => {
   });
 };
 
+//delete product
+exports.getDeleteProduct = async (req, res) => {
+  const confirmation = await deleteProductById(req.params.id);
+  if (confirmation) {
+    req.flash("success", "Product deleted successfully!");
+    res.redirect("/products/home");
+  }
+};
+
 //home page
 exports.getHome = async (req, res) => {
-  res.render("products/home");
+  const products = await getProducts();
+  res.render("products/home", {
+    products: products.toJSON(),
+  });
 };

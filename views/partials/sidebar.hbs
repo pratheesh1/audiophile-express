@@ -1,26 +1,13 @@
 {{!-- component adapted from https://tailwindcomponents.com/component/responsive-sidebar-with-dropdown --}}
-<div @click.away="open = false" class="
-      flex flex-col
-      w-full
-      md:w-64
-      text-gray-700
-      bg-gray-100
-      dark:bg-gray-700
-      dark:text-gray-200 
-      flex-shrink-0
-      shadow-inner
-    " x-data="{ open: false }">
+<div @click.away="open = false"
+    class="
+      flex flex-col w-full md:w-64 text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 flex-shrink-0 shadow-inner"
+    x-data="{ open: false }">
     <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-        <p class="
-          text-md
-          font-semibold
-          tracking-widest
-          text-gray-900
-          uppercase
-          rounded-lg
-          dark:text-white
-          focus:outline-none focus:shadow-outline
-        ">Filter Products:</p>
+        <p
+            class="text-md font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+            Filter Products:
+        </p>
         <button class="
           md:hidden
           rounded-lg

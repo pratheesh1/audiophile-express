@@ -36,6 +36,9 @@ const ProductVariant = bookshelf.model("ProductVariant", {
   orderItem() {
     return this.hasMany("OrderItem", "productVariantId");
   },
+  image() {
+    return this.hasMany("Image", "productVariantId");
+  },
 });
 
 //model table email_validators
@@ -189,6 +192,9 @@ const Product = bookshelf.model("Product", {
   orderItem() {
     return this.hasMany("OrderItem", "productId");
   },
+  image() {
+    return this.hasMany("Image", "productId");
+  },
 });
 
 //model table product_custom_tags
@@ -216,6 +222,17 @@ const OrderItem = bookshelf.model("OrderItem", {
   },
 });
 
+//model table images
+const Image = bookshelf.model("Image", {
+  tableName: "images",
+  product() {
+    return this.belongsTo("Product", "productId");
+  },
+  productVariant() {
+    return this.belongsTo("ProductVariant", "productVariantId");
+  },
+});
+
 module.exports = {
   Category,
   Brand,
@@ -235,4 +252,5 @@ module.exports = {
   Product,
   ProductCustomTag,
   OrderItem,
+  Image,
 };

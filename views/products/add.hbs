@@ -37,8 +37,11 @@ Add Product
                     <img src="" style="display:none" id="uploaded_image" />
                 </div>
                 <div class="flex justify-end">
+                    <a href='/products/home'
+                        class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-blue-500 hover:bg-blue-400 text-white hover:text-black py-2 rounded-full transition duration-100 flex justify-center">Cancel
+                    </a>
                     <button
-                        class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-green-500 hover:bg-green-400 text-white py-2 rounded-full transition duration-100">Add
+                        class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-green-500 hover:bg-green-400 text-white hover:text-black py-2 rounded-full transition duration-100">Add
                         Product
                     </button>
                 </div>
@@ -68,6 +71,7 @@ Add Product
             uploadPreset: '{{cloudinaryPreset}}', uploadSignature: generateSignature
         }, (error, result) => {
             if (!error && result && result.event === "success") {
+                //on each successful upload do the following 
                 document.querySelector('#id_imageUrl').value = result.info.url;
                 document.querySelector('#id_imageThumbnailUrl').value = result.info.thumbnail_url;
                 document.querySelector('#uploaded_image').src = result.info.thumbnail_url;

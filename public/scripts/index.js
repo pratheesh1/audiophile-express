@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   toggleTheme.addEventListener("change", () => {
-    localStorage.theme = "light" ? "dark" : "light";
+    localStorage.theme = localStorage.theme === "light" ? "dark" : "light";
     document.body.classList.toggle("dark");
   });
   /* ----------- end of switch light/dark mode ----------- */

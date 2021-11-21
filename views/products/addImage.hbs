@@ -34,7 +34,8 @@ Add Product Details
     <div class="md:grid md:grid-cols-12 md:gap-6">
         <div class="md:col-start-2 md:col-span-3 p-3 lg:p-10">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Add Product details:</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Add more images for: {{name}}
+                </h3>
                 <hr class="hidden: md:visible border border-gray-600 mt-3" />
                 <p class="mt-1 text-xs text-gray-600 dark:text-white">
                     Fields marked with * are required.
@@ -70,22 +71,17 @@ Add Product Details
                     id="upload-img-btn">Upload Image</button>
             </div>
             <div>
-                <form action="/products/add" method="post">
+                <form action="/products/{{id}}/update" method="post">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                     <input type="hidden" id='imageUrl' name="imageUrl" value="" />
                     <input type="hidden" id="imageThumbnailUrl" name="imageThumbnailUrl" value="" />
-
-                    {{!-- add product details up form --}}
-                    <label for="id_name" class="text-gray-600 m-2 mt-5 text-lg font-serif dark:text-white">Add Custom
-                        Tags:</label>
-
                     <div class="flex justify-end">
                         <a href='/products/home'
                             class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-blue-500 hover:bg-blue-400 text-white hover:text-black py-2 rounded-full transition duration-100 flex justify-center">Cancel
                         </a>
                         <button
-                            class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-green-500 hover:bg-green-400 text-white hover:text-black py-2 rounded-full transition duration-100">Update
-                            Product
+                            class="m-4 w-1/2 md:w-1/3 lg:w-1/4 bg-green-500 hover:bg-green-400 text-white hover:text-black py-2 rounded-full transition duration-100">Add
+                            Images
                         </button>
                     </div>
                 </form>

@@ -65,16 +65,42 @@ Home
                   View
                 </a>
               </td>
+              {{#if @root.user}}
+              {{#compare @root.user.id "===" this.userId}}
               <td class="border bg-yellow-200 hover:bg-blue-400 cursor-pointer p-3">
                 <a href="/products/{{this.id}}/edit">
                   Edit
                 </a>
               </td>
+              {{/compare}}
+              {{#compare @root.user.id "!==" this.userId}}
+              <td class="border bg-gray-400 p-3">
+                Edit
+              </td>
+              {{/compare}}
+              {{else}}
+              <td class="border bg-gray-400 p-3">
+                Edit
+              </td>
+              {{/if}}
+              {{#if @root.user}}
+              {{#compare @root.user.id "===" this.userId}}
               <td class="border bg-yellow-200 hover:bg-red-400 cursor-pointer p-3">
                 <button class="text-red-500 hover:text-red-700" onclick="openModal({{this.id}})">
                   Delete
                 </button>
               </td>
+              {{/compare}}
+              {{#compare @root.user.id "!==" this.userId}}
+              <td class="border bg-gray-400 p-3">
+                Delete
+              </td>
+              {{/compare}}
+              {{else}}
+              <td class="border bg-gray-400 p-3">
+                Delete
+              </td>
+              {{/if}}
             </tr>
             {{>delete this}}
             {{/each}}

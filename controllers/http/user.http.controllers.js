@@ -71,6 +71,7 @@ exports.postSignupForm = (req, res) => {
 //get logout
 exports.getLogout = (req, res) => {
   req.session.user = null;
+  res.locals.user = null;
   req.flash("success", "You have successfully logged out!");
   res.redirect("/");
 };

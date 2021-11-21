@@ -7,13 +7,13 @@ Home
 {{#block 'content'}}
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
   {{> sidebar this}}
-  <div class="w-full overflow-y-scroll lg:pt-5 dark:bg-gray-500">
+  <div class="w-full overflow-y-scroll p-3 lg:pt-5 dark:bg-gray-500">
     <div class="flex items-center justify-center">
       <div class="container">
-        <table class="w-full sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-lg my-5">
           <thead>
             <tr
-              class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex flex-col flex-nowrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+              class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex-col flex-nowrap table-row rounded-l-lg rounded-none mb-0">
               <th class="p-3 text-left font-normal">ID</th>
               <th class="p-3 text-left font-normal border-l">Title</th>
               <th class="p-3 text-left font-normal border-l">Cost</th>
@@ -27,9 +27,9 @@ Home
               <th class="p-3 text-left font-normal border-l">Delete</th>
             </tr>
           </thead>
-          <tbody class="flex-1 sm:flex-none font-extralight">
+          <tbody class="flex-none font-extralight">
             {{#each products}}
-            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+            <tr class="flex-col flex-no wrap table-row mb-0">
               <td class="border hover:bg-gray-100 p-3">{{this.id}}</td>
               <td class="border hover:bg-gray-100 p-3">{{this.name}}</td>
               <td class="border hover:bg-gray-100 p-3">{{this.baseCost}}</td>

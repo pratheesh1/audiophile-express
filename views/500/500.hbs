@@ -1,0 +1,37 @@
+{{#extends "base"}}
+
+{{#block "title"}}
+Server Error
+{{/block}}
+
+{{#block "heading"}}
+Server Error
+{{/block}}
+
+{{#block "content"}}
+
+<main aria-labelledby="404"
+    class="flex h-screen items-center justify-center bg-gray-100 dark:bg-gray-600 dark:text-light">
+    <div class="relative justify-center items-center pb-10">
+        <div class="w-full sm:w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-300 shadow-xl overflow-hidden sm:rounded-xl pb-8">
+                <div class="border-t text-center pt-8">
+                    <h1 class="text-5xl font-bold text-gray-700">500 :')</h1>
+                    <h1 class="text-2xl font-medium pt-8 pb-3 text-gray-500">Oops! Our server encountered an
+                        internal
+                        error! </h1>
+                    <p class="text-xl pb-8 px-12 font-medium text-gray-500">Something went wrong at our server. We will
+                        look into the issue. Please try again later!</p>
+                    <a href='/products/home'
+                        class="text-gray-700 bg-green-300 dark:bg-green-400 font-semibold px-6 py-3 ml-6 rounded-full">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{/block}}
+
+{{/extends}}

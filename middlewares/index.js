@@ -8,7 +8,7 @@ exports.errorHandler = (err, req, res, next) => {
     if (req.url.includes("/api")) {
       handleApiError(err, req, res);
     }
-    res.status(500).send("Something went wrong! Please try again.");
+    res.status(500).render("500/500");
   }
   next();
 };

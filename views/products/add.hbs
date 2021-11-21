@@ -23,7 +23,7 @@ Add Product
         <div class="md:col-start-5 md:col-end-12 lg:col-end-10 p-3 lg:-10">
             <form action="/products/add" method="post">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                {{!-- sign up form --}}
+                {{!-- add product up form --}}
                 {{{form}}}
                 {{!-- button to upload image --}}
                 <div class="mt-5">
@@ -81,7 +81,7 @@ Add Product
     document.getElementById("upload-img-btn").addEventListener("click",
         function () { myWidget.open(); }, false);
 
-    //set img if form i reloaded
+    //set img if form is reloaded
 
     if (document.querySelector('#id_imageThumbnailUrl').value != '') {
         document.querySelector('#uploaded_image').src = document.querySelector('#id_imageThumbnailUrl').value;

@@ -108,9 +108,14 @@ app.use("/", (req, res) => {
       message: "Requested resource not found!",
     });
   } else {
-    res.status(404).render("404/404", {
+    res.status(404).render("products/addDetails", {
       title: "404",
       message: "Page not found",
+
+      //pass in cloudinary config to form
+      cloudinaryName: process.env.CLOUDINARY_NAME,
+      cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+      cloudinaryPreset: process.env.CLOUDINARY_PRESET,
     });
   }
 });

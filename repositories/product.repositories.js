@@ -11,6 +11,7 @@ const {
   CustomTag,
   ImpedanceRange,
   ProductCustomTag,
+  Image,
 } = require("../models");
 
 //category
@@ -157,7 +158,7 @@ const productSchema = yup.object().shape({
   baseCost: yup.number().required("Product base cost is required"),
   brandId: yup.number(),
   categoryId: yup.number().required("Product category is required"),
-  imagUrl: yup.string().url("Product image url is not valid"),
+  imageUrl: yup.string().url("Product image url is not valid"),
   imageThumbnailUrl: yup.string().url("Product image thumbnail is not valid"),
   stock: yup.number().required("Product stock is required"),
   userId: yup.number().required("Product user is required"),
@@ -170,8 +171,17 @@ const productSchema = yup.object().shape({
 exports.addProduct = async (newProduct) => {
   try {
     await productSchema.validate(newProduct);
-    const product = new Product(newProduct);
+    const { imageThumbnailUrl, imageUrl, ...productData } = newProduct;
+    const product = new Product(productData);
     await product.save();
+    if (imageUrl) {
+      const image = new Image({
+        productId: product.get("id"),
+        imageUrl: imageUrl,
+        imageThumbnailUrl: imageThumbnailUrl,
+      });
+      await image.save();
+    }
     return product;
   } catch (error) {
     consoleLog.error(error.message);
@@ -189,6 +199,7 @@ exports.getProducts = async () => {
         "impedanceRange",
         "productVariant",
         "customTag",
+        "image",
       ],
     });
     return products;
@@ -208,6 +219,7 @@ exports.getProductById = async (id) => {
         "impedanceRange",
         "productVariant",
         "customTag",
+        "image",
       ],
     });
     return product;

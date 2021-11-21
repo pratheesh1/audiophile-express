@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const hbs = require("hbs");
+const helpers = require("handlebars-helpers")();
 const wax = require("wax-on");
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -70,7 +71,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 //set-up view engine
 app.set("view engine", "hbs");
-//set-up partials, wax-on and set-up views
+//set-up partials, register helpers, wax-on and set-up views
+hbs.registerHelper(helpers);
 hbs.registerPartials(path.join(__dirname, "views/partials"));
 wax.on(hbs.handlebars);
 wax.setLayoutPath(path.join(__dirname, "views/layouts"));

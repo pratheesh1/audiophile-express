@@ -3,6 +3,7 @@
 {{#block 'css'}}
 {{!-- swiper js css --}}
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
 <style>
     .mySwiper .swiper-slide {
         opacity: 0.2;
@@ -45,6 +46,7 @@ Add Product Details
         </div>
         <div class="md:col-start-5 md:col-end-12 lg:col-end-10 p-3 lg:-10">
             {{!-- image --}}
+            <label for="id_name" class="text-gray-600 m-2 text-lg font-serif dark:text-white">Upload Image:* </label>
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                 <div class="swiper-wrapper" style="height: auto !important;">
                     {{!-- add image here --}}
@@ -58,20 +60,24 @@ Add Product Details
                 </div>
             </div>
             {{!-- end image --}}
+            <div class='w-full p-3 flex flex-wrap' id="image-list">
+            </div>
 
+            {{!-- button to upload image --}}
+            <div class="mt-5">
+                <button type="button"
+                    class="px-3 py-2 m-3 mt-8 text-sm bg-blue-400 rounded-full text-white hover:text-black hover:bg-blue-200"
+                    id="upload-img-btn">Upload Image</button>
+            </div>
             <div>
                 <form action="/products/add" method="post">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                     <input type="hidden" id='imageUrl' name="imageUrl" value="" />
                     <input type="hidden" id="imageThumbnailUrl" name="imageThumbnailUrl" value="" />
-                    {{!-- add product details up form --}}
 
-                    {{!-- button to upload image --}}
-                    <div class="mt-5">
-                        <button type="button"
-                            class="px-3 py-2 m-3 mt-8 text-sm bg-blue-400 rounded-full text-white hover:text-black hover:bg-blue-200"
-                            id="upload-img-btn">Upload Image</button>
-                    </div>
+                    {{!-- add product details up form --}}
+                    <label for="id_name" class="text-gray-600 m-2 mt-5 text-lg font-serif dark:text-white">Add Custom
+                        Tags:</label>
 
                     <div class="flex justify-end">
                         <a href='/products/home'
@@ -112,17 +118,30 @@ Add Product Details
         }, (error, result) => {
             if (!error && result && result.event === "success") {
                 //on each successful upload do the following 
+                //add image to the carousel
                 document.querySelectorAll('.swiper-wrapper').forEach(function (el) {
                     el.innerHTML += `<div class="swiper-slide object-cover">
                         <img src="${result.info.url}" />
                     </div>`;
                 });
+
+                //update form value
                 var imageUrl = document.querySelector('#imageUrl');
                 var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
                 imageUrl.value = imageUrl.value ? `${imageUrl.value}<new_image>${result.info.url}` : result.info.url;
                 thumbnailUrl.value = thumbnailUrl.value ? `${thumbnailUrl.value}<new_image>${result.info.thumbnail_url}` : result.info.thumbnail_url;
+
+                //add image to the image list
+                document.querySelector('#image-list').innerHTML = ""
+                imageUrl.value.split('<new_image>').forEach(function (el, index) {
+                    document.querySelector('#image-list').innerHTML +=
+                        `<div style="padding-top: 0.1em; padding-bottom: 0.1rem" class="text-sm px-3 bg-pink-200 text-pink-800 rounded-full m-1" onclick="removeImage(${index})" role="button">
+                        Remove Image ${index + 1} <i class="fas fa-times"></i></div>`
+                });
             };
         })
+
+    //upload button
     document.getElementById("upload-img-btn").addEventListener("click",
         function () { myWidget.open(); }, false);
 
@@ -132,6 +151,7 @@ Add Product Details
         slidesPerView: 4,
         freeMode: true,
         watchSlidesProgress: true,
+        autoHeight: true,
     });
     var swiper2 = new Swiper(".mySwiper2", {
         spaceBetween: 10,
@@ -143,6 +163,35 @@ Add Product Details
             swiper: swiper,
         },
     });
+
+    //remove image from list
+    function removeImage(index) {
+        var imageUrl = document.querySelector('#imageUrl');
+        var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
+        var imageUrlArray = imageUrl.value.split('<new_image>');
+        var thumbnailUrlArray = thumbnailUrl.value.split('<new_image>');
+        imageUrl.value = imageUrlArray.filter(function (el, i) {
+            return i != index;
+        }).join('<new_image>');
+        thumbnailUrl.value = thumbnailUrlArray.filter(function (el, i) {
+            return i != index;
+        }).join('<new_image>');
+        document.querySelector('#image-list').children[index].remove();
+        document.querySelectorAll('.swiper-wrapper').forEach(function (el) {
+            el.children[index].remove();
+        });
+        //update the image list
+        document.querySelector('#image-list').innerHTML = ""
+        if (imageUrl.value) {
+            imageUrl.value.split('<new_image>').forEach(function (el, index) {
+                document.querySelector('#image-list').innerHTML +=
+                    `<div style="padding-top: 0.1em; padding-bottom: 0.1rem" class="text-sm px-3 bg-pink-200 text-pink-800 rounded-full m-1" onclick="removeImage(${index})" role="button">
+                    Remove Image ${index + 1} <i class="fas fa-times"></i></div>`
+            });
+        }
+        swiper.update();
+        swiper2.update();
+    }
 
 </script>
 {{/block}}

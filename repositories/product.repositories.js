@@ -239,3 +239,29 @@ exports.deleteProductById = async (id) => {
     throw error;
   }
 };
+
+exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
+  try {
+    await yup
+      .array()
+      .of(yup.string().url())
+      .required()
+      .validate(imageUrl, imageThumbnailUrl);
+    await Image.where({ productId: productId }).destroy({
+      require: false,
+    });
+
+    for (let i = 0; i < imageUrl.length; i++) {
+      const image = new Image({
+        productId: productId,
+        imageUrl: imageUrl[i],
+        imageThumbnailUrl: imageThumbnailUrl[i],
+      });
+      await image.save();
+    }
+    return true;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};

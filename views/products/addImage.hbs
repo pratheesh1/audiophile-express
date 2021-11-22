@@ -34,7 +34,8 @@ Add Product Details
     <div class="md:grid md:grid-cols-12 md:gap-6">
         <div class="md:col-start-2 md:col-span-3 p-3 lg:p-10">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Add more images for: {{name}}
+                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Add more images:
+                    {{name}}
                 </h3>
                 <hr class="hidden: md:visible border border-gray-600 mt-3" />
                 <p class="mt-1 text-xs text-gray-600 dark:text-white">
@@ -47,31 +48,51 @@ Add Product Details
         </div>
         <div class="md:col-start-5 md:col-end-12 lg:col-end-10 p-3 lg:-10">
             {{!-- image --}}
-            <label for="id_name" class="text-gray-600 m-2 text-lg font-serif dark:text-white">Upload Image:* </label>
+            <label for="id_name" class="text-gray-600 m-2 text-lg font-serif dark:text-white">Upload Image:*
+            </label>
+
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-                <div class="swiper-wrapper" style="height: auto !important;">
+                <div class="swiper-wrapper mt-5" style="height: auto !important;">
                     {{!-- add image here --}}
+                    {{#each images}}
+                    <div class="swiper-slide object-cover">
+                        <img src="{{this.imageUrl}}" class="object-cover">
+                    </div>
+                    {{/each}}
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
+
             <div thumbsSlider="" class="swiper mySwiper" style="height: '20px' !important;">
                 <div class="swiper-wrapper">
                     {{!-- add image here --}}
+                    {{#each images}}
+                    <div class="swiper-slide object-cover">
+                        <img src="{{this.imageUrl}}" class="object-cover">
+                    </div>
+                    {{/each}}
                 </div>
             </div>
             {{!-- end image --}}
             <div class='w-full p-3 flex flex-wrap' id="image-list">
+                {{#eachIndex images}}
+                <div style="padding-top: 0.1em; padding-bottom: 0.1rem"
+                    class="text-sm px-3 bg-pink-200 text-pink-800 rounded-full m-1" onclick="removeImage({{index}})"
+                    role="button">
+                    Remove Image {{#add index 1 }}{{/add}} <i class="fas fa-times"></i>
+                </div>
+                {{/eachIndex}}
             </div>
 
             {{!-- button to upload image --}}
             <div class="mt-5">
                 <button type="button"
                     class="px-3 py-2 m-3 mt-8 text-sm bg-blue-400 rounded-full text-white hover:text-black hover:bg-blue-200"
-                    id="upload-img-btn">Upload Image</button>
+                    id="upload-img-btn">Upload More</button>
             </div>
             <div>
-                <form action="/products/{{id}}/update" method="post">
+                <form action="/products/add/image/{{id}}" method="post" enctype="application/x-www-form-urlencoded">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                     <input type="hidden" id='imageUrl' name="imageUrl" value="" />
                     <input type="hidden" id="imageThumbnailUrl" name="imageThumbnailUrl" value="" />
@@ -102,7 +123,11 @@ Add Product Details
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 {{! custom script }}
-<script>
+<script defer>
+    //add image initial values
+    document.getElementById('imageUrl').value = '{{{combinedUrl}}}';
+    document.getElementById('imageThumbnailUrl').value = '{{{combinedThumbnailUrl}}}';
+
     // initialize cloudinary js
     function generateSignature(callback, params) {
         axios.get('/cloudinary/sign', { params: { params } }).then(function
@@ -117,15 +142,15 @@ Add Product Details
                 //add image to the carousel
                 document.querySelectorAll('.swiper-wrapper').forEach(function (el) {
                     el.innerHTML += `<div class="swiper-slide object-cover">
-                        <img src="${result.info.url}" />
+                        <img src="${result.info.url}" class="object-cover" />
                     </div>`;
                 });
 
                 //update form value
                 var imageUrl = document.querySelector('#imageUrl');
                 var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
-                imageUrl.value = imageUrl.value ? `${imageUrl.value}<new_image>${result.info.url}` : result.info.url;
-                thumbnailUrl.value = thumbnailUrl.value ? `${thumbnailUrl.value}<new_image>${result.info.thumbnail_url}` : result.info.thumbnail_url;
+                imageUrl.value = imageUrl.value ? `${imageUrl.value}<new_image>${result.info.url}`.toString() : result.info.url.toString();
+                thumbnailUrl.value = thumbnailUrl.value ? `${thumbnailUrl.value}<new_image>${result.info.thumbnail_url}`.toString() : result.info.thumbnail_url.toString();
 
                 //add image to the image list
                 document.querySelector('#image-list').innerHTML = ""
@@ -166,6 +191,7 @@ Add Product Details
         var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
         var imageUrlArray = imageUrl.value.split('<new_image>');
         var thumbnailUrlArray = thumbnailUrl.value.split('<new_image>');
+
         imageUrl.value = imageUrlArray.filter(function (el, i) {
             return i != index;
         }).join('<new_image>');

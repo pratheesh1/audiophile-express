@@ -8,7 +8,9 @@ const {
   getImpedanceRanges,
   addProduct,
   getProducts,
+  getProductById,
   deleteProductById,
+  addImage,
 } = require("../../repositories/product.repositories");
 
 //get form selection fields
@@ -62,9 +64,9 @@ exports.postAddProduct = async (req, res) => {
         }
       }
       formData["userId"] = req.session.user.id;
-      await addProduct(formData);
+      const product = await addProduct(formData);
       req.flash("success", "New product listing added successfully.");
-      res.redirect("/products/home");
+      res.redirect(`/products/add/image/${product.get("id")}`);
     },
     error: (form) => {
       res.render("products/add", {
@@ -88,5 +90,46 @@ exports.getHome = async (req, res) => {
   const products = await getProducts();
   res.render("products/home", {
     products: products.toJSON(),
+  });
+};
+
+//get add image
+exports.getAddImage = async (req, res) => {
+  const product = (await getProductById(req.params.id)).toJSON();
+  const images = product.image;
+
+  res.render("products/addImage", {
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_PRESET,
+    id: req.params.id,
+    images: images,
+    combinedUrl: images.map((image) => image.imageUrl).join("<new_image>"),
+    combinedThumbnailUrl: images
+      .map((image) => image.thumbnailUrl)
+      .join("<new_image>"),
+  });
+};
+
+//post add image
+exports.postAddImage = async (req, res) => {
+  const imageUrl = req.body.imageUrl.split("<new_image>");
+  const imageThumbnailUrl = req.body.imageThumbnailUrl.split("<new_image>");
+  console.log(imageUrl);
+  if (imageUrl.length) {
+    await addImage(req.params.id, imageUrl, imageThumbnailUrl);
+  }
+  req.flash("success", "Image(s) added successfully!");
+  res.redirect(`/products/add/tag/${req.params.id}`);
+};
+
+//get add tag
+exports.getAddTag = async (req, res) => {
+  const product = (await getProductById(req.params.id)).toJSON();
+  const tags = product.tag;
+  console.log(tags);
+  res.render("products/addTags", {
+    id: req.params.id,
+    tags: tags,
   });
 };

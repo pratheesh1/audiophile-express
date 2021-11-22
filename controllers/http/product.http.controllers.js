@@ -1,5 +1,9 @@
 //import form
-const { tailwindForm, createAddProductForm } = require("../../forms");
+const {
+  tailwindForm,
+  createAddProductForm,
+  createAddTagsForm,
+} = require("../../forms");
 //import dal
 const {
   getBrands,
@@ -11,7 +15,11 @@ const {
   getProductById,
   deleteProductById,
   addImage,
+  addCustomTag,
+  getAllTagsDetailsByProductId,
+  deleteCustomTag,
 } = require("../../repositories/product.repositories");
+const { consoleLog } = require("../../signale.config");
 
 //get form selection fields
 async function getFormSelectionFields() {
@@ -104,6 +112,7 @@ exports.getAddImage = async (req, res) => {
     cloudinaryPreset: process.env.CLOUDINARY_PRESET,
     id: req.params.id,
     images: images,
+    product: product,
     combinedUrl: images.map((image) => image.imageUrl).join("<new_image>"),
     combinedThumbnailUrl: images
       .map((image) => image.thumbnailUrl)
@@ -115,7 +124,6 @@ exports.getAddImage = async (req, res) => {
 exports.postAddImage = async (req, res) => {
   const imageUrl = req.body.imageUrl.split("<new_image>");
   const imageThumbnailUrl = req.body.imageThumbnailUrl.split("<new_image>");
-  console.log(imageUrl);
   if (imageUrl.length) {
     await addImage(req.params.id, imageUrl, imageThumbnailUrl);
   }
@@ -124,12 +132,53 @@ exports.postAddImage = async (req, res) => {
 };
 
 //get add tag
-exports.getAddTag = async (req, res) => {
+exports.getAddTag = async (req, res, next) => {
   const product = (await getProductById(req.params.id)).toJSON();
-  const tags = product.tag;
-  console.log(tags);
+  const form = createAddTagsForm();
+  const tags = await getAllTagsDetailsByProductId(req.params.id);
+
   res.render("products/addTags", {
     id: req.params.id,
-    tags: tags,
+    product: product,
+    tags: tags.toJSON(),
+    form: form.toHTML(tailwindForm),
   });
+};
+
+//post add tag
+exports.postAddTag = async (req, res) => {
+  const product = (await getProductById(req.params.id)).toJSON();
+  const form = createAddTagsForm();
+  const tags = await getAllTagsDetailsByProductId(req.params.id);
+
+  form.handle(req, {
+    success: async (form) => {
+      var formData = {};
+      for (var key in form.data) {
+        if (form.data[key]) {
+          formData[key] = form.data[key];
+        }
+      }
+      const tag = await addCustomTag(req.params.id, formData);
+      req.flash("success", "Tag added successfully!");
+      res.redirect(`/products/add/tag/${req.params.id}`);
+    },
+    error: (form) => {
+      res.render("products/addTags", {
+        id: req.params.id,
+        product: product,
+        tags: tags.toJSON(),
+        form: form.toHTML(tailwindForm),
+      });
+    },
+  });
+};
+
+//delete tag
+exports.getDeleteTag = async (req, res) => {
+  const confirmation = await deleteCustomTag(req.params.tagId);
+  if (confirmation) {
+    req.flash("success", "Tag deleted successfully!");
+    res.redirect(`/products/add/tag/${req.params.productId}`);
+  }
 };

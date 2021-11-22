@@ -3,14 +3,14 @@ const csrf = require("csurf");
 
 //middleware to handle errors
 exports.errorHandler = (err, req, res, next) => {
-  consoleLog.error(err);
   if (err) {
+    consoleLog.error(err);
     if (req.url.includes("/api")) {
       handleApiError(err, req, res);
     }
     res.status(500).render("500/500");
   }
-  next();
+  res.status(404).render("404/404");
 };
 
 function handleApiError(err, req, res) {

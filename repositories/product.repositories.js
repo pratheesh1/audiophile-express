@@ -37,8 +37,10 @@ exports.addCategory = async (name) => {
       .string()
       .required(`'${name}' is not a valid name!`)
       .validate(name);
+
     const category = new Category({ name: name });
     await category.save();
+
     return category;
   } catch (error) {
     consoleLog.error(error.message);
@@ -67,11 +69,13 @@ exports.addBrand = async (brandName, url) => {
       .required(`'${brandName}' is not a valid name!`)
       .validate(brandName);
     await yup.string().url(`'${url}' is not a valid url!`).validate(url);
+
     const brand = new Brand({
       brandName: brandName,
       thumbnail: url ? url : null,
     });
     await brand.save();
+
     return brand;
   } catch (error) {
     consoleLog.error(error.message);
@@ -104,10 +108,12 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
       .string()
       .required(`'${frequencyResponse}' is required!`)
       .validate(frequencyResponse);
+
     const freqResponse = new FrequencyResponse({
       frequencyResponse: frequencyResponse,
     });
     await freqResponse.save();
+
     return freqResponse;
   } catch (error) {
     consoleLog.error(error.message);
@@ -140,10 +146,12 @@ exports.addImpedanceRange = async (value) => {
       .number("Impedance value must be a number")
       .required(`'${value}' is required!`)
       .validate(value);
+
     const impedanceRange = new ImpedanceRange({
       impedanceValue: value,
     });
     await impedanceRange.save();
+
     return impedanceRange;
   } catch (error) {
     consoleLog.error(error.message);
@@ -171,9 +179,11 @@ const productSchema = yup.object().shape({
 exports.addProduct = async (newProduct) => {
   try {
     await productSchema.validate(newProduct);
+
     const { imageThumbnailUrl, imageUrl, ...productData } = newProduct;
     const product = new Product(productData);
     await product.save();
+
     if (imageUrl) {
       const image = new Image({
         productId: product.get("id"),
@@ -182,6 +192,7 @@ exports.addProduct = async (newProduct) => {
       });
       await image.save();
     }
+
     return product;
   } catch (error) {
     consoleLog.error(error.message);
@@ -201,6 +212,7 @@ exports.getProducts = async () => {
         "customTag",
         "image",
       ],
+      require: false,
     });
     return products;
   } catch (error) {
@@ -221,6 +233,7 @@ exports.getProductById = async (id) => {
         "customTag",
         "image",
       ],
+      require: false,
     });
     return product;
   } catch (error) {
@@ -247,10 +260,10 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
       .of(yup.string().url())
       .required()
       .validate(imageUrl, imageThumbnailUrl);
+
     await Image.where({ productId: productId }).destroy({
       require: false,
     });
-
     for (let i = 0; i < imageUrl.length; i++) {
       const image = new Image({
         productId: productId,
@@ -259,6 +272,93 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
       });
       await image.save();
     }
+
+    return true;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+//custom tags
+const customTagSchema = yup.object().shape({
+  tagName: yup.string().required("Tag name is required"),
+  tagValue: yup.string().required("Tag value is required"),
+  tagDescription: yup.string(),
+});
+
+exports.getCustomTagsById = async (id) => {
+  try {
+    const customTag = await CustomTag.where({ id: id }).fetch({
+      require: false,
+    });
+    return customTag;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.getCustomTagsByProductId = async (productId) => {
+  try {
+    const customTags = await ProductCustomTag.collection()
+      .where({
+        productId: productId,
+      })
+      .fetch({
+        require: false,
+      });
+    return customTags;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.getAllTagsDetailsByProductId = async (id) => {
+  try {
+    const customTags = (await this.getCustomTagsByProductId(id)).pluck(
+      "customTagId"
+    );
+
+    const tags = await CustomTag.query(function (queryBuilder) {
+      queryBuilder.whereIn("id", customTags);
+    }).fetchAll({
+      require: false,
+    });
+
+    return tags;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.addCustomTag = async (productId, tag) => {
+  try {
+    await customTagSchema.validate(tag);
+
+    const customTag = new CustomTag(tag);
+    await customTag.save();
+
+    const newCustomTag = new ProductCustomTag({
+      productId: productId,
+      customTagId: customTag.get("id"),
+    });
+    await newCustomTag.save();
+
+    return customTag;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+exports.deleteCustomTag = async (tagId) => {
+  try {
+    const customTag = await this.getCustomTagsById(tagId);
+    console.log(customTag);
+    await customTag.destroy();
     return true;
   } catch (error) {
     consoleLog.error(error.message);

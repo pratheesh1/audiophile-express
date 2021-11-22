@@ -264,8 +264,43 @@ const createAddProductForm = (
   });
 };
 
+const createAddTagsForm = (width = "w-full") => {
+  const labelClasses = ["text-gray-600 m-2 text-lg font-serif dark:text-white"];
+  return forms.create({
+    tagName: fields.string({
+      label: "Tag Name:*",
+      required: true,
+      validators: [validators.required("Tag name is required!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    tagValue: fields.string({
+      label: "Tag Value:*",
+      required: true,
+      validators: [validators.required("Tag value is required!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    tagDescription: fields.string({
+      label: "Tag Description:",
+      widget: widgets.textarea({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+  });
+};
+
 module.exports = {
   createRegistrationForm,
   createAddProductForm,
+  createAddTagsForm,
   tailwindForm,
 };

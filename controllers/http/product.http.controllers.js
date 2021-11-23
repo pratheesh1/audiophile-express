@@ -4,6 +4,7 @@ const {
   createAddProductForm,
   createAddTagsForm,
   createEditProductForm,
+  createSearchForm,
 } = require("../../forms");
 //import dal
 const {
@@ -96,11 +97,110 @@ exports.getDeleteProduct = async (req, res) => {
   }
 };
 
+//main list page
+exports.getAllProducts = async (req, res) => {
+  const { brands, categories, frequencyResponses, impedanceRanges } =
+    await getFormSelectionFields();
+
+  const form = createSearchForm(
+    brands,
+    categories,
+    frequencyResponses,
+    impedanceRanges
+  );
+
+  form.handle(req, {
+    empty: async (form) => {
+      const products = await getProducts();
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products",
+      });
+    },
+    success: async (form) => {
+      var formData = {
+        ...form.data,
+        brand: form.data.brand ? form.data.brand.split(",") : null,
+        category: form.data.category ? form.data.category.split(",") : null,
+        bluetooth: form.data.bluetooth ? form.data.bluetooth.split(",") : null,
+        impedanceRangeId: form.data.impedanceRangeId
+          ? form.data.impedanceRangeId.split(",")
+          : null,
+        frequencyResponseId: form.data.frequencyResponseId
+          ? form.data.frequencyResponseId.split(",")
+          : null,
+      };
+      const products = await getProducts(formData);
+
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products",
+      });
+    },
+    error: async (form) => {
+      const products = await getProducts();
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products",
+      });
+    },
+  });
+};
+
 //home page
 exports.getHome = async (req, res) => {
-  const products = await getProducts();
-  res.render("products/home", {
-    products: products.toJSON(),
+  const { brands, categories, frequencyResponses, impedanceRanges } =
+    await getFormSelectionFields();
+
+  const form = createSearchForm(
+    brands,
+    categories,
+    frequencyResponses,
+    impedanceRanges
+  );
+
+  form.handle(req, {
+    empty: async (form) => {
+      const products = await getProducts({ userId: req.session.user.id });
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products/home",
+      });
+    },
+    success: async (form) => {
+      var formData = {
+        userId: req.session.user.id,
+        ...form.data,
+        brand: form.data.brand ? form.data.brand.split(",") : null,
+        category: form.data.category ? form.data.category.split(",") : null,
+        bluetooth: form.data.bluetooth ? form.data.bluetooth.split(",") : null,
+        impedanceRangeId: form.data.impedanceRangeId
+          ? form.data.impedanceRangeId.split(",")
+          : null,
+        frequencyResponseId: form.data.frequencyResponseId
+          ? form.data.frequencyResponseId.split(",")
+          : null,
+      };
+      const products = await getProducts(formData);
+
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products/home",
+      });
+    },
+    error: async (form) => {
+      const products = await getProducts({ userId: req.session.user.id });
+      res.render("products/home", {
+        products: products.toJSON(),
+        form: form.toHTML(tailwindForm),
+        homeUrl: "/products/home",
+      });
+    },
   });
 };
 

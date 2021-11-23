@@ -15,7 +15,7 @@ Home
             <tr
               class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex-col flex-nowrap table-row rounded-l-lg rounded-none mb-0">
               <th class="p-3 text-left font-normal">ID</th>
-              <th class="p-3 text-left font-normal">Title</th>
+              <th class="p-3 text-left font-normal">Name</th>
               <th class="p-3 text-left font-normal">Cost</th>
               <th class="p-3 text-left font-normal">Image</th>
               <th class="p-3 text-left font-normal">Brand</th>
@@ -80,8 +80,8 @@ Home
               {{/if}}
               {{#if @root.user}}
               {{#compare @root.user.id "===" this.userId}}
-              <td class="border bg-yellow-200 hover:bg-red-400 cursor-pointer p-3">
-                <button class="text-red-500 hover:text-red-700" onclick="openModal({{this.id}})">
+              <td class="border bg-yellow-200 hover:bg-red-400 cursor-pointer p-3 text-red-500 hover:text-gray-800">
+                <button onclick="openModal({{this.id}})">
                   Delete
                 </button>
               </td>

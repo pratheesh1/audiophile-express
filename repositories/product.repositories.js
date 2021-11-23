@@ -200,9 +200,86 @@ exports.addProduct = async (newProduct) => {
   }
 };
 
-exports.getProducts = async () => {
+// product query schema
+const productQuerySchema = yup.object().shape({
+  userId: yup.string().test("check", "Stock min must be a number", (value) => {
+    if (![null, undefined, "", NaN].includes(value)) {
+      yup.number().min(0).validate(value);
+    }
+    return true;
+  }),
+  name: yup.string(),
+  brand: yup.array().of(yup.number()).nullable(),
+  category: yup.array().of(yup.number()).nullable(),
+  cost_min: yup
+    .string()
+    .test("check", "Stock min must be a number", (value) => {
+      if (![null, undefined, "", NaN].includes(value)) {
+        yup.number().min(0).validate(value);
+      }
+      return true;
+    }),
+  cost_max: yup
+    .string()
+    .test("check", "Stock min must be a number", (value) => {
+      if (![null, undefined, "", NaN].includes(value)) {
+        yup.number().min(0).validate(value);
+      }
+      return true;
+    }),
+  stock_min: yup
+    .string()
+    .test("check", "Stock min must be a number", (value) => {
+      if (![null, undefined, "", NaN].includes(value)) {
+        yup.number().min(0).validate(value);
+      }
+      return true;
+    }),
+  sku: yup.string(),
+  bluetooth: yup.array().of(yup.number()).nullable(),
+  impedanceRangeId: yup.array().of(yup.number()).nullable(),
+  frequencyResponseId: yup.array().of(yup.number()).nullable(),
+});
+
+exports.getProducts = async (query) => {
   try {
-    const products = await Product.collection().fetch({
+    await productQuerySchema.validate(query);
+
+    const products = Product.query(function (queryBuilder) {
+      if (query?.userId) {
+        queryBuilder.where("userId", query.userId);
+      }
+      if (query?.name) {
+        queryBuilder.where("name", "like", `%${query.name}%`);
+      }
+      if (query?.brand) {
+        queryBuilder.whereIn("brandId", query.brand);
+      }
+      if (query?.category) {
+        queryBuilder.whereIn("categoryId", query.category);
+      }
+      if (query?.cost_min) {
+        queryBuilder.where("baseCost", ">=", query.cost_min);
+      }
+      if (query?.cost_max) {
+        queryBuilder.where("baseCost", "<=", query.cost_max);
+      }
+      if (query?.stock_min) {
+        queryBuilder.where("stock", ">=", query.stock_min);
+      }
+      if (query?.sku) {
+        queryBuilder.where("sku", "like", `%${query.sku}%`);
+      }
+      if (query?.bluetooth) {
+        queryBuilder.whereIn("bluetooth", query.bluetooth);
+      }
+      if (query?.impedanceRangeId) {
+        queryBuilder.whereIn("impedanceRangeId", query.impedanceRangeId);
+      }
+      if (query?.frequencyResponseId) {
+        queryBuilder.whereIn("frequencyResponseId", query.frequencyResponseId);
+      }
+    }).fetchAll({
       withRelated: [
         "brand",
         "category",

@@ -7,13 +7,14 @@ var widgets = require("forms").widgets;
 
 //function to add tailwind classes to form
 var tailwindForm = function (name, object) {
+  const excludedInputs = ["multipleRadio", "multipleCheckbox"];
   if (
     Array.isArray(object.widget.classes)
       ? !object.widget.classes.length > 0
       : true
   ) {
     //   set classes if not already set
-    if (object.widget.type !== "multipleRadio") {
+    if (!excludedInputs.includes(object.widget.type)) {
       object.widget.classes = [
         "shadow",
         "appearance-none",
@@ -31,7 +32,7 @@ var tailwindForm = function (name, object) {
     }
   } else {
     //   add classes if already set
-    if (object.widget.type !== "multipleRadio") {
+    if (!excludedInputs.includes(object.widget.type)) {
       object.widget.classes.push(
         "shadow",
         "appearance-none",
@@ -416,10 +417,118 @@ const createAddTagsForm = (width = "w-full") => {
   });
 };
 
+const createSearchForm = (
+  brands,
+  categories,
+  frequencyResponses,
+  impedanceRange,
+  width = "w-full"
+) => {
+  const labelClasses = ["text-gray-600 m-2 text-lg font-serif dark:text-white"];
+  return forms.create({
+    name: fields.string({
+      label: "Product Name:",
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    brand: fields.string({
+      label: "Brands:",
+      widget: widgets.multipleSelect({ classes: [width] }),
+      choices: brands,
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    category: fields.string({
+      label: "Category:",
+      widget: widgets.multipleSelect({ classes: [width] }),
+      choices: categories,
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    cost_min: fields.string({
+      label: "Cost Min:",
+      validators: [validators.integer("Cost must be a number!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    cost_max: fields.string({
+      label: "Cost Max:",
+      validators: [validators.integer("Cost must be a number!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    stock_min: fields.string({
+      label: "Minimum Stock:",
+      validators: [validators.integer("Stock must be a number!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    sku: fields.string({
+      label: "SKU:",
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    customTag: fields.string({
+      label: "Custom Tag:",
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    bluetooth: fields.string({
+      label: "Bluetooth:",
+      widget: widgets.multipleCheckbox({ classes: ["mx-3"] }),
+      choices: [
+        [1, "Yes"],
+        [0, "No"],
+      ],
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    impedanceRangeId: fields.string({
+      label: "Impedance Range:",
+      widget: widgets.multipleSelect({ classes: [width] }),
+      errorAfterField: true,
+      choices: impedanceRange,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    frequencyResponseId: fields.string({
+      label: "Frequency Response:",
+      widget: widgets.multipleSelect({ classes: [width] }),
+      errorAfterField: true,
+      choices: frequencyResponses,
+    }),
+  });
+};
+
 module.exports = {
   createRegistrationForm,
   createAddProductForm,
   createEditProductForm,
   createAddTagsForm,
+  createSearchForm,
   tailwindForm,
 };

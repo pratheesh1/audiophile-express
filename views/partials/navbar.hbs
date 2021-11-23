@@ -45,7 +45,7 @@
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Random
                         Item</a>
                     <a href="#" @click="isOpen = false"
-                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Experts</a>
+                        class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Orders</a>
                 </div>
 
                 <div class="flex items-center mt-4 md:mt-0 relative" x-data="{ dropdownIsOpen : false }"
@@ -97,16 +97,10 @@
                         class="absolute left-0 md:right-0 top-9 z-20 w-48 py-2 mt-2 bg-gray-400 rounded-md shadow-xl dark:bg-gray-600">
                         <a href="#" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            your profile </a>
-                        <a href="#" @click="dropdownIsOpen = false"
-                            class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Your projects </a>
+                            Your profile </a>
                         <a href="#" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             Help </a>
-                        <a href="#" @click="dropdownIsOpen = false"
-                            class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Settings </a>
                         <a href="/users/logout" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             Sign Out </a>

@@ -99,7 +99,6 @@ exports.getDeleteProduct = async (req, res) => {
 //home page
 exports.getHome = async (req, res) => {
   const products = await getProducts();
-  console.log(products.toJSON()[1].image);
   res.render("products/home", {
     products: products.toJSON(),
   });

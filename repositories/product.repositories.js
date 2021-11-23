@@ -14,21 +14,24 @@ const {
   Image,
 } = require("../models");
 
-//category
 /*
+ * @desc get all categories
  * @param {boolean} [form = false]
+ *
  * @returns {array} - array of categories if form is true
  * @returns {Object} - bookshelf category object if form is false
  */
 exports.getCategories = async (form = false) => {
   try {
     const categories = await Category.collection().orderBy("name").fetch();
+
     if (form) {
       return categories.map((category) => [
         category.get("id"),
         category.get("name"),
       ]);
     }
+
     return categories;
   } catch (error) {
     consoleLog.error(error.message);
@@ -37,6 +40,7 @@ exports.getCategories = async (form = false) => {
 };
 
 /*
+ * @desc add a new category
  * @param {string} name - name of the new category
  * @returns {Object} - bookshelf category object
  */
@@ -57,18 +61,21 @@ exports.addCategory = async (name) => {
   }
 };
 
-//brand
 /*
+ * @desc get all brands
  * @param {boolean} [form = false] - if true returns an array of arrays
+ *
  * @returns {array} - array of brands if form is true
  * @returns {Object} - bookshelf brand object if form is false
  */
 exports.getBrands = async (form = false) => {
   try {
     const brands = await Brand.collection().orderBy("brandName").fetch();
+
     if (form) {
       return brands.map((brand) => [brand.get("id"), brand.get("brandName")]);
     }
+
     return brands;
   } catch (error) {
     consoleLog.error(error.message);
@@ -77,8 +84,10 @@ exports.getBrands = async (form = false) => {
 };
 
 /*
+ * @desc add a new brand
  * @param {string} brandName - name of the new brand
  * @param {string} url - url of the new brand image
+ *
  * @returns {Object} - bookshelf brand object
  */
 exports.addBrand = async (brandName, url) => {
@@ -102,9 +111,10 @@ exports.addBrand = async (brandName, url) => {
   }
 };
 
-//frequency response
 /*
+ * @desc get all frequency responses
  * @param {boolean} [form = false] - if true returns an array of arrays
+ *
  * @returns {array} - array of frequency responses if form is true
  * @returns {Object} - bookshelf frequency response object if form is false
  */
@@ -113,12 +123,14 @@ exports.getFrequencyResponses = async (form = false) => {
     const frequencyResponses = await FrequencyResponse.collection()
       .orderBy("frequencyResponse")
       .fetch();
+
     if (form) {
       return frequencyResponses.map((frequencyResponse) => [
         frequencyResponse.get("id"),
         frequencyResponse.get("frequencyResponse"),
       ]);
     }
+
     return frequencyResponses;
   } catch (error) {
     consoleLog.error(error.message);
@@ -127,6 +139,7 @@ exports.getFrequencyResponses = async (form = false) => {
 };
 
 /*
+ * @desc add a new frequency response
  * @param {string} frequencyResponse - new frequency response
  * @returns {Object} - bookshelf frequency response object
  */
@@ -149,9 +162,10 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
   }
 };
 
-//impedance range
 /*
+ * @desc get all impedance ranges
  * @param {boolean} [form = false] - if true returns an array of arrays
+ *
  * @returns {array} - array of impedance ranges if form is true
  * @returns {Object} - bookshelf impedance range object if form is false
  */
@@ -160,12 +174,14 @@ exports.getImpedanceRanges = async (form = true) => {
     const impedanceRanges = await ImpedanceRange.collection()
       .orderBy("impedanceValue")
       .fetch();
+
     if (form) {
       return impedanceRanges.map((impedanceRange) => [
         impedanceRange.get("id"),
         impedanceRange.get("impedanceValue"),
       ]);
     }
+
     return impedanceRanges;
   } catch (error) {
     consoleLog.error(error.message);
@@ -174,6 +190,7 @@ exports.getImpedanceRanges = async (form = true) => {
 };
 
 /*
+ * @desc add a new impedance range
  * @param {string} value - new impedance range value
  * @returns {Object} - bookshelf impedance range object
  */
@@ -196,7 +213,7 @@ exports.addImpedanceRange = async (value) => {
   }
 };
 
-//product
+//product schema
 const productSchema = yup.object().shape({
   name: yup.string().required("Product name is required"),
   description: yup.string().required("Product description is required"),
@@ -214,6 +231,8 @@ const productSchema = yup.object().shape({
 });
 
 /*
+ * @desc add a new product
+ *
  * @param {object} newProduct - new product
  * @param {string} newProduct.name - name of the new product
  * @param {string} newProduct.description - description of the new product
@@ -255,8 +274,6 @@ exports.addProduct = async (newProduct) => {
   }
 };
 
-// product query schema
-
 // helper for yup transform function
 // code from https://github.com/jquense/yup/issues/298#issuecomment-543791550
 function emptyStringToNull(value, originalValue) {
@@ -266,6 +283,7 @@ function emptyStringToNull(value, originalValue) {
   return value;
 }
 
+// product query schema
 const productQuerySchema = yup.object().shape({
   userId: yup.number().integer().nullable().transform(emptyStringToNull),
   name: yup.string(),
@@ -281,6 +299,8 @@ const productQuerySchema = yup.object().shape({
 });
 
 /*
+ * @desc get products by query
+ *
  * @param {object} query - query to filter products
  * @param {string} [query.userId] - id of the user of the new product
  * @param {string} [query.name] - name of the new product
@@ -346,6 +366,7 @@ exports.getProducts = async (query) => {
       ],
       require: false,
     });
+
     return products;
   } catch (error) {
     consoleLog.error(error.message);
@@ -354,6 +375,7 @@ exports.getProducts = async (query) => {
 };
 
 /*
+ * @desc get product by id
  * @param {number} id - id of the product
  * @returns {Object} - bookshelf product object
  */
@@ -371,6 +393,7 @@ exports.getProductById = async (id) => {
       ],
       require: false,
     });
+
     return product;
   } catch (error) {
     consoleLog.error(error.message);
@@ -379,13 +402,17 @@ exports.getProductById = async (id) => {
 };
 
 /*
+ * @desc delete product by id
  * @param {number} id - id of the product
  * @returns {Boolean} - true if product is deleted
  */
 exports.deleteProductById = async (id) => {
   try {
+    await yup.number().integer().validate(id);
+
     const product = await this.getProductById(id);
     await product.destroy();
+
     return true;
   } catch (error) {
     consoleLog.error(error.message);
@@ -394,9 +421,12 @@ exports.deleteProductById = async (id) => {
 };
 
 /*
+ * @desc add new product image
+ *
  * @param {number} productId - id of the product
  * @param {string} imageUrl - url of the image
  * @param {string} imageThumbnailUrl - url of the thumbnail
+ *
  * @return {Boolean} - true if image is added
  */
 exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
@@ -427,15 +457,19 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
 };
 
 /*
+ * @desc edit product
  * @param {number} id - id of the product
  * @param {object} productData - data of the product as defined in the schema
  * @returns {Object} - bookshelf product object
  */
 exports.editProductById = async (id, productData) => {
   try {
+    await yup.number().integer().validate(id);
     await productSchema.validate(productData);
+
     const product = await this.getProductById(id);
     await product.save(productData, { method: "update" });
+
     return product;
   } catch (error) {
     consoleLog.error(error.message);
@@ -443,7 +477,7 @@ exports.editProductById = async (id, productData) => {
   }
 };
 
-//custom tags
+//custom tags schema
 const customTagSchema = yup.object().shape({
   tagName: yup.string().required("Tag name is required"),
   tagValue: yup.string().required("Tag value is required"),
@@ -451,14 +485,18 @@ const customTagSchema = yup.object().shape({
 });
 
 /*
+ * @desc get custom tag by id
  * @param {number} id - id of the tag
  * @returns {Object} - bookshelf tag object
  */
 exports.getCustomTagsById = async (id) => {
   try {
+    await yup.number().integer().validate(id);
+
     const customTag = await CustomTag.where({ id: id }).fetch({
       require: false,
     });
+
     return customTag;
   } catch (error) {
     consoleLog.error(error.message);
@@ -467,11 +505,14 @@ exports.getCustomTagsById = async (id) => {
 };
 
 /*
+ * @desc get custom tags by product id
  * @param {number} productId - id of the product
  * @returns {Object} - bookshelf tag object
  */
 exports.getCustomTagsByProductId = async (productId) => {
   try {
+    await yup.number().integer().validate(productId);
+
     const customTags = await ProductCustomTag.collection()
       .where({
         productId: productId,
@@ -479,6 +520,7 @@ exports.getCustomTagsByProductId = async (productId) => {
       .fetch({
         require: false,
       });
+
     return customTags;
   } catch (error) {
     consoleLog.error(error.message);
@@ -487,15 +529,17 @@ exports.getCustomTagsByProductId = async (productId) => {
 };
 
 /*
+ * @desc get full tag details by product id
  * @param {number} id - id of the product
  * @returns {Object} - bookshelf tag object
  */
 exports.getAllTagsDetailsByProductId = async (id) => {
   try {
+    await yup.number().integer().validate(id);
+
     const customTags = (await this.getCustomTagsByProductId(id)).pluck(
       "customTagId"
     );
-
     const tags = await CustomTag.query(function (queryBuilder) {
       queryBuilder.whereIn("id", customTags);
     }).fetchAll({
@@ -510,6 +554,7 @@ exports.getAllTagsDetailsByProductId = async (id) => {
 };
 
 /*
+ * @desc add new custom tag
  * @param {number} productId - id of the product
  * @param {Object} tag - data of the custom tag as defined in the schema
  * @returns {Object} - bookshelf tag object
@@ -535,14 +580,18 @@ exports.addCustomTag = async (productId, tag) => {
 };
 
 /*
+ * @desc delete custom tag by id
  * @param {number} tagId - id of the tag
  * @returns {Boolean} - true if tag is deleted
  */
 exports.deleteCustomTag = async (tagId) => {
   try {
+    await yup.number().integer().validate(tagId);
+
     const customTag = await this.getCustomTagsById(tagId);
     console.log(customTag);
     await customTag.destroy();
+
     return true;
   } catch (error) {
     consoleLog.error(error.message);

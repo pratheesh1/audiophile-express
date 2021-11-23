@@ -5,6 +5,7 @@ const {
   addBlacklistedToken,
   addUser,
 } = require("../../repositories/user.repositories");
+const { createCart } = require("../../repositories/cart.repositories");
 
 //login
 exports.login = async (req, res) => {
@@ -83,13 +84,15 @@ exports.register = async (req, res) => {
       userTypeId: 3,
     });
     if (user) {
+      const userId = user.get("id");
+      createCart(userId);
       const accessToken = generateToken(
-        { email: email, id: user.get("id") },
+        { email: email, id: userId },
         process.env.JWT_ACCESS_TOKEN,
         "1hr"
       );
       const refreshToken = generateToken(
-        { email: email, id: user.get("id") },
+        { email: email, id: userId },
         process.env.JWT_REFRESH_TOKEN,
         "7d"
       );

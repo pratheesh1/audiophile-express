@@ -1,6 +1,7 @@
 const { consoleLog } = require("../signale.config");
 const yup = require("yup");
 const { getHashedPassword, generateToken, verifyToken } = require("../utils");
+
 //import models
 const {
   User,
@@ -10,18 +11,21 @@ const {
   BlacklistedToken,
 } = require("../models");
 
-//get user by email
 /*
+ ** @desc get user by email
  ** @param {string} email
  ** @returns {Object} user - bookshelf user object
  */
 exports.getUserByEmail = async (email) => {
   try {
+    await yup.string().email().required().validate(email);
+
     let user = await User.where({
       email,
     }).fetch({
       require: false,
     });
+
     return user;
   } catch (error) {
     consoleLog.error(error);
@@ -29,8 +33,8 @@ exports.getUserByEmail = async (email) => {
   }
 };
 
-//validate login
 /*
+ ** @desc validate login
  ** @param {string} email
  ** @param {string} password
  **
@@ -58,12 +62,22 @@ exports.getUser = async (email, password) => {
   }
 };
 
-//add new user
+//user schema
+const userSchema = yup.object().shape({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  userTypeId: yup.number().required(),
+});
+
 /*
+ ** @desc add new user
  ** @param {Object} data
  ** @param {string} data.email
  ** @param {string} data.password
  ** @returns {Object}
+ **
  ** @returns {string} return.token  - token for user
  ** @returns {Object} return.user  - bookshelf user object
  */
@@ -72,13 +86,6 @@ exports.addUser = async (data) => {
     if (await this.getUserByEmail(data.email)) {
       return false;
     }
-    const userSchema = yup.object().shape({
-      firstName: yup.string().required(),
-      lastName: yup.string().required(),
-      email: yup.string().email().required(),
-      password: yup.string().required(),
-      userTypeId: yup.number().required(),
-    });
 
     await userSchema.validate(data, { abortEarly: false });
     const user = new User({
@@ -86,6 +93,7 @@ exports.addUser = async (data) => {
       password: getHashedPassword(data.password),
     });
     await user.save();
+
     const token = generateToken(
       {
         email: user.get("email"),
@@ -99,6 +107,7 @@ exports.addUser = async (data) => {
       createdAt: new Date(),
     });
     emailToken.save();
+
     return { user, token: token };
   } catch (error) {
     consoleLog.error(error.message);
@@ -106,13 +115,15 @@ exports.addUser = async (data) => {
   }
 };
 
-//verify user email
 /*
+ ** @desc verify user email
  ** @param {string} token
  ** @return {boolean} true - if token is valid
  */
 exports.verifyEmail = async (token) => {
   try {
+    await yup.string().required().validate(token);
+
     const emailToken = await EmailValidator.where({
       validator: token,
     }).fetch({ require: false });
@@ -137,13 +148,15 @@ exports.verifyEmail = async (token) => {
   }
 };
 
-//get token by name
 /*
+ ** @desc get token by name
  ** @param {string} token
  ** @return {boolean} true - if token is in database
  */
 exports.checkIfBlacklisted = async (jwtToken) => {
   try {
+    await yup.string().required().validate(jwtToken);
+
     const listedToken = await BlacklistedToken.where({
       token: jwtToken,
     }).fetch({ require: false });
@@ -157,13 +170,15 @@ exports.checkIfBlacklisted = async (jwtToken) => {
   }
 };
 
-//add token to blacklist
 /*
+ ** @desc add token to blacklist
  ** @param {string} token
  ** @return {boolean} true - if token is added to database
  */
 exports.addBlacklistedToken = async (jwtToken) => {
   try {
+    await yup.string().required().validate(jwtToken);
+
     const tokenToAdd = new BlacklistedToken({
       token: jwtToken,
     });

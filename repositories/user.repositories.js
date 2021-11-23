@@ -2,7 +2,13 @@ const { consoleLog } = require("../signale.config");
 const yup = require("yup");
 const { getHashedPassword, generateToken, verifyToken } = require("../utils");
 //import models
-const { User, EmailValidator, UserType, Address } = require("../models");
+const {
+  User,
+  EmailValidator,
+  UserType,
+  Address,
+  BlacklistedToken,
+} = require("../models");
 
 //get user by email
 /*
@@ -125,6 +131,44 @@ exports.verifyEmail = async (token) => {
     }
     // emailToken?.destroy();
     return false;
+  } catch (error) {
+    consoleLog.error(error);
+    throw error;
+  }
+};
+
+//get token by name
+/*
+ ** @param {string} token
+ ** @return {boolean} true - if token is in database
+ */
+exports.checkIfBlacklisted = async (jwtToken) => {
+  try {
+    const listedToken = await BlacklistedToken.where({
+      token: jwtToken,
+    }).fetch({ require: false });
+    if (listedToken) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    consoleLog.error(error);
+    throw error;
+  }
+};
+
+//add token to blacklist
+/*
+ ** @param {string} token
+ ** @return {boolean} true - if token is added to database
+ */
+exports.addBlacklistedToken = async (jwtToken) => {
+  try {
+    const tokenToAdd = new BlacklistedToken({
+      token: jwtToken,
+    });
+    await tokenToAdd.save();
+    return true;
   } catch (error) {
     consoleLog.error(error);
     throw error;

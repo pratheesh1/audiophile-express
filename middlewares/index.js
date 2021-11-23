@@ -73,10 +73,11 @@ exports.isAuthenticated = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.JWT_API_ACCESS_TOKEN, (err, user) => {
+    jwt.verify(token, process.env.JWT_ACCESS_TOKEN, (err, user) => {
       if (err) {
         res.sendStatus(403);
       } else {
+        // { user: { id: 2, email: 'john@gemail.com' } }
         req.user = user;
         next();
       }

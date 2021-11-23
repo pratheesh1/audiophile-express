@@ -256,40 +256,24 @@ exports.addProduct = async (newProduct) => {
 };
 
 // product query schema
+
+// helper for yup transform function
+// code from https://github.com/jquense/yup/issues/298#issuecomment-543791550
+function emptyStringToNull(value, originalValue) {
+  if (typeof originalValue === "string" && originalValue === "") {
+    return null;
+  }
+  return value;
+}
+
 const productQuerySchema = yup.object().shape({
-  userId: yup.string().test("check", "Stock min must be a number", (value) => {
-    if (![null, undefined, "", NaN].includes(value)) {
-      yup.number().min(0).validate(value);
-    }
-    return true;
-  }),
+  userId: yup.number().integer().nullable().transform(emptyStringToNull),
   name: yup.string(),
   brand: yup.array().of(yup.number()).nullable(),
   category: yup.array().of(yup.number()).nullable(),
-  cost_min: yup
-    .string()
-    .test("check", "Stock min must be a number", (value) => {
-      if (![null, undefined, "", NaN].includes(value)) {
-        yup.number().min(0).validate(value);
-      }
-      return true;
-    }),
-  cost_max: yup
-    .string()
-    .test("check", "Stock min must be a number", (value) => {
-      if (![null, undefined, "", NaN].includes(value)) {
-        yup.number().min(0).validate(value);
-      }
-      return true;
-    }),
-  stock_min: yup
-    .string()
-    .test("check", "Stock min must be a number", (value) => {
-      if (![null, undefined, "", NaN].includes(value)) {
-        yup.number().min(0).validate(value);
-      }
-      return true;
-    }),
+  cost_min: yup.number().integer().nullable().transform(emptyStringToNull),
+  cost_max: yup.number().integer().nullable().transform(emptyStringToNull),
+  stock_min: yup.number().integer().nullable().transform(emptyStringToNull),
   sku: yup.string(),
   bluetooth: yup.array().of(yup.number()).nullable(),
   impedanceRangeId: yup.array().of(yup.number()).nullable(),

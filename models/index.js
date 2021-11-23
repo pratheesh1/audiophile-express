@@ -233,6 +233,10 @@ const Image = bookshelf.model("Image", {
   },
 });
 
+const BlacklistedToken = bookshelf.model("BlacklistedToken", {
+  tableName: "blacklisted_tokens",
+});
+
 module.exports = {
   Category,
   Brand,
@@ -253,4 +257,5 @@ module.exports = {
   ProductCustomTag,
   OrderItem,
   Image,
+  BlacklistedToken,
 };

@@ -5,6 +5,10 @@ const { getHashedPassword, generateToken, verifyToken } = require("../utils");
 const { User, EmailValidator, UserType, Address } = require("../models");
 
 //get user by email
+/*
+ ** @param {string} email
+ ** @returns {Object} user - bookshelf user object
+ */
 exports.getUserByEmail = async (email) => {
   try {
     let user = await User.where({
@@ -20,6 +24,10 @@ exports.getUserByEmail = async (email) => {
 };
 
 //validate login
+/*
+ ** @param {string} email
+ ** @param {string} password
+ */
 exports.getUser = async (email, password) => {
   try {
     await yup.string().email().required().validate(email);
@@ -42,6 +50,14 @@ exports.getUser = async (email, password) => {
 };
 
 //add new user
+/*
+ ** @param {Object} data
+ ** @param {string} data.email
+ ** @param {string} data.password
+ ** @returns {Object}
+ ** @returns {string} return.token  - token for user
+ ** @returns {Object} return.user  - bookshelf user object
+ */
 exports.addUser = async (data) => {
   try {
     if (await this.getUserByEmail(data.email)) {
@@ -82,6 +98,10 @@ exports.addUser = async (data) => {
 };
 
 //verify user email
+/*
+ ** @param {string} token
+ ** @return {boolean} true - if token is valid
+ */
 exports.verifyEmail = async (token) => {
   try {
     const emailToken = await EmailValidator.where({

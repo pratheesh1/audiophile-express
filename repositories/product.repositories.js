@@ -15,6 +15,11 @@ const {
 } = require("../models");
 
 //category
+/*
+ * @param {boolean} [form = false]
+ * @returns {array} - array of categories if form is true
+ * @returns {Object} - bookshelf category object if form is false
+ */
 exports.getCategories = async (form = false) => {
   try {
     const categories = await Category.collection().orderBy("name").fetch();
@@ -31,6 +36,10 @@ exports.getCategories = async (form = false) => {
   }
 };
 
+/*
+ * @param {string} name - name of the new category
+ * @returns {Object} - bookshelf category object
+ */
 exports.addCategory = async (name) => {
   try {
     await yup
@@ -49,6 +58,11 @@ exports.addCategory = async (name) => {
 };
 
 //brand
+/*
+ * @param {boolean} [form = false] - if true returns an array of arrays
+ * @returns {array} - array of brands if form is true
+ * @returns {Object} - bookshelf brand object if form is false
+ */
 exports.getBrands = async (form = false) => {
   try {
     const brands = await Brand.collection().orderBy("brandName").fetch();
@@ -62,6 +76,11 @@ exports.getBrands = async (form = false) => {
   }
 };
 
+/*
+ * @param {string} brandName - name of the new brand
+ * @param {string} url - url of the new brand image
+ * @returns {Object} - bookshelf brand object
+ */
 exports.addBrand = async (brandName, url) => {
   try {
     await yup
@@ -84,6 +103,11 @@ exports.addBrand = async (brandName, url) => {
 };
 
 //frequency response
+/*
+ * @param {boolean} [form = false] - if true returns an array of arrays
+ * @returns {array} - array of frequency responses if form is true
+ * @returns {Object} - bookshelf frequency response object if form is false
+ */
 exports.getFrequencyResponses = async (form = false) => {
   try {
     const frequencyResponses = await FrequencyResponse.collection()
@@ -102,6 +126,10 @@ exports.getFrequencyResponses = async (form = false) => {
   }
 };
 
+/*
+ * @param {string} frequencyResponse - new frequency response
+ * @returns {Object} - bookshelf frequency response object
+ */
 exports.addFrequencyResponse = async (frequencyResponse) => {
   try {
     await yup
@@ -122,6 +150,11 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
 };
 
 //impedance range
+/*
+ * @param {boolean} [form = false] - if true returns an array of arrays
+ * @returns {array} - array of impedance ranges if form is true
+ * @returns {Object} - bookshelf impedance range object if form is false
+ */
 exports.getImpedanceRanges = async (form = true) => {
   try {
     const impedanceRanges = await ImpedanceRange.collection()
@@ -140,6 +173,10 @@ exports.getImpedanceRanges = async (form = true) => {
   }
 };
 
+/*
+ * @param {string} value - new impedance range value
+ * @returns {Object} - bookshelf impedance range object
+ */
 exports.addImpedanceRange = async (value) => {
   try {
     await yup
@@ -176,6 +213,24 @@ const productSchema = yup.object().shape({
   impedanceRangeId: yup.number("Product impedance range is not valid"),
 });
 
+/*
+ * @param {object} newProduct - new product
+ * @param {string} newProduct.name - name of the new product
+ * @param {string} newProduct.description - description of the new product
+ * @param {number} newProduct.baseCost - base cost of the new product
+ * @param {number} [newProduct.brandId] - id of the brand of the new product
+ * @param {number} newProduct.categoryId - id of the category of the new product
+ * @param {string} [newProduct.imageUrl] - url of the image of the new product
+ * @param {string} [newProduct.imageThumbnailUrl] - url of the thumbnail of the new product
+ * @param {number} newProduct.stock - stock of the new product
+ * @param {number} newProduct.userId - id of the user of the new product
+ * @param {string} [newProduct.sku] - sku of the new product
+ * @param {number} [newProduct.frequencyResponseId] - id of the frequency response of the new product
+ * @param {number} [newProduct.bluetooth] - bluetooth of the new product
+ * @param {number} [newProduct.impedanceRangeId] - id of the impedance range of the new product
+ *
+ * @returns {Object} - bookshelf product object
+ */
 exports.addProduct = async (newProduct) => {
   try {
     await productSchema.validate(newProduct);
@@ -241,6 +296,22 @@ const productQuerySchema = yup.object().shape({
   frequencyResponseId: yup.array().of(yup.number()).nullable(),
 });
 
+/*
+ * @param {object} query - query to filter products
+ * @param {string} [query.userId] - id of the user of the new product
+ * @param {string} [query.name] - name of the new product
+ * @param {string} [query.brand] - id of the brand of the new product
+ * @param {string} [query.category] - id of the category of the new product
+ * @param {string} [query.cost_min] - cost min of the new product
+ * @param {string} [query.cost_max] - cost max of the new product
+ * @param {string} [query.stock_min] - stock min of the new product
+ * @param {string} [query.sku] - sku of the new product
+ * @param {string} [query.bluetooth] - bluetooth of the new product
+ * @param {string} [query.impedanceRangeId] - id of the impedance range of the new product
+ * @param {string} [query.frequencyResponseId] - id of the frequency response of the new product
+ *
+ * @returns {Object} - bookshelf product object
+ */
 exports.getProducts = async (query) => {
   try {
     await productQuerySchema.validate(query);
@@ -298,6 +369,10 @@ exports.getProducts = async (query) => {
   }
 };
 
+/*
+ * @param {number} id - id of the product
+ * @returns {Object} - bookshelf product object
+ */
 exports.getProductById = async (id) => {
   try {
     const product = await Product.where({ id: id }).fetch({
@@ -319,6 +394,10 @@ exports.getProductById = async (id) => {
   }
 };
 
+/*
+ * @param {number} id - id of the product
+ * @returns {Boolean} - true if product is deleted
+ */
 exports.deleteProductById = async (id) => {
   try {
     const product = await this.getProductById(id);
@@ -330,6 +409,12 @@ exports.deleteProductById = async (id) => {
   }
 };
 
+/*
+ * @param {number} productId - id of the product
+ * @param {string} imageUrl - url of the image
+ * @param {string} imageThumbnailUrl - url of the thumbnail
+ * @return {Boolean} - true if image is added
+ */
 exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
   try {
     await yup
@@ -357,6 +442,11 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
   }
 };
 
+/*
+ * @param {number} id - id of the product
+ * @param {object} productData - data of the product as defined in the schema
+ * @returns {Object} - bookshelf product object
+ */
 exports.editProductById = async (id, productData) => {
   try {
     await productSchema.validate(productData);
@@ -376,6 +466,10 @@ const customTagSchema = yup.object().shape({
   tagDescription: yup.string(),
 });
 
+/*
+ * @param {number} id - id of the tag
+ * @returns {Object} - bookshelf tag object
+ */
 exports.getCustomTagsById = async (id) => {
   try {
     const customTag = await CustomTag.where({ id: id }).fetch({
@@ -388,6 +482,10 @@ exports.getCustomTagsById = async (id) => {
   }
 };
 
+/*
+ * @param {number} productId - id of the product
+ * @returns {Object} - bookshelf tag object
+ */
 exports.getCustomTagsByProductId = async (productId) => {
   try {
     const customTags = await ProductCustomTag.collection()
@@ -404,6 +502,10 @@ exports.getCustomTagsByProductId = async (productId) => {
   }
 };
 
+/*
+ * @param {number} id - id of the product
+ * @returns {Object} - bookshelf tag object
+ */
 exports.getAllTagsDetailsByProductId = async (id) => {
   try {
     const customTags = (await this.getCustomTagsByProductId(id)).pluck(
@@ -423,6 +525,11 @@ exports.getAllTagsDetailsByProductId = async (id) => {
   }
 };
 
+/*
+ * @param {number} productId - id of the product
+ * @param {Object} tag - data of the custom tag as defined in the schema
+ * @returns {Object} - bookshelf tag object
+ */
 exports.addCustomTag = async (productId, tag) => {
   try {
     await customTagSchema.validate(tag);
@@ -443,6 +550,10 @@ exports.addCustomTag = async (productId, tag) => {
   }
 };
 
+/*
+ * @param {number} tagId - id of the tag
+ * @returns {Boolean} - true if tag is deleted
+ */
 exports.deleteCustomTag = async (tagId) => {
   try {
     const customTag = await this.getCustomTagsById(tagId);

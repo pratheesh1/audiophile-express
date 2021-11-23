@@ -88,7 +88,6 @@ exports.getLogout = (req, res) => {
 exports.getVerifyEmail = async (req, res) => {
   const { token } = req.params;
   const user = await verifyEmail(token);
-  console.log(user);
   if (user) {
     req.flash("success", "Your email has been verified!");
     res.redirect("/users/login");

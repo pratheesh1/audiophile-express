@@ -20,7 +20,7 @@ Home
               <th class="p-3 text-left font-normal">Image</th>
               <th class="p-3 text-left font-normal">Brand</th>
               <th class="p-3 text-left font-normal">Category</th>
-              <th class="p-3 text-left font-normal">Tags</th>
+              <th class="p-3 text-left font-normal">Custom Tag</th>
               <th class="p-3 text-left font-normal">Stock</th>
               <th class="p-3 text-left font-normal">View</th>
               <th class="p-3 text-left font-normal">Edit</th>
@@ -48,16 +48,11 @@ Home
               <td class="border hover:bg-gray-100 p-3">{{this.brand.brandName}}</td>
               <td class="border hover:bg-gray-100 p-3">{{this.category.name}}</td>
               <td class="border hover:bg-gray-100 p-3">
-                <ul>
-                  {{#each this.tags}}
-                  <span
-                    class="inline-flex items-center justify-center px-2 py-1 my-1 text-xs font-bold leading-none text-indigo-100 bg-indigo-700 rounded-full">
-                    <li>
-                      {{this.name}}
-                    </li>
-                  </span>
-                  {{/each}}
-                </ul>
+                {{#if this.customTag.length}}
+                {{this.customTag.length}} tag(s)
+                {{else}}
+                No Tags
+                {{/if}}
               </td>
               <td class="border hover:bg-gray-100 p-3">{{this.stock}}</td>
               <td class="border bg-yellow-200 hover:bg-green-400 cursor-pointer p-3">

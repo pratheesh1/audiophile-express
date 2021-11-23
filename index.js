@@ -17,6 +17,7 @@ const {
   errorHandler,
   csrfMiddleWare,
   handleCsrfErr,
+  isLoggedIn,
 } = require("./middlewares");
 
 // Initialize Express
@@ -90,7 +91,7 @@ const cloudinaryRoutes = require("./routes/cloudinary.routes");
 async function main() {
   //http routes
   app.use("/users", httpRoutes.users);
-  app.use("/products", httpRoutes.products);
+  app.use("/products", isLoggedIn, httpRoutes.products);
 
   //api routes
   app.all("/api/*", express.json());

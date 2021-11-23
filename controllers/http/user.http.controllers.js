@@ -1,7 +1,11 @@
 //import form
 const { tailwindForm, createRegistrationForm } = require("../../forms");
 //import dal
-const { getUser, addUser } = require("../../repositories/user.repositories");
+const {
+  getUser,
+  addUser,
+  verifyEmail,
+} = require("../../repositories/user.repositories");
 const { sendConfirmationEmail } = require("../../utils/nodemailer.config");
 
 //get login form
@@ -57,6 +61,10 @@ exports.postSignupForm = (req, res) => {
           newUser.user.get("email"),
           newUser.token
         );
+        req.flash(
+          "success",
+          "Your account has been created! Please check your email to verify your account!"
+        );
         res.redirect(req.session.urlToGoBack || "/users/profile");
       }
     },
@@ -73,5 +81,18 @@ exports.getLogout = (req, res) => {
   req.session.user = null;
   res.locals.user = null;
   req.flash("success", "You have successfully logged out!");
+  res.redirect("/users/login");
+};
+
+//user email confirmation
+exports.getVerifyEmail = async (req, res) => {
+  const { token } = req.params;
+  const user = await verifyEmail(token);
+  console.log(user);
+  if (user) {
+    req.flash("success", "Your email has been verified!");
+    res.redirect("/users/login");
+  }
+  req.flash("error", "This link is invalid or has expired!");
   res.redirect("/users/login");
 };

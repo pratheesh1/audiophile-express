@@ -1,5 +1,6 @@
 const { consoleLog } = require("../signale.config");
 const csrf = require("csurf");
+const jwt = require("jsonwebtoken");
 
 //middleware to handle errors
 exports.errorHandler = (err, req, res, next) => {
@@ -60,7 +61,25 @@ exports.isLoggedIn = (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
-    req.flash("info", "Please login to continue");
-    res.redirect("/login");
+    req.flash("info", "Please login to access this page.");
+    res.redirect("/users/login");
+  }
+};
+
+// check if user is authenticated
+exports.isAuthenticated = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.JWT_API_USER_TOKEN, (err, user) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        req.user = user;
+        next();
+      }
+    });
+  } else {
+    res.sendStatus(401);
   }
 };

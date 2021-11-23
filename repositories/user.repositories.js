@@ -80,3 +80,30 @@ exports.addUser = async (data) => {
     throw error;
   }
 };
+
+//verify user email
+exports.verifyEmail = async (token) => {
+  try {
+    const emailToken = await EmailValidator.where({
+      validator: token,
+    }).fetch({ require: false });
+    if (emailToken) {
+      const user = await User.where({
+        id: emailToken.get("userId"),
+      }).fetch({ require: false });
+      if (user) {
+        if (!user.get("isVerified")) {
+          user.set("isVerified", 1);
+          await user.save();
+          emailToken.destroy();
+          return true;
+        }
+      }
+    }
+    // emailToken?.destroy();
+    return false;
+  } catch (error) {
+    consoleLog.error(error);
+    throw error;
+  }
+};

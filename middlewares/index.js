@@ -54,3 +54,13 @@ exports.handleCsrfErr = (err, req, res, next) => {
     next();
   }
 };
+
+//check if user is logged in
+exports.isLoggedIn = (req, res, next) => {
+  if (req.session.user) {
+    next();
+  } else {
+    req.flash("info", "Please login to continue");
+    res.redirect("/login");
+  }
+};

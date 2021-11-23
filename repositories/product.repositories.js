@@ -280,6 +280,18 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
   }
 };
 
+exports.editProductById = async (id, productData) => {
+  try {
+    await productSchema.validate(productData);
+    const product = await this.getProductById(id);
+    await product.save(productData, { method: "update" });
+    return product;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
 //custom tags
 const customTagSchema = yup.object().shape({
   tagName: yup.string().required("Tag name is required"),

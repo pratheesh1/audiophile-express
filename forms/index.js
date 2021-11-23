@@ -264,6 +264,124 @@ const createAddProductForm = (
   });
 };
 
+const createEditProductForm = (
+  brands,
+  categories,
+  frequencyResponses,
+  impedanceRange,
+  width = "w-full"
+) => {
+  const labelClasses = ["text-gray-600 m-2 text-lg font-serif dark:text-white"];
+  return forms.create({
+    name: fields.string({
+      label: "Product Name:*",
+      required: true,
+      validators: [validators.required("Product name is required!")],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    description: fields.string({
+      label: "Description:*",
+      required: true,
+      validators: [validators.required("Description is required!")],
+      widget: widgets.textarea({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    baseCost: fields.string({
+      label: "Base Cost:*",
+      required: true,
+      validators: [
+        validators.required("Base cost is required!"),
+        validators.integer("Base cost must be a number!"),
+      ],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    brandId: fields.string({
+      label: "Brand:*",
+      required: true,
+      validators: [validators.required("Brand is required!")],
+      widget: widgets.select({ classes: [width] }),
+      errorAfterField: true,
+      choices: brands,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    categoryId: fields.string({
+      label: "Category:*",
+      required: true,
+      validators: [validators.required("Category is required!")],
+      widget: widgets.select({ classes: [width] }),
+      errorAfterField: true,
+      choices: categories,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    stock: fields.string({
+      label: "Stock:*",
+      required: true,
+      validators: [
+        validators.required("Stock is required!"),
+        validators.integer("Stock must be a number!"),
+      ],
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    sku: fields.string({
+      label: "SKU:",
+      widget: widgets.text({ classes: [width] }),
+      errorAfterField: true,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    frequencyResponseId: fields.string({
+      label: "Frequency Response:",
+      widget: widgets.select({ classes: [width] }),
+      errorAfterField: true,
+      choices: frequencyResponses,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    bluetooth: fields.string({
+      label: "Bluetooth:",
+      widget: widgets.multipleRadio({ classes: ["m-3"] }),
+      errorAfterField: true,
+      choices: [
+        [1, "Yes"],
+        [0, "No"],
+      ],
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+    impedanceRangeId: fields.string({
+      label: "Impedance Range:",
+      widget: widgets.select({ classes: [width] }),
+      errorAfterField: true,
+      choices: impedanceRange,
+      cssClasses: {
+        label: labelClasses,
+      },
+    }),
+  });
+};
+
 const createAddTagsForm = (width = "w-full") => {
   const labelClasses = ["text-gray-600 m-2 text-lg font-serif dark:text-white"];
   return forms.create({
@@ -301,6 +419,7 @@ const createAddTagsForm = (width = "w-full") => {
 module.exports = {
   createRegistrationForm,
   createAddProductForm,
+  createEditProductForm,
   createAddTagsForm,
   tailwindForm,
 };

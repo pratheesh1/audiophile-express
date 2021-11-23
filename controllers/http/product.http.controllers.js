@@ -3,6 +3,7 @@ const {
   tailwindForm,
   createAddProductForm,
   createAddTagsForm,
+  createEditProductForm,
 } = require("../../forms");
 //import dal
 const {
@@ -14,6 +15,7 @@ const {
   getProducts,
   getProductById,
   deleteProductById,
+  editProductById,
   addImage,
   addCustomTag,
   getAllTagsDetailsByProductId,
@@ -73,6 +75,7 @@ exports.postAddProduct = async (req, res) => {
       }
       formData["userId"] = req.session.user.id;
       const product = await addProduct(formData);
+
       req.flash("success", "New product listing added successfully.");
       res.redirect(`/products/add/image/${product.get("id")}`);
     },
@@ -96,6 +99,7 @@ exports.getDeleteProduct = async (req, res) => {
 //home page
 exports.getHome = async (req, res) => {
   const products = await getProducts();
+  console.log(products.toJSON()[1].image);
   res.render("products/home", {
     products: products.toJSON(),
   });
@@ -115,7 +119,7 @@ exports.getAddImage = async (req, res) => {
     product: product,
     combinedUrl: images.map((image) => image.imageUrl).join("<new_image>"),
     combinedThumbnailUrl: images
-      .map((image) => image.thumbnailUrl)
+      .map((image) => image.imageThumbnailUrl)
       .join("<new_image>"),
   });
 };
@@ -160,6 +164,7 @@ exports.postAddTag = async (req, res) => {
         }
       }
       const tag = await addCustomTag(req.params.id, formData);
+
       req.flash("success", "Tag added successfully!");
       res.redirect(`/products/add/tag/${req.params.id}`);
     },
@@ -181,4 +186,60 @@ exports.getDeleteTag = async (req, res) => {
     req.flash("success", "Tag deleted successfully!");
     res.redirect(`/products/add/tag/${req.params.productId}`);
   }
+};
+
+//get edit product
+exports.getEditProduct = async (req, res) => {
+  const { brands, categories, frequencyResponses, impedanceRanges } =
+    await getFormSelectionFields();
+  const form = createEditProductForm(
+    brands,
+    categories,
+    frequencyResponses,
+    impedanceRanges
+  );
+  const product = await getProductById(req.params.id);
+
+  for (field in form.fields) {
+    form.fields[field].value = product.get(field);
+  }
+  res.render("products/edit", {
+    form: form.toHTML(tailwindForm),
+    product: product,
+  });
+};
+
+//post edit product
+exports.postEditProduct = async (req, res) => {
+  const { brands, categories, frequencyResponses, impedanceRanges } =
+    await getFormSelectionFields();
+  const form = createEditProductForm(
+    brands,
+    categories,
+    frequencyResponses,
+    impedanceRanges
+  );
+  const product = await getProductById(req.params.id);
+
+  form.handle(req, {
+    success: async (form) => {
+      var formData = {};
+      for (var key in form.data) {
+        if (form.data[key]) {
+          formData[key] = form.data[key];
+        }
+      }
+      formData["userId"] = req.session.user.id;
+      const product = await editProductById(req.params.id, formData);
+
+      req.flash("success", "Product edited successfully!");
+      res.redirect(`/products/add/image/${req.params.id}`);
+    },
+    error: (form) => {
+      res.render("products/edit", {
+        form: form.toHTML(tailwindForm),
+        product: product,
+      });
+    },
+  });
 };

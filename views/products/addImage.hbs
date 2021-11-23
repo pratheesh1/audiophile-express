@@ -148,9 +148,9 @@ Add Product Details
 
                 //update form value
                 var imageUrl = document.querySelector('#imageUrl');
-                var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
+                var imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
                 imageUrl.value = imageUrl.value ? `${imageUrl.value}<new_image>${result.info.url}`.toString() : result.info.url.toString();
-                thumbnailUrl.value = thumbnailUrl.value ? `${thumbnailUrl.value}<new_image>${result.info.thumbnail_url}`.toString() : result.info.thumbnail_url.toString();
+                imageThumbnailUrl.value = imageThumbnailUrl.value ? `${imageThumbnailUrl.value}<new_image>${result.info.thumbnail_url}`.toString() : result.info.thumbnail_url.toString();
 
                 //add image to the image list
                 document.querySelector('#image-list').innerHTML = ""
@@ -188,14 +188,14 @@ Add Product Details
     //remove image from list
     function removeImage(index) {
         var imageUrl = document.querySelector('#imageUrl');
-        var thumbnailUrl = document.querySelector('#imageThumbnailUrl');
+        var imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
         var imageUrlArray = imageUrl.value.split('<new_image>');
-        var thumbnailUrlArray = thumbnailUrl.value.split('<new_image>');
+        var thumbnailUrlArray = imageThumbnailUrl.value.split('<new_image>');
 
         imageUrl.value = imageUrlArray.filter(function (el, i) {
             return i != index;
         }).join('<new_image>');
-        thumbnailUrl.value = thumbnailUrlArray.filter(function (el, i) {
+        imageThumbnailUrl.value = thumbnailUrlArray.filter(function (el, i) {
             return i != index;
         }).join('<new_image>');
         document.querySelector('#image-list').children[index].remove();

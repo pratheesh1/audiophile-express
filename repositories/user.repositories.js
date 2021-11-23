@@ -27,6 +27,9 @@ exports.getUserByEmail = async (email) => {
 /*
  ** @param {string} email
  ** @param {string} password
+ **
+ ** @returns {Object} userData - all user data except password if login is valid
+ ** @returns {boolean} false - if login is invalid
  */
 exports.getUser = async (email, password) => {
   try {

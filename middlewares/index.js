@@ -7,14 +7,16 @@ exports.errorHandler = (err, req, res, next) => {
   if (err) {
     consoleLog.error(err);
     if (req.url.includes("/api")) {
-      handleApiError(err, req, res);
+      handleApiError(err, req, res, next);
+      return;
     }
     res.status(500).render("500/500");
+    return;
   }
   res.status(404).render("404/404");
 };
 
-function handleApiError(err, req, res) {
+function handleApiError(err, req, res, next) {
   if (err.status === 400) {
     res.status(400).json({
       error: err.message,
@@ -71,7 +73,7 @@ exports.isAuthenticated = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.JWT_API_USER_TOKEN, (err, user) => {
+    jwt.verify(token, process.env.JWT_API_ACCESS_TOKEN, (err, user) => {
       if (err) {
         res.sendStatus(403);
       } else {

@@ -9,7 +9,6 @@ exports.getCart = async (req, res, next) => {
     const cartItems = await cart.getCart();
     res.status(200).json(cartItems.toJSON());
   } catch (error) {
-    console.log(error);
     throw new apiError(error.message, 400);
   }
 };
@@ -21,7 +20,6 @@ exports.addToCart = async (req, res, next) => {
     const cartItems = await cart.addToCart(req.body);
     res.status(200).json(cartItems.toJSON());
   } catch (error) {
-    console.log(error);
     throw new apiError(error.message, 400);
   }
 };
@@ -33,7 +31,6 @@ exports.updateCartQuantity = async (req, res, next) => {
     const cartItems = await cart.updateQuantity(req.body);
     res.status(200).json(cartItems.toJSON());
   } catch (error) {
-    console.log(error);
     throw new apiError(error.message, 400);
   }
 };
@@ -45,7 +42,6 @@ exports.removeFromCart = async (req, res, next) => {
     const status = await cart.deleteCartItem(req.body);
     res.status(200).json(status);
   } catch (error) {
-    console.log(error);
     throw new apiError(error.message, 400);
   }
 };

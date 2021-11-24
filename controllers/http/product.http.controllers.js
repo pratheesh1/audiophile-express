@@ -68,8 +68,8 @@ exports.postAddProduct = async (req, res) => {
   );
   form.handle(req, {
     success: async (form) => {
-      var formData = {};
-      for (var key in form.data) {
+      let formData = {};
+      for (let key in form.data) {
         if (form.data[key]) {
           formData[key] = form.data[key];
         }
@@ -119,7 +119,7 @@ exports.getAllProducts = async (req, res) => {
       });
     },
     success: async (form) => {
-      var formData = {
+      let formData = {
         ...form.data,
         brand: form.data.brand ? form.data.brand.split(",") : null,
         category: form.data.category ? form.data.category.split(",") : null,
@@ -172,7 +172,7 @@ exports.getHome = async (req, res) => {
       });
     },
     success: async (form) => {
-      var formData = {
+      let formData = {
         userId: req.session.user.id,
         ...form.data,
         brand: form.data.brand ? form.data.brand.split(",") : null,
@@ -256,8 +256,8 @@ exports.postAddTag = async (req, res) => {
 
   form.handle(req, {
     success: async (form) => {
-      var formData = {};
-      for (var key in form.data) {
+      let formData = {};
+      for (let key in form.data) {
         if (form.data[key]) {
           formData[key] = form.data[key];
         }
@@ -322,8 +322,8 @@ exports.postEditProduct = async (req, res) => {
 
   form.handle(req, {
     success: async (form) => {
-      var formData = {};
-      for (var key in form.data) {
+      let formData = {};
+      for (let key in form.data) {
         if (form.data[key]) {
           formData[key] = form.data[key];
         }

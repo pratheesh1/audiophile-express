@@ -22,18 +22,15 @@ exports.createOrder = async (
 ) => {
   try {
     //validate params
-    await yup.number().validate(statusId);
     await yup.number().required().validate(addressId);
     await yup.number().required().validate(userId);
-    await yup.date().validate(timestamp);
-    await yup.string().validate(notes);
+    await yup.string().nullable().validate(notes);
 
-    const order = new Order.create({
+    const order = new Order({
       statusId: 1,
       userId: userId,
       addressId: addressId,
-      timestamp: timestamp,
-      notes: notes,
+      notes: notes ? notes : null,
     });
     await order.save();
 
@@ -44,42 +41,43 @@ exports.createOrder = async (
   }
 };
 
+//order item schema
+const orderItemSchema = yup.object().shape({
+  orderId: yup.number().required(),
+  productId: yup.number().required(),
+  productVariantId: yup.number().nullable(),
+  quantity: yup.number().required(),
+  cost: yup.number().required(),
+});
 /*
  * @desc create a new order item
  *
- * @param {number} orderId - order id
- * @param {number} productId - product id
- * @param {number} [productVariantId = null] - product variant id
- * @param {number} quantity - quantity
- * @param {number} cost - cost
+ * @param {object} orderItem - order item object
+ * @param {number} orderItem.orderId - order id
+ * @param {number} orderItem.productId - product id
+ * @param {number} [orderItem.productVariantId = null] - product variant id
+ * @param {number} orderItem.quantity - quantity
+ * @param {number} orderItem.cost - cost
  *
  * @returns {object} - bookshelf order item object
  */
-exports.createOrderItem = async (
-  orderId,
-  productId,
-  productVariantId = null,
-  quantity,
-  cost
-) => {
+exports.createOrderItem = async (orderItem) => {
   try {
     //validate params
-    await yup.number().required().validate(orderId);
-    await yup.number().required().validate(productId);
-    await yup.number().validate(productVariantId);
-    await yup.number().required().validate(quantity);
-    await yup.number().required().validate(cost);
+    await orderItemSchema.validate(orderItem);
 
-    const orderItem = new OrderItem.create({
-      orderId,
-      productId,
-      productVariantId,
-      quantity,
-      cost,
+    const item = new OrderItem({
+      orderId: orderItem.orderId,
+      productId: orderItem.productId,
+      productVariantId: orderItem.productVariantId
+        ? orderItem.productVariantId
+        : null,
+      quantity: orderItem.quantity,
+      cost: orderItem.cost,
     });
-    await orderItem.save();
+    await item.save();
 
-    return orderItem;
+    return item;
   } catch (error) {
     consoleLog.error(error);
     throw error;

@@ -210,7 +210,7 @@ const ProductCustomTag = bookshelf.model("ProductCustomTag", {
 
 //model table orders_items
 const OrderItem = bookshelf.model("OrderItem", {
-  tableName: "orders_items",
+  tableName: "order_items",
   order() {
     return this.belongsTo("Order", "orderId");
   },

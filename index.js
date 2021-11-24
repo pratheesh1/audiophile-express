@@ -87,9 +87,9 @@ const apiRoutes = {
   users: require("./routes/api/user.api.routes"),
   products: require("./routes/api/product.api.routes"),
   cart: require("./routes/api/cart.api.routes"),
+  checkout: require("./routes/api/checkout.api.routes"),
 };
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
-const { getMaxListeners } = require("process");
 
 //TODO: remove this after testing
 app.use((req, res, next) => {
@@ -111,6 +111,7 @@ async function main() {
   app.use("/api/users", apiRoutes.users);
   app.use("/api/products", apiRoutes.products);
   app.use("/api/cart", apiRoutes.cart);
+  app.use("/api/checkout", apiRoutes.checkout);
 
   //other routes
   app.use("/cloudinary", cloudinaryRoutes);

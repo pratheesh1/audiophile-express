@@ -157,7 +157,12 @@ exports.getCartItems = async (userId) => {
     const cart = await this.getCart(userId);
     const cartItems = await CartItem.where({ cartId: cart.get("id") }).fetchAll(
       {
-        withRelated: ["product", "productVariant"],
+        withRelated: [
+          "product",
+          "productVariant",
+          "product.image",
+          "productVariant.image",
+        ],
         require: false,
       }
     );

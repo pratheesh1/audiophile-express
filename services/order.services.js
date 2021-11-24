@@ -1,43 +1,40 @@
-const CartServices = require("cart.services");
+const CartServices = require("../services/cart.services");
 const {
   createOrder,
   createOrderItem,
 } = require("../repositories/order.repositories");
 
 class OrderServices extends CartServices {
-  constructor(userId, addressId, notes) {
+  constructor(userId) {
     super(userId);
-    this.addressId = addressId;
-    this.notes = notes;
   }
 
-  async checkOut() {
+  async checkOut(addressId, notes) {
     const cartItems = await this.getCart();
     const order = await createOrder(
       this.userId,
-      this.addressId,
-      Date.now(),
-      this.notes
+      addressId,
+      notes ? notes : null
     );
-    //TODO: check if product is available
 
-    const orderItems = await Promise.all(
+    await Promise.all(
       cartItems.map(async (cartItem) => {
-        const orderItem = await createOrderItem(
-          order.id,
-          cartItem.productId,
-          item.productVariantId ? item.productVariantId : null,
-          cartItem.quantity,
-          cartItem.originalPrice
-        );
-        this.deleteCartItem(
-          cartItem.id,
-          productVariantId ? productVariantId : null
-        );
-
-        //TODO: Send email to user
-        //TODO: decrease stock
-        return orderItem;
+        createOrderItem({
+          orderId: order.get("id"),
+          productId: cartItem.get("productId"),
+          productVariantId: cartItem.get("productVariantId")
+            ? cartItem.get("productVariantId")
+            : null,
+          quantity: cartItem.get("quantity"),
+          cost: cartItem.get("originalPrice"),
+        }).then(() => {
+          this.deleteCartItem({
+            productId: cartItem.get("productId"),
+            productVariantId: cartItem.get("productVariantId")
+              ? cartItem.get("productVariantId")
+              : null,
+          });
+        });
       })
     );
     return order;

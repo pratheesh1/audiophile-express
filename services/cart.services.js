@@ -40,11 +40,20 @@ class CartServices {
 
       //get cost of product
       const product = await getProductById(productId);
-      var originalPrice = product.get("baseCost");
+      if (!product) {
+        throw new this.apiError("Product not found", 400);
+      }
+      let originalPrice = product.get("baseCost");
 
       //get cost of product variant
       if (productVariantId) {
-        const variant = await getProductVariantsById(productVariantId);
+        const variant = await getProductVariantsById(
+          productVariantId,
+          productId
+        );
+        if (!variant) {
+          throw new this.apiError("Product variant not found", 400);
+        }
         originalPrice = variant.get("variantCost");
       }
 
@@ -133,6 +142,40 @@ class CartServices {
     try {
       const cartItems = await getCartItems(this.userId);
       return cartItems;
+    } catch (error) {
+      this.consoleLog.error(error);
+      throw error;
+    }
+  }
+
+  //update price to new price for all cart items
+  async updateCartPrice() {
+    try {
+      const cartItems = await getCartItems(this.userId);
+      const updatedCartItems = cartItems.map(async (item) => {
+        let newPrice = item.get("originalPrice");
+        const product = await getProductById(item.get("productId"));
+        const productVariant = await getProductVariantsById(
+          item.get("productVariantId"),
+          item.get("productId")
+        );
+
+        if (product) {
+          newPrice = product.get("baseCost");
+        }
+        if (productVariant) {
+          newPrice = productVariant.get("variantCost");
+        }
+        //update price if price has changed
+        if (newPrice !== item.get("originalPrice")) {
+          await updateCartItem(this.userId, {
+            productId: item.get("productId"),
+            productVariantId: item.get("productVariantId"),
+            quantity: item.get("quantity"),
+            originalPrice: newPrice,
+          });
+        }
+      });
     } catch (error) {
       this.consoleLog.error(error);
       throw error;

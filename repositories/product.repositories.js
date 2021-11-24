@@ -361,7 +361,9 @@ exports.getProducts = async (query) => {
         "frequencyResponse",
         "impedanceRange",
         "productVariant",
+        "productVariant.image",
         "customTag",
+        "customTag.customTag",
         "image",
       ],
       require: false,
@@ -404,11 +406,18 @@ exports.getProductById = async (id) => {
 /*
  * @desc get product variants by product id
  * @param {number} id - id of the product variant
+ * @param {number} productId - id of the product
  * @returns {Object} - bookshelf product variant object
  */
-exports.getProductVariantsById = async (id) => {
+exports.getProductVariantsById = async (id, productId) => {
   try {
-    const productVariants = await ProductVariant.where({ id: id }).fetch({
+    await yup.number().integer().positive().nullable().validate(id);
+    await yup.number().integer().positive().nullable().validate(productId);
+
+    const productVariants = await ProductVariant.where({
+      id: id,
+      productId: productId,
+    }).fetch({
       withRelated: [
         "product",
         "product.brand",
@@ -419,6 +428,7 @@ exports.getProductVariantsById = async (id) => {
         "product.image",
         "image",
       ],
+      require: false,
     });
 
     return productVariants;

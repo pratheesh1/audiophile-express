@@ -132,7 +132,7 @@ Add Product Details
     function generateSignature(callback, params) {
         axios.get('/cloudinary/sign', { params: { params } }).then(function
             (response) { callback(response.data); })
-    } var myWidget =
+    } let myWidget =
         cloudinary.createUploadWidget({
             cloudName: '{{cloudinaryName}}', apiKey: '{{cloudinaryApiKey}}',
             uploadPreset: '{{cloudinaryPreset}}', uploadSignature: generateSignature
@@ -147,8 +147,8 @@ Add Product Details
                 });
 
                 //update form value
-                var imageUrl = document.querySelector('#imageUrl');
-                var imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
+                let imageUrl = document.querySelector('#imageUrl');
+                let imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
                 imageUrl.value = imageUrl.value ? `${imageUrl.value}<new_image>${result.info.url}`.toString() : result.info.url.toString();
                 imageThumbnailUrl.value = imageThumbnailUrl.value ? `${imageThumbnailUrl.value}<new_image>${result.info.thumbnail_url}`.toString() : result.info.thumbnail_url.toString();
 
@@ -167,14 +167,14 @@ Add Product Details
         function () { myWidget.open(); }, false);
 
     // initialize swiper
-    var swiper = new Swiper(".mySwiper", {
+    let swiper = new Swiper(".mySwiper", {
         spaceBetween: 10,
         slidesPerView: 4,
         freeMode: true,
         watchSlidesProgress: true,
         autoHeight: true,
     });
-    var swiper2 = new Swiper(".mySwiper2", {
+    let swiper2 = new Swiper(".mySwiper2", {
         spaceBetween: 10,
         navigation: {
             nextEl: ".swiper-button-next",
@@ -187,10 +187,10 @@ Add Product Details
 
     //remove image from list
     function removeImage(index) {
-        var imageUrl = document.querySelector('#imageUrl');
-        var imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
-        var imageUrlArray = imageUrl.value.split('<new_image>');
-        var thumbnailUrlArray = imageThumbnailUrl.value.split('<new_image>');
+        let imageUrl = document.querySelector('#imageUrl');
+        let imageThumbnailUrl = document.querySelector('#imageThumbnailUrl');
+        let imageUrlArray = imageUrl.value.split('<new_image>');
+        let thumbnailUrlArray = imageThumbnailUrl.value.split('<new_image>');
 
         imageUrl.value = imageUrlArray.filter(function (el, i) {
             return i != index;

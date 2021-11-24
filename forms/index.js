@@ -2,11 +2,11 @@
 const forms = require("forms");
 //shortcut for forms.fields and forms.validators
 const fields = forms.fields;
-var validators = forms.validators;
-var widgets = require("forms").widgets;
+let validators = forms.validators;
+let widgets = require("forms").widgets;
 
 //function to add tailwind classes to form
-var tailwindForm = function (name, object) {
+let tailwindForm = function (name, object) {
   const excludedInputs = ["multipleRadio", "multipleCheckbox"];
   if (
     Array.isArray(object.widget.classes)
@@ -51,7 +51,7 @@ var tailwindForm = function (name, object) {
   }
 
   //add tailwind classes to form - green border if valid, red if invalid
-  var validationClass =
+  let validationClass =
     object.value && !object.error ? "border-3 border-green-400" : "";
   validationClass = object.error ? "border-3 border-red-400" : validationClass;
   if (validationClass) {
@@ -59,13 +59,13 @@ var tailwindForm = function (name, object) {
   }
 
   // error object
-  var label = object.labelHTML(name);
-  var error = object.error
+  let label = object.labelHTML(name);
+  let error = object.error
     ? `<div class="text-red-500 text-sm p-2 font-serif">${object.error}</div>`
     : "";
 
   //return form widget
-  var widget = object.widget.toHTML(name, object);
+  let widget = object.widget.toHTML(name, object);
   return `<div class="align-middle m-3 ${validationClass}"> <div class="my-2">${label}</div> ${widget} ${error} </div>`;
 };
 

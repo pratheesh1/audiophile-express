@@ -65,7 +65,7 @@ Add Product
     function generateSignature(callback, params) {
         axios.get('/cloudinary/sign', { params: { params } }).then(function
             (response) { callback(response.data); })
-    } var myWidget =
+    } let myWidget =
         cloudinary.createUploadWidget({
             cloudName: '{{cloudinaryName}}', apiKey: '{{cloudinaryApiKey}}',
             uploadPreset: '{{cloudinaryPreset}}', uploadSignature: generateSignature

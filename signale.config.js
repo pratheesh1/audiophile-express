@@ -1,5 +1,5 @@
 const { Signale } = require("signale");
-var emoji = require("node-emoji");
+let emoji = require("node-emoji");
 // https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json
 
 const options = {

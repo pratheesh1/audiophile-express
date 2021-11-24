@@ -44,4 +44,5 @@ class OrderServices extends CartServices {
   }
 }
 
-export default OrderServices;
+//export class
+module.exports = OrderServices;

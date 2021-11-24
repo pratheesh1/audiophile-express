@@ -402,6 +402,33 @@ exports.getProductById = async (id) => {
 };
 
 /*
+ * @desc get product variants by product id
+ * @param {number} id - id of the product variant
+ * @returns {Object} - bookshelf product variant object
+ */
+exports.getProductVariantsById = async (id) => {
+  try {
+    const productVariants = await ProductVariant.where({ id: id }).fetch({
+      withRelated: [
+        "product",
+        "product.brand",
+        "product.category",
+        "product.frequencyResponse",
+        "product.impedanceRange",
+        "product.customTag",
+        "product.image",
+        "image",
+      ],
+    });
+
+    return productVariants;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+/*
  * @desc delete product by id
  * @param {number} id - id of the product
  * @returns {Boolean} - true if product is deleted

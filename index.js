@@ -86,8 +86,20 @@ const httpRoutes = {
 const apiRoutes = {
   users: require("./routes/api/user.api.routes"),
   products: require("./routes/api/product.api.routes"),
+  cart: require("./routes/api/cart.api.routes"),
 };
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
+const { getMaxListeners } = require("process");
+
+//TODO: remove this after testing
+app.use((req, res, next) => {
+  req.user = {
+    id: 19,
+    email: "john@gemail.com",
+  };
+  console.log("req.user", req.user);
+  next();
+});
 
 async function main() {
   //http routes
@@ -98,6 +110,7 @@ async function main() {
   app.all("/api/*", express.json());
   app.use("/api/users", apiRoutes.users);
   app.use("/api/products", apiRoutes.products);
+  app.use("/api/cart", apiRoutes.cart);
 
   //other routes
   app.use("/cloudinary", cloudinaryRoutes);

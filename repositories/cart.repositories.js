@@ -3,6 +3,7 @@ const yup = require("yup");
 
 const { Cart, CartItem } = require("../models");
 
+/************************** Cart ************************************/
 /*
  * @desc create cart
  * @param {number} userId
@@ -42,6 +43,7 @@ exports.getCart = async (userId) => {
   }
 };
 
+/************************** Cart Item ************************************/
 //cart schema
 const cartSchema = yup.object().shape({
   productId: yup.number().required(),

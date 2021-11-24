@@ -134,6 +134,7 @@ const createRegistrationForm = (width = "w-full") => {
   });
 };
 
+//add product form
 const createAddProductForm = (
   brands,
   categories,
@@ -265,6 +266,7 @@ const createAddProductForm = (
   });
 };
 
+//edit product form
 const createEditProductForm = (
   brands,
   categories,
@@ -383,6 +385,7 @@ const createEditProductForm = (
   });
 };
 
+//add tag form
 const createAddTagsForm = (width = "w-full") => {
   const labelClasses = ["text-gray-600 m-2 text-lg font-serif dark:text-white"];
   return forms.create({
@@ -417,6 +420,7 @@ const createAddTagsForm = (width = "w-full") => {
   });
 };
 
+//search form
 const createSearchForm = (
   brands,
   categories,

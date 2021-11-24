@@ -14,6 +14,7 @@ const {
   Image,
 } = require("../models");
 
+/************************** Category ************************************/
 /*
  * @desc get all categories
  * @param {boolean} [form = false]
@@ -61,6 +62,7 @@ exports.addCategory = async (name) => {
   }
 };
 
+/************************** Brand ************************************/
 /*
  * @desc get all brands
  * @param {boolean} [form = false] - if true returns an array of arrays
@@ -111,6 +113,7 @@ exports.addBrand = async (brandName, url) => {
   }
 };
 
+/************************** Frequency Response ************************************/
 /*
  * @desc get all frequency responses
  * @param {boolean} [form = false] - if true returns an array of arrays
@@ -162,6 +165,7 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
   }
 };
 
+/************************** Impedance Range ************************************/
 /*
  * @desc get all impedance ranges
  * @param {boolean} [form = false] - if true returns an array of arrays
@@ -213,6 +217,7 @@ exports.addImpedanceRange = async (value) => {
   }
 };
 
+/************************** Product, Image ************************************/
 //product schema
 const productSchema = yup.object().shape({
   name: yup.string().required("Product name is required"),
@@ -521,6 +526,7 @@ const customTagSchema = yup.object().shape({
   tagDescription: yup.string(),
 });
 
+/************************** Custom Tag ************************************/
 /*
  * @desc get custom tag by id
  * @param {number} id - id of the tag

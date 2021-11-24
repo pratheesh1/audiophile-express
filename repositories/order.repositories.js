@@ -4,6 +4,7 @@ const yup = require("yup");
 // import models
 const { Order, OrderItem } = require("../models");
 
+/************************** Order ************************************/
 /*
  * @desc create a new order
  *
@@ -41,6 +42,7 @@ exports.createOrder = async (
   }
 };
 
+/************************** Order Item ************************************/
 //order item schema
 const orderItemSchema = yup.object().shape({
   orderId: yup.number().required(),

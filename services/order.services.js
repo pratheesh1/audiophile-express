@@ -18,7 +18,7 @@ class OrderServices extends CartServices {
     );
 
     await Promise.all(
-      cartItems.map(async (cartItem) => {
+      cartItems.map((cartItem) => {
         createOrderItem({
           orderId: order.get("id"),
           productId: cartItem.get("productId"),

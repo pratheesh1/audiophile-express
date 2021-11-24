@@ -91,7 +91,7 @@ class CartServices {
         return cartItem;
       }
     } catch (error) {
-      this.consoleLog.error(error);
+      this.consoleLog.error(error.message);
       throw error;
     }
   }
@@ -103,7 +103,7 @@ class CartServices {
 
       return updatedCart;
     } catch (error) {
-      this.consoleLog.error(error);
+      this.consoleLog.error(error.message);
       throw error;
     }
   }
@@ -132,7 +132,7 @@ class CartServices {
         throw new apiError("CartItem not found", 400);
       }
     } catch (error) {
-      this.consoleLog.error(error);
+      this.consoleLog.error(error.message);
       throw error;
     }
   }
@@ -143,7 +143,7 @@ class CartServices {
       const cartItems = await getCartItems(this.userId);
       return cartItems;
     } catch (error) {
-      this.consoleLog.error(error);
+      this.consoleLog.error(error.message);
       throw error;
     }
   }
@@ -177,7 +177,7 @@ class CartServices {
         }
       });
     } catch (error) {
-      this.consoleLog.error(error);
+      this.consoleLog.error(error.message);
       throw error;
     }
   }

@@ -4,6 +4,7 @@ const {
   checkIfBlacklisted,
   addBlacklistedToken,
   addUser,
+  getUserByEmail,
 } = require("../../repositories/user.repositories");
 const { createCart } = require("../../repositories/cart.repositories");
 
@@ -102,6 +103,29 @@ exports.register = async (req, res) => {
       });
     } else {
       throw new Error("Account with that email already exists");
+    }
+  } catch (err) {
+    throw new apiError(err.message, 401);
+  }
+};
+
+//get user by email - router checks auth header
+exports.getUserData = async (req, res) => {
+  try {
+    const email = req.user.email;
+    const user = await getUserByEmail(email);
+    if (user) {
+      res.status(200).json({
+        user: {
+          id: user.get("id"),
+          email: user.get("email"),
+          firstName: user.get("firstName"),
+          lastName: user.get("lastName"),
+          userTypeId: user.get("userTypeId"),
+        },
+      });
+    } else {
+      throw new Error("User does not exist");
     }
   } catch (err) {
     throw new apiError(err.message, 401);

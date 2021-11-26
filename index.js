@@ -18,6 +18,7 @@ const {
   csrfMiddleWare,
   handleCsrfErr,
   isLoggedIn,
+  isAuthenticated,
 } = require("./middlewares");
 
 // Initialize Express
@@ -91,16 +92,6 @@ const apiRoutes = {
 };
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
 
-//TODO: remove this after testing
-app.use((req, res, next) => {
-  req.user = {
-    id: 19,
-    email: "john@gemail.com",
-  };
-  console.log("req.user", req.user);
-  next();
-});
-
 async function main() {
   //http routes
   app.use("/users", httpRoutes.users);
@@ -110,8 +101,8 @@ async function main() {
   app.all("/api/*", express.json());
   app.use("/api/users", apiRoutes.users);
   app.use("/api/products", apiRoutes.products);
-  app.use("/api/cart", apiRoutes.cart);
-  app.use("/api/checkout", apiRoutes.checkout);
+  app.use("/api/cart", isAuthenticated, apiRoutes.cart);
+  app.use("/api/checkout", isAuthenticated, apiRoutes.checkout);
 
   //other routes
   app.use("/cloudinary", cloudinaryRoutes);

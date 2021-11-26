@@ -77,7 +77,6 @@ exports.isAuthenticated = (req, res, next) => {
       if (err) {
         res.sendStatus(403);
       } else {
-        // { user: { id: 2, email: 'john@gemail.com' } }
         req.user = user;
         next();
       }

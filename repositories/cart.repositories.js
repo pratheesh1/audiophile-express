@@ -164,6 +164,8 @@ exports.getCartItems = async (userId) => {
           "productVariant",
           "product.image",
           "productVariant.image",
+          "product.brand",
+          "product.category",
         ],
         require: false,
       }

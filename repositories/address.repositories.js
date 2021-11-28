@@ -2,7 +2,7 @@ const { consoleLog } = require("../signale.config");
 const yup = require("yup");
 
 // import models
-const { Address } = require("../models");
+const { Address, Country } = require("../models");
 
 //address schema
 const addressSchema = yup.object().shape({
@@ -37,7 +37,7 @@ exports.createAddress = async (address) => {
     //return address
     return newAddress;
   } catch (err) {
-    consoleLog(err);
+    consoleLog.error(err);
     throw err;
   }
 };
@@ -57,7 +57,24 @@ exports.getAddressById = async (addressId) => {
     //return address
     return address;
   } catch (err) {
-    consoleLog(err);
+    consoleLog.error(err);
+    throw err;
+  }
+};
+
+/*
+ * @desc    Get all countries
+ * @returns {object} countries - bookshelf countries object
+ */
+exports.getCountries = async () => {
+  try {
+    //get countries
+    const countries = await Country.fetchAll();
+
+    //return countries
+    return countries;
+  } catch (err) {
+    consoleLog.error(err);
     throw err;
   }
 };

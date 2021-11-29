@@ -303,6 +303,14 @@ const productQuerySchema = yup.object().shape({
   frequencyResponseId: yup.array().of(yup.number()).nullable(),
 });
 
+const productVariantSchema = yup.object().shape({
+  productId: yup.number().integer(),
+  variantName: yup.string(),
+  variantDescription: yup.string(),
+  variantCost: yup.number().integer(),
+  stock: yup.number().integer(),
+});
+
 /*
  * @desc get products by query
  *
@@ -509,12 +517,35 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
 exports.editProductById = async (id, productData) => {
   try {
     await yup.number().integer().validate(id);
-    await productSchema.validate(productData);
+    await productQuerySchema.validate(productData);
 
     const product = await this.getProductById(id);
     await product.save(productData, { method: "update" });
 
     return product;
+  } catch (error) {
+    consoleLog.error(error.message);
+    throw error;
+  }
+};
+
+/*
+ * @desc edit productVariant
+ * @param {number} id - id of the product variant
+ * @param {object} productVariantData - data of the product variant as defined in the schema
+ * @returns {Object} - bookshelf product variant object
+ */
+exports.editProductVariantById = async (id, productVariantData) => {
+  try {
+    await yup.number().integer().validate(id);
+    await productVariantSchema.validate(productVariantData);
+
+    const productVariant = await ProductVariant.where({ id: id }).fetch({
+      require: false,
+    });
+    await productVariant.save(productVariantData, { method: "update" });
+
+    return productVariant;
   } catch (error) {
     consoleLog.error(error.message);
     throw error;

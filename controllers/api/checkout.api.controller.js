@@ -14,7 +14,49 @@ exports.postCheckout = async (req, res) => {
     await cart.updateCartPrice();
     const cartItems = await cart.getCart();
 
-    //TODO: check if product is available before allowing checkout
+    //send error if cart is empty
+    if (!cartItems.length) {
+      res.status(400).json({
+        message: "Your cart is empty",
+      });
+      return;
+    }
+
+    //check id any items are out of stock
+    let noStock = cartItems.filter(
+      (item) => item.get("quantity") > item.related("product").get("stock")
+    );
+    //send items with no stock
+    if (noStock.length > 0) {
+      //update quantity to stock
+
+      noStock.map(async (item) => {
+        const currentStock = item.get("productVariantId")
+          ? item.related("productVariant").get("stock")
+          : item.related("product").get("stock");
+        if (currentStock > 0) {
+          await cart.updateQuantity({
+            productId: item.get("productId"),
+            productVariantId: item.get("productVariantId")
+              ? item.get("productVariantId")
+              : null,
+            quantity: currentStock,
+          });
+        } else {
+          await cart.deleteCartItem({
+            productId: item.get("productId"),
+            productVariantId: item.get("productVariantId")
+              ? item.get("productVariantId")
+              : null,
+          });
+        }
+      });
+      // return apiError(res, "Some items are out of stock", 417);
+      res.status(417).json({
+        noStock,
+      });
+      return;
+    }
 
     // create line items
     let line_items = [];
@@ -73,23 +115,15 @@ exports.postCheckout = async (req, res) => {
     //register session
     const stripeSession = await Stripe.checkout.sessions.create(payment);
 
+    //create order
+    const order = new OrderServices(req.user.id);
+    await order.checkOut(addressId, notes);
+
+    //send stripe session
     res.status(200).json({
       sessionId: stripeSession.id,
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     });
-  } catch (err) {
-    throw new apiError(err.message, 500);
-  }
-};
-
-//create order and update cart after payment
-exports.createOrder = async (req, res) => {
-  try {
-    // Get cart
-    const cart = new OrderServices(req.user.id);
-    const { addressId, notes } = req.body;
-    const order = await cart.checkOut(addressId, notes);
-    res.status(200).json(order);
   } catch (err) {
     throw new apiError(err.message, 500);
   }

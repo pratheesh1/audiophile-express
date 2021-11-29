@@ -4,15 +4,17 @@ const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const CartServices = require("../../services/cart.services");
 const OrderServices = require("../../services/order.services");
 
-exports.getCheckout = async (req, res) => {
+exports.postCheckout = async (req, res) => {
   try {
     // Get cart
     const cart = new CartServices(req.user.id);
-    await cart.updateCartPrice();
-    //TODO: check if product is available before allowing checkout
+    const { addressId, notes } = req.body;
 
+    //update to latest price and get cart
+    await cart.updateCartPrice();
     const cartItems = await cart.getCart();
-    // console.log(cartItems.toJSON());
+
+    //TODO: check if product is available before allowing checkout
 
     // create line items
     let line_items = [];
@@ -34,16 +36,28 @@ exports.getCheckout = async (req, res) => {
                 .related("productVariant")
                 .related("image")
                 .pluck("imageThumbnailUrl"),
-            ]
+            ][0]
           : [
               item
                 .related("product")
                 .related("image")
                 .pluck("imageThumbnailUrl"),
-            ],
+            ][0],
       });
       meta.push({
-        order: cartItems.toJSON(),
+        userId: req.user.id,
+        order: {
+          addressId: addressId,
+          notes: notes,
+          name: item.get("productVariantId")
+            ? item.related("productVariant").get("variantName")
+            : item.related("product").get("name"),
+          productVariantId: item.get("productVariantId")
+            ? item.get("productVariantId")
+            : null,
+          productId: item.get("productId"),
+          quantity: item.get("quantity"),
+        },
       });
     });
 
@@ -52,15 +66,19 @@ exports.getCheckout = async (req, res) => {
     const payment = {
       payment_method_types: ["card"],
       line_items: line_items,
-      success_url: `${process.env.BASE_URL}/checkout/success`,
-      cancel_url: `${process.env.BASE_URL}/checkout/cancel`,
+      success_url: `${process.env.FRONTEND_BASE_URL}orders`,
+      cancel_url: `${process.env.FRONTEND_BASE_URL}cart`,
       metadata: {
         orders: metaData,
       },
     };
 
+    //register session
+    const stripeSession = await Stripe.checkout.sessions.create(payment);
+
     res.status(200).json({
-      paymentInvoice: payment,
+      sessionId: stripeSession.id,
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     });
   } catch (err) {
     throw new apiError(err.message, 500);

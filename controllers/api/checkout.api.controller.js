@@ -45,18 +45,15 @@ exports.postCheckout = async (req, res) => {
             ][0],
       });
       meta.push({
-        userId: req.user.id,
         order: {
-          addressId: addressId,
-          notes: notes,
-          name: item.get("productVariantId")
-            ? item.related("productVariant").get("variantName")
-            : item.related("product").get("name"),
           productVariantId: item.get("productVariantId")
             ? item.get("productVariantId")
             : null,
           productId: item.get("productId"),
           quantity: item.get("quantity"),
+          amount: item.get("productVariantId")
+            ? item.related("productVariant").get("variantCost")
+            : item.related("product").get("baseCost"),
         },
       });
     });

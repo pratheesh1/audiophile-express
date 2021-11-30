@@ -44,8 +44,44 @@ exports.getAllImpedanceRanges = async (req, res) => {
 //get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const query = req.query;
-    // await productQuerySchema.validate(query);
+    const rawQuery = req.query;
+    let query = {};
+
+    //sanitized query
+    if (rawQuery?.cost_min) {
+      query["cost_min"] = parseInt(rawQuery.cost_min * 100);
+    }
+    if (rawQuery?.cost_max) {
+      query["cost_max"] = parseInt(rawQuery.cost_max * 100);
+    }
+    if (rawQuery?.category) {
+      query["category"] = [rawQuery.category];
+    }
+    if (rawQuery?.brand?.length && rawQuery?.brand[0]) {
+      query["brand"] = rawQuery.brand;
+    }
+    if (rawQuery?.bluetooth) {
+      query["bluetooth"] = [rawQuery.bluetooth];
+    }
+    if (
+      rawQuery?.frequencyResponseId?.length &&
+      rawQuery?.frequencyResponseId[0]
+    ) {
+      query["frequencyResponseId"] = rawQuery.frequencyResponseId;
+    }
+    if (rawQuery?.impedanceRangeId?.length && rawQuery?.impedanceRangeId[0]) {
+      query["impedanceRangeId"] = rawQuery.impedanceRangeId;
+    }
+    if (rawQuery?.sort) {
+      query["sort"] = rawQuery.sort;
+    }
+    if (rawQuery?.name) {
+      query["name"] = rawQuery.name;
+    }
+    if (rawQuery?.description) {
+      query["description"] = rawQuery.description;
+    }
+
     const products = await getProducts(query);
     return res.status(200).json({
       products: products,

@@ -292,6 +292,7 @@ function emptyStringToNull(value, originalValue) {
 const productQuerySchema = yup.object().shape({
   userId: yup.number().integer().nullable().transform(emptyStringToNull),
   name: yup.string(),
+  description: yup.string(),
   brand: yup.array().of(yup.number()).nullable(),
   category: yup.array().of(yup.number()).nullable(),
   cost_min: yup.number().integer().nullable().transform(emptyStringToNull),
@@ -317,6 +318,7 @@ const productVariantSchema = yup.object().shape({
  * @param {object} query - query to filter products
  * @param {string} [query.userId] - id of the user of the new product
  * @param {string} [query.name] - name of the new product
+ * @param {string} [query.description] - description of the new product
  * @param {string} [query.brand] - id of the brand of the new product
  * @param {string} [query.category] - id of the category of the new product
  * @param {string} [query.cost_min] - cost min of the new product
@@ -326,6 +328,7 @@ const productVariantSchema = yup.object().shape({
  * @param {string} [query.bluetooth] - bluetooth of the new product
  * @param {string} [query.impedanceRangeId] - id of the impedance range of the new product
  * @param {string} [query.frequencyResponseId] - id of the frequency response of the new product
+ * @params {string} [query.sort] - sort by field
  *
  * @returns {Object} - bookshelf product object
  */
@@ -338,12 +341,15 @@ exports.getProducts = async (query) => {
         queryBuilder.where("userId", query.userId);
       }
       if (query?.name) {
-        queryBuilder.where("name", "like", `%${query.name}%`);
+        queryBuilder.orWhere("name", "like", `%${query.name}%`);
       }
-      if (query?.brand) {
+      if (query?.description) {
+        queryBuilder.orWhere("description", "like", `%${query.description}%`);
+      }
+      if (query?.brand?.length) {
         queryBuilder.whereIn("brandId", query.brand);
       }
-      if (query?.category) {
+      if (query?.category?.length) {
         queryBuilder.whereIn("categoryId", query.category);
       }
       if (query?.cost_min) {
@@ -358,14 +364,17 @@ exports.getProducts = async (query) => {
       if (query?.sku) {
         queryBuilder.where("sku", "like", `%${query.sku}%`);
       }
-      if (query?.bluetooth) {
+      if (query?.bluetooth?.length) {
         queryBuilder.whereIn("bluetooth", query.bluetooth);
       }
-      if (query?.impedanceRangeId) {
+      if (query?.impedanceRangeId?.length) {
         queryBuilder.whereIn("impedanceRangeId", query.impedanceRangeId);
       }
-      if (query?.frequencyResponseId) {
+      if (query?.frequencyResponseId?.length) {
         queryBuilder.whereIn("frequencyResponseId", query.frequencyResponseId);
+      }
+      if (query?.sort) {
+        queryBuilder.orderBy(query.sort);
       }
     }).fetchAll({
       withRelated: [

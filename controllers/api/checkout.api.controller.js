@@ -23,6 +23,7 @@ exports.postCheckout = async (req, res) => {
     }
 
     //check id any items are out of stock
+    //TODO: move this to services
     let noStock = cartItems.filter(
       (item) => item.get("quantity") > item.related("product").get("stock")
     );

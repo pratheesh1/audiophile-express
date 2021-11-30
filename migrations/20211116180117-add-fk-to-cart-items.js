@@ -24,7 +24,7 @@ exports.up = function (db) {
         productId: "id",
       },
       {
-        onDelete: "CASCADE",
+        onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
       }
     )
@@ -37,7 +37,7 @@ exports.up = function (db) {
           productVariantId: "id",
         },
         {
-          onDelete: "CASCADE",
+          onDelete: "RESTRICT",
           onUpdate: "RESTRICT",
         }
       );

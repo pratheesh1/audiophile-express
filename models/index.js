@@ -63,6 +63,9 @@ const Status = bookshelf.model("Status", {
   order() {
     return this.hasMany("Order", "statusId");
   },
+  orderItem() {
+    return this.hasMany("OrderItem", "statusId");
+  },
 });
 
 //model table countries
@@ -158,10 +161,13 @@ const Order = bookshelf.model("Order", {
     return this.belongsTo("Status", "statusId");
   },
   address() {
-    return this.belongsTo("Address", "AddressId");
+    return this.belongsTo("Address", "addressId");
   },
   user() {
     return this.belongsTo("User", "userId");
+  },
+  orderItem() {
+    return this.hasMany("OrderItem", "orderId");
   },
 });
 
@@ -219,6 +225,9 @@ const OrderItem = bookshelf.model("OrderItem", {
   },
   productVariant() {
     return this.belongsTo("ProductVariant", "productVariantId");
+  },
+  status() {
+    return this.belongsTo("Status", "statusId");
   },
 });
 

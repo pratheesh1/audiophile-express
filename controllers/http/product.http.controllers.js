@@ -90,10 +90,19 @@ exports.postAddProduct = async (req, res) => {
 
 //delete product
 exports.getDeleteProduct = async (req, res) => {
-  const confirmation = await deleteProductById(req.params.id);
-  if (confirmation) {
-    req.flash("success", "Product deleted successfully!");
-    res.redirect("/products/home");
+  const product = (await getProductById(req.params.id)).toJSON();
+  if (product.userId !== req.session.user.id) {
+    req.flash("error", "You do not have permission to delete this product.");
+    res.redirect("/products");
+  } else {
+    const confirmation = await deleteProductById(
+      req.params.id,
+      req.session.user.id
+    );
+    if (confirmation) {
+      req.flash("success", "Product deleted successfully!");
+      res.redirect("/products/home");
+    }
   }
 };
 
@@ -298,14 +307,18 @@ exports.getEditProduct = async (req, res) => {
     impedanceRanges
   );
   const product = await getProductById(req.params.id);
-
-  for (field in form.fields) {
-    form.fields[field].value = product.get(field);
+  if (product.get("userId") === req.session.user.id) {
+    for (field in form.fields) {
+      form.fields[field].value = product.get(field);
+    }
+    res.render("products/edit", {
+      form: form.toHTML(tailwindForm),
+      product: product,
+    });
+  } else {
+    req.flash("error", "You do not have permission to edit this product");
+    res.redirect("/products");
   }
-  res.render("products/edit", {
-    form: form.toHTML(tailwindForm),
-    product: product,
-  });
 };
 
 //post edit product

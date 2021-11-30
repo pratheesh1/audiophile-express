@@ -42,6 +42,71 @@ exports.createOrder = async (
   }
 };
 
+//order query schema
+const orderQuerySchema = yup.object().shape({
+  userId: yup.number().nullable(),
+  statusId: yup.number().nullable(),
+  productId: yup.number().nullable(),
+  productVariantId: yup.number().nullable(),
+});
+
+/*
+ * @desc get all orders
+ * @param {object} query - query object
+ * @param {number} [query.userId = null] - user id
+ * @param {number} [query.statusId = null] - status id
+ * @param {number} [query.itemStatusId = null] - item status id
+ * @param {number} [query.productId = null] - product id
+ * @param {number} [query.productVariantId = null] - product variant id
+ *
+ * @returns {object} - bookshelf order object
+ */
+exports.getOrders = async (query) => {
+  try {
+    //validate params
+    await orderQuerySchema.validate(query);
+
+    const orders = await Order.query((qb) => {
+      if (query?.userId) {
+        qb.where("userId", query.userId);
+      }
+      if (query?.statusId) {
+        qb.where("statusId", query.statusId);
+      }
+    }).fetchAll({
+      withRelated: [
+        {
+          user: (qb) => {
+            qb.column("id", "firstName", "lastName");
+          },
+        },
+        "status",
+        "address",
+        "orderItem.product",
+        "orderItem.productVariant",
+        {
+          orderItem: (qb) => {
+            if (query?.productId) {
+              qb.where("productId", query.productId);
+            }
+            if (query?.productVariantId) {
+              qb.where("productVariantId", query.productVariantId);
+            }
+            if (query?.itemStatusId) {
+              qb.where("statusId", query.itemStatusId);
+            }
+          },
+        },
+      ],
+      require: false,
+    });
+    return orders;
+  } catch (error) {
+    consoleLog.error(error);
+    throw error;
+  }
+};
+
 /************************** Order Item ************************************/
 //order item schema
 const orderItemSchema = yup.object().shape({

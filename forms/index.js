@@ -111,7 +111,14 @@ const createRegistrationForm = (width = "w-full") => {
     password: fields.string({
       label: "Password: ",
       required: true,
-      validators: [validators.required("Password is required!")],
+      validators: [
+        validators.required("Password is required!"),
+        validators.minlength(8, "Password must be at least 8 characters long!"),
+        validators.maxlength(
+          32,
+          "Password must be less than 32 characters long!"
+        ),
+      ],
       widget: widgets.password({ classes: [width] }),
       errorAfterField: true,
       cssClasses: {

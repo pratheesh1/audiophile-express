@@ -465,14 +465,22 @@ exports.getProductVariantsById = async (id, productId) => {
 /*
  * @desc delete product by id
  * @param {number} id - id of the product
+ * @param {number} userId - id of the user
  * @returns {Boolean} - true if product is deleted
  */
-exports.deleteProductById = async (id) => {
+exports.deleteProductById = async (id, userId) => {
   try {
+    await yup.number().integer().validate(id);
     await yup.number().integer().validate(id);
 
     const product = await this.getProductById(id);
-    await product.destroy();
+    if (!product) {
+      throw new Error("Product not found");
+    } else if (product.get("userId") == userId) {
+      await product.destroy();
+    } else {
+      throw new Error("You are not authorized to delete this product");
+    }
 
     return true;
   } catch (error) {

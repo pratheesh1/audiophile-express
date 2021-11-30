@@ -91,11 +91,13 @@ const apiRoutes = {
   cart: require("./routes/api/cart.api.routes"),
   checkout: require("./routes/api/checkout.api.routes"),
   address: require("./routes/api/address.api.routes"),
+  orders: require("./routes/api/order.api.routes"),
 };
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
 
 async function main() {
   //http routes
+  app.use("/", httpRoutes.products);
   app.use("/users", httpRoutes.users);
   app.use("/products", isLoggedIn, httpRoutes.products);
 
@@ -106,6 +108,7 @@ async function main() {
   app.use("/api/cart", isAuthenticated, apiRoutes.cart);
   app.use("/api/checkout", isAuthenticated, apiRoutes.checkout);
   app.use("/api/address", apiRoutes.address);
+  app.use("/api/orders", isAuthenticated, apiRoutes.orders);
 
   //other routes
   app.use("/cloudinary", cloudinaryRoutes);

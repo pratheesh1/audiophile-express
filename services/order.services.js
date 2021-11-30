@@ -2,6 +2,7 @@ const CartServices = require("../services/cart.services");
 const {
   createOrder,
   createOrderItem,
+  getOrders,
 } = require("../repositories/order.repositories");
 const {
   getProductById,
@@ -63,6 +64,11 @@ class OrderServices extends CartServices {
           });
       })
     );
+    return order;
+  }
+
+  async getOrder(query) {
+    const order = await getOrders({ ...query, userId: this.userId });
     return order;
   }
 }

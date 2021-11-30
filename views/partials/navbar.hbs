@@ -95,12 +95,9 @@
                     <div :class="{ 'block': dropdownIsOpen, 'hidden': !dropdownIsOpen }"
                         @click.away="dropdownIsOpen = false"
                         class="absolute left-0 md:right-0 top-9 z-20 w-48 py-2 mt-2 bg-gray-400 rounded-md shadow-xl dark:bg-gray-600">
-                        <a href="#" @click="dropdownIsOpen = false"
+                        <a href="/products/home" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Your profile </a>
-                        <a href="#" @click="dropdownIsOpen = false"
-                            class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Help </a>
+                            Listings </a>
                         <a href="/users/logout" @click="dropdownIsOpen = false"
                             class="block px-4 py-3 text-sm text-gray-900 capitalize transition-colors duration-200 transform dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                             Sign Out </a>

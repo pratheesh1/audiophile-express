@@ -83,8 +83,12 @@ exports.getOrders = async (query) => {
         },
         "status",
         "address",
+        "address.country",
+        "orderItem.status",
         "orderItem.product",
+        "orderItem.product.image",
         "orderItem.productVariant",
+        "orderItem.productVariant.image",
         {
           orderItem: (qb) => {
             if (query?.productId) {

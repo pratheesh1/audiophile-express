@@ -73,6 +73,7 @@ exports.getOrders = async (query) => {
       if (query?.statusId) {
         qb.where("statusId", query.statusId);
       }
+      qb.orderBy("timestamp", "desc");
     }).fetchAll({
       withRelated: [
         {

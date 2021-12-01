@@ -4,6 +4,7 @@ const router = express.Router();
 const userControllers = require("../../controllers/http/user.http.controllers");
 const { isLoggedIn } = require("../../middlewares");
 
+router.get("/", userControllers.getLoginForm);
 router.get("/login", userControllers.getLoginForm);
 router.get("/register", userControllers.getSignupForm);
 router.get("/logout", userControllers.getLogout);

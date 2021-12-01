@@ -992,9 +992,6 @@ video {
 .overflow-y-scroll {
 	overflow-y: scroll;
 }
-.whitespace-pre-line {
-	white-space: pre-line;
-}
 .rounded-3xl {
 	border-radius: 1.5rem;
 }
@@ -1382,9 +1379,6 @@ video {
 }
 .font-normal {
 	font-weight: 400;
-}
-.font-thin {
-	font-weight: 100;
 }
 .font-extralight {
 	font-weight: 200;

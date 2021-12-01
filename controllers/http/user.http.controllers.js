@@ -10,7 +10,11 @@ const { sendConfirmationEmail } = require("../../utils/nodemailer.config");
 
 //get login form
 exports.getLoginForm = (req, res) => {
-  res.render("users/login");
+  if (req.session.user) {
+    res.redirect("/products/home");
+  } else {
+    res.render("users/login");
+  }
 };
 
 //post login form
@@ -34,10 +38,14 @@ exports.postLoginForm = async (req, res) => {
 
 //get signup form
 exports.getSignupForm = (req, res) => {
-  const registrationForm = createRegistrationForm();
-  res.render("users/signup", {
-    form: registrationForm.toHTML(tailwindForm),
-  });
+  if (req.session.user) {
+    res.redirect("/products/home");
+  } else {
+    const registrationForm = createRegistrationForm();
+    res.render("users/signup", {
+      form: registrationForm.toHTML(tailwindForm),
+    });
+  }
 };
 
 //post signup form

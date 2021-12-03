@@ -59,17 +59,17 @@ Home
               </td>
               <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">{{this.stock}}
               </td>
-              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3 max-w-[100px]">
+              <td class="border bg-yellow-200 hover:bg-gray-300 dark:hover:bg-gray-300 p-3 max-w-[100px] text-center">
                 {{!-- view --}}
                 <a href={{@root.frontendUrl}}product/{{this.id}} target="_blank" rel="noopener noreferrer"
-                  class="bg-blue-400 hover:bg-blue-700 text-white py-2 px-4 rounded-full m-1  text-center">
+                  class="bg-blue-400 hover:bg-blue-700 text-white py-2 px-4 rounded-full m-1">
                   <i class="fas fa-eye"></i>
                 </a>
                 {{!-- edit/delete --}}
                 {{#if @root.user}}
                 {{#compare @root.user.id "===" this.userId}}
                 <a href="/products/{{this.id}}/edit"
-                  class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full m-1  text-center">
+                  class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full m-1">
                   <i class="far fa-edit"></i>
                 </a>
                 <button onclick="openModal({{this.id}})"

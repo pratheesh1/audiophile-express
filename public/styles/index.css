@@ -907,6 +907,9 @@ video {
 .w-1\/2 {
 	width: 50%;
 }
+.w-auto {
+	width: auto;
+}
 .w-10\/12 {
 	width: 83.333333%;
 }

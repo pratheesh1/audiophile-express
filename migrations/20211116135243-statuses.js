@@ -44,7 +44,7 @@ function addData(db) {
 //array of audio equipment categories
 const dataArr = [
   ["Payment Pending"],
-  ["Payment Processed"],
+  ["Paid"],
   ["Payment Failed"],
   ["Payment Refunded"],
   ["Payment Cancelled"],

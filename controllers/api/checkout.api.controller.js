@@ -75,6 +75,10 @@ exports.postCheckout = async (req, res) => {
       });
     });
 
+    //create order
+    const order = new OrderServices(req.user.id);
+    const newOrder = await order.checkOut(addressId, notes);
+
     // create stripe payment object
     const metaData = JSON.stringify(meta);
     const payment = {
@@ -84,15 +88,13 @@ exports.postCheckout = async (req, res) => {
       cancel_url: `${process.env.FRONTEND_BASE_URL}cart`,
       metadata: {
         orders: metaData,
+        orderId: newOrder.get("id"),
+        userId: req.user.id,
       },
     };
 
     //register session
     const stripeSession = await Stripe.checkout.sessions.create(payment);
-
-    //create order
-    const order = new OrderServices(req.user.id);
-    await order.checkOut(addressId, notes);
 
     //send stripe session
     res.status(200).json({
@@ -102,26 +104,4 @@ exports.postCheckout = async (req, res) => {
   } catch (err) {
     throw new apiError(err.message, 500);
   }
-};
-
-/********************** Stripe Webhooks  **********************/
-//process payment
-exports.processPayment = async (req, res) => {
-  const payload = req.body;
-  const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
-  let signHeader = req.headers["stripe-signature"];
-  let event;
-  try {
-    event = Stripe.webhooks.constructEvent(payload, signHeader, endpointSecret);
-  } catch (err) {
-    console.log(err);
-    return res.sendStatus(400);
-  }
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const sessionId = session.id;
-    console.log(sessionId), console.log(session);
-    //TODO: update order status to paid
-  }
-  res.status(200).send({ received: true });
 };

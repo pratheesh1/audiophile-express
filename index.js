@@ -98,6 +98,7 @@ const apiRoutes = {
   orders: require("./routes/api/order.api.routes"),
 };
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
+const stripeRoutes = require("./routes/stripe.routes");
 
 async function main() {
   //http routes
@@ -117,6 +118,7 @@ async function main() {
 
   //other routes
   app.use("/cloudinary", cloudinaryRoutes);
+  app.use("/payment", stripeRoutes);
 }
 main();
 

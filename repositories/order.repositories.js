@@ -169,6 +169,28 @@ exports.updateOrder = async (id, statusId) => {
   }
 };
 
+/**
+ * @desc delete order by id
+ * @param {number} id - order id
+ * @returns {boolean} - true if deleted
+ */
+exports.deleteOrderById = async (id) => {
+  try {
+    //validate params
+    await yup.number().required().validate(id);
+
+    const order = await this.getOrderById(id);
+    if (!order) {
+      throw new Error("Order not found");
+    }
+    await order.destroy();
+    return true;
+  } catch (error) {
+    consoleLog.error(error);
+    throw error;
+  }
+};
+
 /************************** Order Item ************************************/
 //order item schema
 const orderItemSchema = yup.object().shape({

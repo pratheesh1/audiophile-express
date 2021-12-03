@@ -6,6 +6,7 @@ const {
   getOrderItems,
   updateOrder,
   updateOrderItemStatus,
+  deleteOrderById,
 } = require("../repositories/order.repositories");
 const {
   getProductById,
@@ -91,6 +92,13 @@ class OrderServices extends CartServices {
     return orderItems;
   }
 
+  async getOrderForStripe(orderId) {
+    const orderItems = await getOrderItems({
+      orderId: orderId,
+    });
+    return orderItems;
+  }
+
   async updateOrder(orderId, status) {
     const order = updateOrder(orderId, status);
     return order;
@@ -122,6 +130,32 @@ class OrderServices extends CartServices {
       });
       await this.updateOrder(orderId, lowestStatus);
     }
+  }
+
+  //roll back order
+  async rollBackOrder(orderId) {
+    const orderItems = await this.getOrderForStripe(orderId);
+    await Promise.all(
+      orderItems.map(async (orderItem) => {
+        //update stock
+        const product = await getProductById(orderItem.get("productId"));
+        const productVariant = await getProductVariantsById(
+          orderItem.get("productVariantId"),
+          orderItem.get("productId")
+        );
+
+        if (productVariant) {
+          editProductVariantById(orderItem.get("productVariantId"), {
+            stock: productVariant.get("stock") + orderItem.get("quantity"),
+          });
+        } else {
+          editProductById(orderItem.get("productId"), {
+            stock: product.get("stock") + orderItem.get("quantity"),
+          });
+        }
+      })
+    );
+    deleteOrderById(orderId);
   }
 }
 

@@ -40,7 +40,7 @@ function handleApiError(err, req, res, next) {
 const csrfProtection = csrf();
 exports.csrfMiddleWare = (req, res, next) => {
   if (
-    req.url.includes("/checkout/process_payment") ||
+    req.url.includes("/payment/process_payment") ||
     req.url.includes("/api")
   ) {
     next();

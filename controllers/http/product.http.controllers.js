@@ -95,12 +95,20 @@ exports.getDeleteProduct = async (req, res) => {
     req.flash("error", "You do not have permission to delete this product.");
     res.redirect("/products");
   } else {
-    const confirmation = await deleteProductById(
-      req.params.id,
-      req.session.user.id
-    );
-    if (confirmation) {
-      req.flash("success", "Product deleted successfully!");
+    try {
+      const confirmation = await deleteProductById(
+        req.params.id,
+        req.session.user.id
+      );
+      if (confirmation) {
+        req.flash("success", "Product deleted successfully!");
+        res.redirect("/products/home");
+      }
+    } catch (err) {
+      req.flash(
+        "error",
+        "This product has orders associated with it and cannot be deleted."
+      );
       res.redirect("/products/home");
     }
   }

@@ -181,6 +181,46 @@ class CartServices {
       throw error;
     }
   }
+
+  //check stock and update cart items
+  async checkStock() {
+    try {
+      const cartItems = await getCartItems(this.userId);
+      let noStock = cartItems.filter(
+        (item) => item.get("quantity") > item.related("product").get("stock")
+      );
+      //send items with no stock
+      if (noStock.length > 0) {
+        //update quantity to stock
+
+        noStock.map(async (item) => {
+          const currentStock = item.get("productVariantId")
+            ? item.related("productVariant").get("stock")
+            : item.related("product").get("stock");
+          if (currentStock > 0) {
+            await this.updateQuantity({
+              productId: item.get("productId"),
+              productVariantId: item.get("productVariantId")
+                ? item.get("productVariantId")
+                : null,
+              quantity: currentStock,
+            });
+          } else {
+            await this.deleteCartItem({
+              productId: item.get("productId"),
+              productVariantId: item.get("productVariantId")
+                ? item.get("productVariantId")
+                : null,
+            });
+          }
+        });
+      }
+      return noStock;
+    } catch (error) {
+      this.consoleLog.error(error.message);
+      throw error;
+    }
+  }
 }
 
 //export class

@@ -23,38 +23,12 @@ exports.postCheckout = async (req, res) => {
     }
 
     //check id any items are out of stock
-    //TODO: move this to services
-    let noStock = cartItems.filter(
-      (item) => item.get("quantity") > item.related("product").get("stock")
-    );
-    //send items with no stock
-    if (noStock.length > 0) {
-      //update quantity to stock
-
-      noStock.map(async (item) => {
-        const currentStock = item.get("productVariantId")
-          ? item.related("productVariant").get("stock")
-          : item.related("product").get("stock");
-        if (currentStock > 0) {
-          await cart.updateQuantity({
-            productId: item.get("productId"),
-            productVariantId: item.get("productVariantId")
-              ? item.get("productVariantId")
-              : null,
-            quantity: currentStock,
-          });
-        } else {
-          await cart.deleteCartItem({
-            productId: item.get("productId"),
-            productVariantId: item.get("productVariantId")
-              ? item.get("productVariantId")
-              : null,
-          });
-        }
-      });
-      // return apiError(res, "Some items are out of stock", 417);
+    let noStock = await cart.checkStock();
+    // return apiError(res, "Some items are out of stock", 417);
+    if (noStock.length) {
       res.status(417).json({
         noStock,
+        message: "Some items are out of stock. Your cart has been updated.",
       });
       return;
     }

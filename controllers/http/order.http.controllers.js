@@ -12,9 +12,6 @@ exports.getAllOrders = async (req, res) => {
   const selectedOrder =
     orderId && (await orders.getOrderItemsByOrderId(orderId));
 
-  // console.log(selectedOrder.toJSON()[0].order.orderItem[0].product);
-  console.log(selectedOrder?.toJSON()[0].order.orderItem);
-
   res.render("products/orders", {
     orders: productOrders.toJSON(),
     activeTab: " bg-gray-100 dark:bg-gray-300",

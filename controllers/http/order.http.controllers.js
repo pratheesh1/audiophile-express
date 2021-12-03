@@ -12,8 +12,16 @@ exports.getAllOrders = async (req, res) => {
   const selectedOrder =
     orderId && (await orders.getOrderItemsByOrderId(orderId));
 
+  //remove duplicate orders by orderId
+  const uniqueOrders = productOrders
+    ?.toJSON()
+    .filter(
+      (order, index, self) =>
+        index === self.findIndex((t) => t.orderId === order.orderId)
+    );
+
   res.render("products/orders", {
-    orders: productOrders.toJSON(),
+    orders: uniqueOrders,
     activeTab: " bg-gray-100 dark:bg-gray-300",
     inactiveTab: " bg-gray-200 dark:bg-gray-500",
     selectedOrder: selectedOrder?.toJSON()[0],

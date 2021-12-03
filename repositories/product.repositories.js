@@ -15,7 +15,7 @@ const {
 } = require("../models");
 
 /************************** Category ************************************/
-/*
+/**
  * @desc get all categories
  * @param {boolean} [form = false]
  *
@@ -40,7 +40,7 @@ exports.getCategories = async (form = false) => {
   }
 };
 
-/*
+/**
  * @desc add a new category
  * @param {string} name - name of the new category
  * @returns {Object} - bookshelf category object
@@ -63,7 +63,7 @@ exports.addCategory = async (name) => {
 };
 
 /************************** Brand ************************************/
-/*
+/**
  * @desc get all brands
  * @param {boolean} [form = false] - if true returns an array of arrays
  *
@@ -85,7 +85,7 @@ exports.getBrands = async (form = false) => {
   }
 };
 
-/*
+/**
  * @desc add a new brand
  * @param {string} brandName - name of the new brand
  * @param {string} url - url of the new brand image
@@ -114,7 +114,7 @@ exports.addBrand = async (brandName, url) => {
 };
 
 /************************** Frequency Response ************************************/
-/*
+/**
  * @desc get all frequency responses
  * @param {boolean} [form = false] - if true returns an array of arrays
  *
@@ -141,7 +141,7 @@ exports.getFrequencyResponses = async (form = false) => {
   }
 };
 
-/*
+/**
  * @desc add a new frequency response
  * @param {string} frequencyResponse - new frequency response
  * @returns {Object} - bookshelf frequency response object
@@ -166,7 +166,7 @@ exports.addFrequencyResponse = async (frequencyResponse) => {
 };
 
 /************************** Impedance Range ************************************/
-/*
+/**
  * @desc get all impedance ranges
  * @param {boolean} [form = false] - if true returns an array of arrays
  *
@@ -193,7 +193,7 @@ exports.getImpedanceRanges = async (form = true) => {
   }
 };
 
-/*
+/**
  * @desc add a new impedance range
  * @param {string} value - new impedance range value
  * @returns {Object} - bookshelf impedance range object
@@ -235,7 +235,7 @@ const productSchema = yup.object().shape({
   impedanceRangeId: yup.number("Product impedance range is not valid"),
 });
 
-/*
+/**
  * @desc add a new product
  *
  * @param {object} newProduct - new product
@@ -312,7 +312,7 @@ const productVariantSchema = yup.object().shape({
   stock: yup.number().integer(),
 });
 
-/*
+/**
  * @desc get products by query
  *
  * @param {object} query - query to filter products
@@ -398,7 +398,7 @@ exports.getProducts = async (query) => {
   }
 };
 
-/*
+/**
  * @desc get product by id
  * @param {number} id - id of the product
  * @returns {Object} - bookshelf product object
@@ -427,7 +427,7 @@ exports.getProductById = async (id) => {
   }
 };
 
-/*
+/**
  * @desc get product variants by product id
  * @param {number} id - id of the product variant
  * @param {number} productId - id of the product
@@ -462,7 +462,7 @@ exports.getProductVariantsById = async (id, productId) => {
   }
 };
 
-/*
+/**
  * @desc delete product by id
  * @param {number} id - id of the product
  * @param {number} userId - id of the user
@@ -489,7 +489,7 @@ exports.deleteProductById = async (id, userId) => {
   }
 };
 
-/*
+/**
  * @desc add new product image
  *
  * @param {number} productId - id of the product
@@ -525,7 +525,7 @@ exports.addImage = async (productId, imageUrl, imageThumbnailUrl) => {
   }
 };
 
-/*
+/**
  * @desc edit product
  * @param {number} id - id of the product
  * @param {object} productData - data of the product as defined in the schema
@@ -546,7 +546,7 @@ exports.editProductById = async (id, productData) => {
   }
 };
 
-/*
+/**
  * @desc edit productVariant
  * @param {number} id - id of the product variant
  * @param {object} productVariantData - data of the product variant as defined in the schema
@@ -577,7 +577,7 @@ const customTagSchema = yup.object().shape({
 });
 
 /************************** Custom Tag ************************************/
-/*
+/**
  * @desc get custom tag by id
  * @param {number} id - id of the tag
  * @returns {Object} - bookshelf tag object
@@ -597,7 +597,7 @@ exports.getCustomTagsById = async (id) => {
   }
 };
 
-/*
+/**
  * @desc get custom tags by product id
  * @param {number} productId - id of the product
  * @returns {Object} - bookshelf tag object
@@ -621,7 +621,7 @@ exports.getCustomTagsByProductId = async (productId) => {
   }
 };
 
-/*
+/**
  * @desc get full tag details by product id
  * @param {number} id - id of the product
  * @returns {Object} - bookshelf tag object
@@ -646,7 +646,7 @@ exports.getAllTagsDetailsByProductId = async (id) => {
   }
 };
 
-/*
+/**
  * @desc add new custom tag
  * @param {number} productId - id of the product
  * @param {Object} tag - data of the custom tag as defined in the schema
@@ -672,7 +672,7 @@ exports.addCustomTag = async (productId, tag) => {
   }
 };
 
-/*
+/**
  * @desc delete custom tag by id
  * @param {number} tagId - id of the tag
  * @returns {Boolean} - true if tag is deleted

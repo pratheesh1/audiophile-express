@@ -13,7 +13,7 @@ const addressSchema = yup.object().shape({
   countryId: yup.number().required(),
 });
 
-/*
+/**
  * @desc    Create a new address
  *
  * @param   {object} address
@@ -42,7 +42,7 @@ exports.createAddress = async (address) => {
   }
 };
 
-/*
+/**
  * @desc    Get address by id
  *  @param   {number} addressId
  * @returns {object} address - bookshelf address object
@@ -62,7 +62,7 @@ exports.getAddressById = async (addressId) => {
   }
 };
 
-/*
+/**
  * @desc    Get all countries
  * @returns {object} countries - bookshelf countries object
  */

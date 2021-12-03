@@ -18,7 +18,7 @@ class CartServices {
     this.apiError = apiError;
   }
 
-  /*
+  /**
    * @desc add product to cart
    *
    * @param {Object} product

@@ -1,5 +1,5 @@
 {{!-- adapted from https://merakiui.com and https://alpinetoolbox.com/examples/navbar --}}
-<nav class="bg-gray-300 shadow-xl dark:bg-gray-800 h-auto pb-1 sm:pb-0">
+<nav class="bg-gray-300 shadow-xl dark:bg-gray-700 h-auto pb-1 sm:pb-0">
     <div class="container px-6 py-4 mx-auto">
         <div class="md:flex md:items-center md:justify-between" x-data="{ isOpen: false }"
             @keydown.escape="isOpen = false">
@@ -44,7 +44,7 @@
                     <a href="/products/add" @click="isOpen = false"
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Add
                         Product</a>
-                    <a href="#" @click="isOpen = false"
+                    <a href="/orders" @click="isOpen = false"
                         class="px-2 py-1 mx-2 mt-2 text-sm font-medium text-gray-800 transition-colors duration-200 transform rounded-md md:mt-0 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">Orders</a>
                 </div>
 

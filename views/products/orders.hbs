@@ -1,0 +1,171 @@
+{{#extends 'base'}}
+
+{{#block 'title'}}
+Orders
+{{/block}}
+
+{{#block 'content'}}
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
+    <div class="w-full overflow-y-scroll p-3 lg:p-5 lg:px-14 dark:bg-gray-800">
+        <div class="w-full">
+            {{!-- manage orders --}}
+            {{!-- heading section --}}
+            <div class="w-full flex flex-row items-center justify-start border-b mb-10">
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white my-2">
+                    Manage Orders
+                </h1>
+            </div>
+            {{!-- end of heading section --}}
+            <div class="w-full">
+                {{!-- table section --}}
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12 lg:col-span-7 lg:border-r pr-1 w-full lg:pr-5">
+                        <div class="flex flex-col items-start justify-between">
+                            <h2 class="text-lg font-bold text-gray-800 dark:text-white mt-2 p-2">
+                                All Orders
+                            </h2>
+                            <table class="w-full bg-white rounded-lg overflow-hidden shadow-lg my-2">
+                                <thead>
+                                    <tr
+                                        class="bg-blue-100 dark:bg-blue-200 font-serif text-gray-800 flex-col flex-nowrap table-row rounded-l-lg rounded-none mb-0">
+                                        <th class="p-3 text-left">Order ID</th>
+                                        <th class="p-3 text-left">Date</th>
+                                        <th class="p-3 text-left">Customer</th>
+                                        <th class="p-3 text-left">Ship To</th>
+                                        <th class="p-3 text-left">View Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-light">
+                                    {{#each orders}}
+                                    <tr class="flex-col flex-none table-row mb-0">
+                                        <td
+                                            class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 py-1 px-2 pl-6">
+                                            {{this.orderId}}</td>
+                                        <td
+                                            class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
+                                            {{formatDate this.order.timestamp}}
+                                        </td>
+                                        <td
+                                            class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3 leading-relaxed">
+                                            <span class="font-bold font-serif">Name: </span>
+                                            {{this.order.user.firstName}},
+                                            {{this.order.user.lastName}} <br />
+                                            <span class="font-bold font-serif">Email: </span>
+                                            {{this.order.user.email}} <br />
+                                        </td>
+                                        <td
+                                            class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3 leading-normal">
+                                            {{this.order.address.street}},
+                                            {{this.order.address.city}}
+                                            <br />
+                                            {{this.order.address.state}}, {{this.order.address.zip}}<br />
+                                            {{this.order.address.country.name}}
+                                        </td>
+                                        <td
+                                            class="border bg-yellow-200 hover:bg-blue-400 cursor-pointer hover:animate-pulse hover:scale-105 hover:rounded-md p-3">
+                                            <a href="/orders/{{this.orderId}}">View Order</a>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{!-- order details --}}
+                    <div class="col-span-12 lg:col-span-5">
+                        <div class="flex flex-col items-start justify-between lg:pl-3">
+                            <h2 class="text-lg font-bold text-gray-800 dark:text-white mt-2 p-2">
+                                Order Details: #{{selectedOrder.orderId}}
+                            </h2>
+                            {{#if selectedOrder}}
+                            <h2 class="text-base font-bold text-gray-800 dark:text-white p-2">
+                                Order Total: ${{orderTotal}}
+                            </h2>
+                            {{!-- details --}}
+                            <div class="w-full pt-10">
+                                {{#each selectedOrder.order.orderItem}}
+                                <div class="grid grid-cols-12 py-2 border-b">
+                                    <div class="col-span-2">
+                                        <img src="{{this.product.image.0.imageUrl}}" alt="{{this.product.name}}"
+                                            class="w-10/12 h-full rounded-lg object-contain hover:scale-150" />
+                                    </div>
+                                    <div class="col-span-10 grid grid-cols-12 pl-1">
+                                        <div class="col-span-12 md:col-span-6 lg:border-r">
+                                            <h2 class="text-base font-light text-gray-800 dark:text-white">
+                                                Product Name: &nbsp;{{this.product.name}}
+                                            </h2>
+                                            <h2 class="text-base font-light text-gray-800 dark:text-white">
+                                                Order Quantity: &nbsp;{{this.quantity}}
+                                            </h2>
+                                            <h2 class="text-base font-light text-gray-800 dark:text-white">
+                                                Purchased At: &nbsp;${{divide this.cost 100}}
+                                            </h2>
+                                        </div>
+                                        <div class="col-span-12 md:col-span-6 pl-2">
+                                            <h2 class="text-base font-light text-gray-800 dark:text-white">
+                                                <span class="font-bold font-serif">Current
+                                                    Status:</span>&nbsp;{{this.status.name}}
+                                            </h2>
+                                            {{!-- update item status --}}
+                                            {{#if (comparison this.status.id "!=" 13)}}
+                                            <div class="flex flex-row items-start justify-between py-3">
+                                                <div class="flex flex-col items-start justify-between mr-2">
+                                                    <select
+                                                        class="w-full bg-gray-200 dark:bg-gray-100 text-gray-800 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-yellow-100 focus:border-gray-500"
+                                                        id="status-{{this.id}}">
+                                                        <option value="">Select Status</option>
+                                                        <option value="6">Processing</option>
+                                                        <option value="7">Processed</option>
+                                                        <option value="8">Shipped</option>
+                                                        <option value="9">Cancelled</option>
+                                                        <option value="13">Completed</option>
+                                                    </select>
+                                                </div>
+                                                <div class="flex flex-col items-start justify-between">
+                                                    <button
+                                                        class="text-white bg-green-400 active:bg-green-700 py-1 px-5 w-full rounded-full"
+                                                        id="updateStatus" onclick="updateStatus({{this.id}})">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                            {{else}}
+                            <div class="flex items-center justify-center w-full pt-10 dark:text-white">
+                                Select an order to view details.
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{/block}}
+
+
+{{!-- scripts --}}
+{{#block "scripts"}}
+<script>
+    // update order status
+    function updateStatus(id) {
+        var status = document.getElementById(`status-${id}`).value;
+        if (status == '') {
+            alert('Please select a status');
+            return;
+        } else {
+            var url = '/orders/orderItem/updateStatus/{{selectedOrder.orderId}}/' + id + '/' + status;
+            window.location.href = url;
+        }
+    }
+</script>
+{{/block}}
+
+{{/extends}}

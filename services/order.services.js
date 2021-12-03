@@ -3,6 +3,9 @@ const {
   createOrder,
   createOrderItem,
   getOrders,
+  getOrderItems,
+  updateOrder,
+  updateOrderItemStatus,
 } = require("../repositories/order.repositories");
 const {
   getProductById,
@@ -70,6 +73,55 @@ class OrderServices extends CartServices {
   async getOrder(query) {
     const order = await getOrders({ ...query, userId: this.userId });
     return order;
+  }
+
+  async getProductOrdersByUserId(query) {
+    const orderItems = await getOrderItems({
+      ...query,
+      productOwnerId: this.userId,
+    });
+    return orderItems;
+  }
+
+  async getOrderItemsByOrderId(orderId) {
+    const orderItems = await getOrderItems({
+      productOwnerId: this.userId,
+      orderId: orderId,
+    });
+    return orderItems;
+  }
+
+  async updateOrder(orderId, status) {
+    const order = updateOrder(orderId, status);
+    return order;
+  }
+
+  async updateOrderItem(orderId, orderItemId, status) {
+    const orderItem = await updateOrderItemStatus(orderItemId, status);
+    await this.checkOrderStatus(orderId);
+    return orderItem;
+  }
+
+  //check if all order items have same status, if so, update order status
+  async checkOrderStatus(orderId) {
+    const orderItems = await this.getOrderItemsByOrderId(orderId);
+    //check if all values are same in array
+    const orderItemsStatus = orderItems.map((orderItem) => {
+      return orderItem.get("statusId");
+    });
+    const isSame = orderItemsStatus.every((status) => {
+      return status === orderItemsStatus[0];
+    });
+    if (isSame) {
+      await this.updateOrder(orderId, orderItemsStatus[0]);
+    }
+    //if not same, set to the lowest status
+    else {
+      const lowestStatus = orderItemsStatus.reduce((a, b) => {
+        return a < b ? a : b;
+      });
+      await this.updateOrder(orderId, lowestStatus);
+    }
   }
 }
 

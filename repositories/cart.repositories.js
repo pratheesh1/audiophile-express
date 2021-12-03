@@ -4,7 +4,7 @@ const yup = require("yup");
 const { Cart, CartItem } = require("../models");
 
 /************************** Cart ************************************/
-/*
+/**
  * @desc create cart
  * @param {number} userId
  * @returns {object} cart - bookshelf cart object
@@ -25,7 +25,7 @@ exports.createCart = async (userId) => {
   }
 };
 
-/*
+/**
  * @desc get cart
  * @param {number} userId
  * @returns {object} cart - bookshelf cart object
@@ -51,7 +51,7 @@ const cartSchema = yup.object().shape({
   quantity: yup.number().required(),
   originalPrice: yup.number().required(),
 });
-/*
+/**
  * @desc add item to cart
  * @param {Object} cartItem - cart item object
  * @param {number} userId - user id
@@ -87,7 +87,7 @@ exports.addProductToCart = async (userId, newProduct) => {
   }
 };
 
-/*
+/**
  * @desc update cart item
  * @param {number} userId - user id
  * @param {number} productId - product id
@@ -118,7 +118,7 @@ exports.updateCartItem = async (userId, product) => {
   }
 };
 
-/*
+/**
  * @desc delete cart item
  * @param {number} userId - user id
  * @param {number} productId - product id
@@ -147,7 +147,7 @@ exports.deleteCartItem = async (userId, productId, productVariantId = null) => {
   }
 };
 
-/*
+/**
  * @desc get cart items for a user
  * @param {number} userId - user id
  * @returns {object} cart - bookshelf cart object

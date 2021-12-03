@@ -10,6 +10,7 @@ const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 require("dotenv").config();
 const { consoleLog } = require("./signale.config");
+const { formatDate, comparison } = require("./utils");
 //handle async/await errors
 require("express-async-errors");
 //export error handler
@@ -76,6 +77,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.set("view engine", "hbs");
 //set-up partials, register helpers, wax-on and set-up views
 hbs.registerHelper(helpers);
+hbs.registerHelper("formatDate", formatDate);
+hbs.registerHelper("comparison", comparison);
 hbs.registerPartials(path.join(__dirname, "views/partials"));
 wax.on(hbs.handlebars);
 wax.setLayoutPath(path.join(__dirname, "views/layouts"));
@@ -84,6 +87,7 @@ wax.setLayoutPath(path.join(__dirname, "views/layouts"));
 const httpRoutes = {
   users: require("./routes/http/user.http.routes"),
   products: require("./routes/http/product.http.routes"),
+  orders: require("./routes/http/order.http.routes"),
 };
 const apiRoutes = {
   users: require("./routes/api/user.api.routes"),
@@ -100,6 +104,7 @@ async function main() {
   app.use("/", httpRoutes.users);
   app.use("/users", httpRoutes.users);
   app.use("/products", isLoggedIn, httpRoutes.products);
+  app.use("/orders", isLoggedIn, httpRoutes.orders);
 
   //api routes
   app.all("/api/*", express.json());

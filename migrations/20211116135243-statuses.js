@@ -55,4 +55,5 @@ const dataArr = [
   ["Order Received"],
   ["Order Cancelled"],
   ["Order Returned"],
+  ["Completed"],
 ];

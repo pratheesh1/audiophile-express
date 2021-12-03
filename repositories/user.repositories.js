@@ -11,7 +11,7 @@ const {
   BlacklistedToken,
 } = require("../models");
 
-/*
+/**
  ** @desc get user by email
  ** @param {string} email
  ** @returns {Object} user - bookshelf user object
@@ -33,7 +33,7 @@ exports.getUserByEmail = async (email) => {
   }
 };
 
-/*
+/**
  ** @desc validate login
  ** @param {string} email
  ** @param {string} password
@@ -71,7 +71,7 @@ const userSchema = yup.object().shape({
   userTypeId: yup.number().required(),
 });
 
-/*
+/**
  ** @desc add new user
  ** @param {Object} data
  ** @param {string} data.email
@@ -115,7 +115,7 @@ exports.addUser = async (data) => {
   }
 };
 
-/*
+/**
  ** @desc verify user email
  ** @param {string} token
  ** @return {boolean} true - if token is valid
@@ -148,7 +148,7 @@ exports.verifyEmail = async (token) => {
   }
 };
 
-/*
+/**
  ** @desc get token by name
  ** @param {string} token
  ** @return {boolean} true - if token is in database
@@ -170,7 +170,7 @@ exports.checkIfBlacklisted = async (jwtToken) => {
   }
 };
 
-/*
+/**
  ** @desc add token to blacklist
  ** @param {string} token
  ** @return {boolean} true - if token is added to database

@@ -13,7 +13,7 @@ Home
         <table class="w-full bg-white rounded-lg overflow-hidden shadow-lg my-5">
           <thead>
             <tr
-              class="bg-blue-50 dark:bg-blue-200 font-serif text-gray-800 flex-col flex-nowrap table-row rounded-l-lg rounded-none mb-0">
+              class="bg-blue-100 dark:bg-blue-200 font-serif text-gray-800 flex-col flex-nowrap table-row rounded-l-lg rounded-none mb-0">
               <th class="p-3 text-left font-normal">ID</th>
               <th class="p-3 text-left font-normal">Name</th>
               <th class="p-3 text-left font-normal">Cost</th>
@@ -28,15 +28,18 @@ Home
               <th class="p-3 text-left font-normal">Delete</th>
             </tr>
           </thead>
-          <tbody class="flex-none font-extralight">
+          <tbody class="flex-none font-light">
             {{#each products}}
-            <tr class="flex-col flex-no wrap table-row mb-0">
-              <td class="border hover:bg-gray-100 p-3">{{this.id}}</td>
-              <td class="border hover:bg-gray-100 p-3">{{this.name}}</td>
-              <td class="border hover:bg-gray-100 p-3">{{this.baseCost}}</td>
-              <td class="border hover:bg-gray-100 p-3">
+            <tr class="flex-col flex-nowrap table-row mb-0">
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">{{this.id}}
+              </td>
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">{{this.name}}
+              </td>
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
+                {{this.baseCost}}</td>
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
                 {{#if this.image}}
-                <img src="{{this.image.[0].imageThumbnailUrl}}" alt="listed product" />
+                <img src="{{this.image.[0].imageThumbnailUrl}}" alt="listed product" class="hover:scale-125" />
                 {{#compare this.image.length ">" 1}}
                 <p class="text-sm">
                   {{#minus this.image.length 1}}{{/minus}} more image(s).
@@ -46,24 +49,29 @@ Home
                 No Image
                 {{/if}}
               </td>
-              <td class="border hover:bg-gray-100 p-3">{{this.brand.brandName}}</td>
-              <td class="border hover:bg-gray-100 p-3">{{this.category.name}}</td>
-              <td class="border hover:bg-gray-100 p-3">
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
+                {{this.brand.brandName}}</td>
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
+                {{this.category.name}}</td>
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">
                 {{#if this.customTag.length}}
                 {{this.customTag.length}} tag(s)
                 {{else}}
                 No Tags
                 {{/if}}
               </td>
-              <td class="border hover:bg-gray-100 p-3">{{this.stock}}</td>
-              <td class="border bg-yellow-200 hover:bg-green-400 cursor-pointer p-3">
+              <td class="border bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 dark:hover:bg-gray-300 p-3">{{this.stock}}
+              </td>
+              <td
+                class="border bg-yellow-200 hover:bg-green-400 cursor-pointer hover:animate-pulse hover:scale-105 hover:rounded-md p-3">
                 <a href={{@root.frontendUrl}}product/{{this.id}} target="_blank" rel="noopener noreferrer">
                   View
                 </a>
               </td>
               {{#if @root.user}}
               {{#compare @root.user.id "===" this.userId}}
-              <td class="border bg-yellow-200 hover:bg-blue-400 cursor-pointer p-3">
+              <td
+                class="border bg-yellow-200 hover:bg-blue-400 cursor-pointer hover:animate-pulse hover:scale-105 hover:rounded-md p-3">
                 <a href="/products/{{this.id}}/edit">
                   Edit
                 </a>
@@ -81,7 +89,8 @@ Home
               {{/if}}
               {{#if @root.user}}
               {{#compare @root.user.id "===" this.userId}}
-              <td class="border bg-yellow-200 hover:bg-red-400 cursor-pointer p-3 text-red-500 hover:text-gray-800">
+              <td
+                class="border bg-yellow-200 hover:bg-red-400 cursor-pointer hover:animate-pulse hover:scale-105 hover:rounded-md p-3 text-red-500 hover:text-gray-800">
                 <button onclick="openModal({{this.id}})">
                   Delete
                 </button>

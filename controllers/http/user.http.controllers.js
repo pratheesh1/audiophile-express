@@ -73,7 +73,7 @@ exports.postSignupForm = (req, res) => {
           "success",
           "Your account has been created! Please check your email to verify your account!"
         );
-        res.redirect(req.session.urlToGoBack || "/users/profile");
+        res.redirect(req.session.urlToGoBack || "/products/home");
       }
     },
     error: (form) => {
@@ -96,10 +96,13 @@ exports.getLogout = (req, res) => {
 exports.getVerifyEmail = async (req, res) => {
   const { token } = req.params;
   const user = await verifyEmail(token);
+  //FIXME: flash message not working. Remove this log after fixing
+  console.log(user);
   if (user) {
     req.flash("success", "Your email has been verified!");
     res.redirect("/users/login");
+  } else {
+    req.flash("error", "This link is invalid or has expired!");
+    res.redirect("/users/login");
   }
-  req.flash("error", "This link is invalid or has expired!");
-  res.redirect("/users/login");
 };

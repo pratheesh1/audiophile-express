@@ -682,7 +682,6 @@ exports.deleteCustomTag = async (tagId) => {
     await yup.number().integer().validate(tagId);
 
     const customTag = await this.getCustomTagsById(tagId);
-    console.log(customTag);
     await customTag.destroy();
 
     return true;

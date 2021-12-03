@@ -1016,9 +1016,6 @@ video {
 .overflow-x-scroll {
 	overflow-x: scroll;
 }
-.overflow-y-scroll {
-	overflow-y: scroll;
-}
 .whitespace-nowrap {
 	white-space: nowrap;
 }
@@ -1312,6 +1309,10 @@ video {
 .px-3 {
 	padding-left: 0.75rem;
 	padding-right: 0.75rem;
+}
+.py-10 {
+	padding-top: 2.5rem;
+	padding-bottom: 2.5rem;
 }
 .pb-10 {
 	padding-bottom: 2.5rem;

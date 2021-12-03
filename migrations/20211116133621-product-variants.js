@@ -23,7 +23,7 @@ exports.up = function (db) {
     variantCost: { type: "int", notNull: true },
     imageURL: { type: "string", notNull: false },
     imageThumbnailURL: { type: "string", notNull: false },
-    stock: { type: "int", notNull: true },
+    stock: { type: "int", notNull: true, unsigned: true, defaultValue: 0 },
     productId: { type: "int", unsigned: true, notNull: true },
   });
 };

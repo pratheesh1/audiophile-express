@@ -54,7 +54,7 @@ exports.up = function (db) {
     },
     imageUrl: { type: "string", notNull: false },
     imageThumbnailUrl: { type: "string", notNull: false },
-    stock: { type: "int", notNull: true, defaultValue: 0 },
+    stock: { type: "int", notNull: true, unsigned: true, defaultValue: 0 },
     userId: { type: "int", notNull: false, unsigned: true, defaultValue: null },
     sku: { type: "string", notNull: false },
     frequencyResponseId: {

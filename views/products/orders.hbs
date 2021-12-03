@@ -87,6 +87,7 @@ Orders
                             {{!-- details --}}
                             <div class="w-full pt-10">
                                 {{#each selectedOrder.order.orderItem}}
+                                {{#if (comparison this.product.userId "===" @root.user.id)}}
                                 <div class="grid grid-cols-12 py-2 border-b">
                                     <div class="col-span-2">
                                         <img src="{{this.product.image.0.imageUrl}}" alt="{{this.product.name}}"
@@ -138,6 +139,7 @@ Orders
                                         </div>
                                     </div>
                                 </div>
+                                {{/if}}
                                 {{/each}}
                             </div>
                             {{else}}

@@ -144,3 +144,35 @@ describe("Logout user", () => {
     cy.url().should("include", "/users/login");
   });
 });
+
+describe("Accessing pages when user is logged in", () => {
+  beforeEach(() => {
+    cy.viewport("macbook-13");
+    cy.login();
+    cy.scrollTo(0, 0);
+  });
+
+  it("should redirect home page if the user is logged in and access /loggin", () => {
+    cy.visit("users/login");
+    cy.url().should("include", "/products");
+  });
+
+  it("should redirect home page if the user is logged in and access /register", () => {
+    cy.visit("users/register");
+    cy.url().should("include", "/products");
+  });
+
+  it("should be able to access protected routes after login", () => {
+    cy.visit("/products/home");
+    cy.url().should("include", "/products");
+
+    cy.visit("/products");
+    cy.url().should("include", "/products");
+
+    cy.visit("/products/add");
+    cy.url().should("include", "/products");
+
+    cy.visit("/orders");
+    cy.url().should("include", "/orders");
+  });
+});

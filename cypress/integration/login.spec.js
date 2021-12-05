@@ -45,8 +45,8 @@ describe("show error message when email or password is invalid", () => {
   it("should display error when credentials are invalid", () => {
     const email = chance.email();
     const password = chance.string({ length: 8 });
-    cy.get("input[name=email]").type(email);
-    cy.get("input[name=password]").type(password);
+    cy.get("input[name='email']").type(email);
+    cy.get("input[name='password']").type(password);
     cy.contains("button", "Login").click();
     cy.contains("Invalid email or password! Please try again!").should(
       "be.visible"
@@ -108,6 +108,16 @@ describe("Login with valid credentials", () => {
       cy.get("input[name='password']").type(credentials.password);
       cy.get("button").contains("Login").click();
       cy.contains("Login successful! Welcome back").should("be.visible");
+    });
+  });
+
+  it("should not display login and signup buttons", () => {
+    cy.get("@credentials").then((credentials) => {
+      cy.get("input[name='email']").type(credentials.email);
+      cy.get("input[name='password']").type(credentials.password);
+      cy.get("button").contains("Login").click();
+      cy.get('[href="/users/login"]').should("not.exist");
+      cy.get('[href="/users/register"]').should("not.exist");
     });
   });
 });

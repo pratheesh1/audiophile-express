@@ -27,3 +27,13 @@ Cypress.Commands.add("headerAndFooterVisible", () => {
   cy.get("nav").should("be.visible");
   cy.get("footer").should("be.visible");
 });
+
+Cypress.Commands.add("login", () => {
+  cy.fixture("credentials").as("credentials");
+  cy.get("@credentials").then((credentials) => {
+    cy.visit("/users/login");
+    cy.get("input[name='email']").type(credentials.email);
+    cy.get("input[name='password']").type(credentials.password);
+    cy.get("button").contains("Login").click();
+  });
+});

@@ -211,6 +211,12 @@ The default tailwind font family can be found in the documentation [here](https:
 | font-serif | font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;                                                                                                                                                     |
 | font-mono  | font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;                                                                                                              |
 
+The color palette for this website is designed to be light and vibrant and provide a fluid user experience. Prominent colours vary between light and dark modes. Major colors used are the following:
+
+```
+#25caac, #3f3f46, #22c55e, #d4d4d8, #27272a,  #dbeafe
+```
+
 #### 5.2.3 Light/Dark Mode
 
 This project also make use of tailwind classes to create a light/dark mode. The default theme is based on system preferences. User can change the theme by clicking on the light/dark mode button. If the user switches themes, this choice is saved in the local storage and will be used on the next visit.

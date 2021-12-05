@@ -55,7 +55,7 @@ exports.up = function (db) {
     imageUrl: { type: "string", notNull: false },
     imageThumbnailUrl: { type: "string", notNull: false },
     stock: { type: "int", notNull: true, unsigned: true, defaultValue: 0 },
-    userId: { type: "int", notNull: false, unsigned: true, defaultValue: null },
+    userId: { type: "int", notNull: false, unsigned: true },
     sku: { type: "string", notNull: false },
     frequencyResponseId: {
       type: "int",

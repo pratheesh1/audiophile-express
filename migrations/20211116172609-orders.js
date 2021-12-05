@@ -56,13 +56,13 @@ exports.up = function (db) {
         },
       },
     },
-    paymentReference: { type: "string", notNull: false, defaultValue: null },
+    paymentReference: { type: "string", notNull: false },
     timestamp: {
       type: "timestamp",
       notNull: true,
-      defaultValue: "CURRENT_TIMESTAMP",
+      defaultValue: "now()",
     },
-    notes: { type: "string", notNull: false, defaultValue: null },
+    notes: { type: "string", notNull: false },
   });
 };
 

@@ -16,21 +16,21 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   return db
-    .removeColumn("product_variants", "imageThumbnailUrl")
+    .removeColumn("product_variants", "imageThumbnailURL")
     .then(function () {
-      return db.removeColumn("product_variants", "imageUrl");
+      return db.removeColumn("product_variants", "imageURL");
     });
 };
 
 exports.down = function (db) {
   return db
-    .addColumn("product_variants", "imageUrl", {
+    .addColumn("product_variants", "imageURL", {
       type: "string",
       length: 255,
       notNull: false,
     })
     .then(function () {
-      return db.addColumn("product_variants", "imageThumbnailUrl", {
+      return db.addColumn("product_variants", "imageThumbnailURL", {
         type: "string",
         length: 255,
         notNull: false,

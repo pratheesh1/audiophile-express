@@ -38,6 +38,17 @@ describe("show error message when email or password is invalid", () => {
       "be.visible"
     );
   });
+
+  it("should display error when credentials are invalid", () => {
+    const email = chance.email();
+    const password = chance.string({ length: 8 });
+    cy.get("input[name=email]").type(email);
+    cy.get("input[name=password]").type(password);
+    cy.contains("button", "Login").click();
+    cy.contains("Invalid email or password! Please try again!").should(
+      "be.visible"
+    );
+  });
 });
 
 describe("Redirects to login page if user is not logged in", () => {
@@ -67,5 +78,31 @@ describe("Redirects to login page if user is not logged in", () => {
     cy.get('[href="/orders"]').click();
     cy.contains("Please login to access this page.").should("be.visible");
     cy.url().should("include", "/users/login");
+  });
+});
+
+describe("Login with valid credentials", () => {
+  beforeEach(() => {
+    cy.viewport("macbook-13");
+    cy.visit("/users/login");
+    cy.fixture("credentials").as("credentials");
+  });
+
+  it("should login with valid credentials", () => {
+    cy.get("@credentials").then((credentials) => {
+      cy.get("input[name=email]").type(credentials.email);
+      cy.get("input[name=password]").type(credentials.password);
+      cy.get("button").contains("Login").click();
+      cy.url().should("include", "/products");
+    });
+  });
+
+  it("should display welcome message", () => {
+    cy.get("@credentials").then((credentials) => {
+      cy.get("input[name=email]").type(credentials.email);
+      cy.get("input[name=password]").type(credentials.password);
+      cy.get("button").contains("Login").click();
+      cy.contains("Login successful! Welcome back").should("be.visible");
+    });
   });
 });

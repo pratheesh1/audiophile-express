@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-audio-store-express",
+  "name": "e-commerce-audio-store-express",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,8 @@
     "build:css": "postcss ./public/styles/tailwind.css -o ./public/styles/index.css && echo '\\033[1;92m>> tailwind css build completed!'",
     "start-dev": "nodemon index.js",
     "watch": "chokidar './views/**' './forms/**' './public/styles/tailwind.css' -c \"npm run build:css\"",
-    "dev": "concurrently \"npm run build:css\" \"npm run watch\" \"npm run start-dev\""
+    "dev": "concurrently \"npm run build:css\" \"npm run watch\" \"npm run start-dev\"",
+    "test": "cypress open"
   },
   "keywords": [
     "e-commerce",
@@ -53,8 +54,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
+    "chance": "^1.1.8",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^6.4.0",
+    "cypress": "^9.1.1",
     "postcss-cli": "^9.0.2",
     "tailwindcss": "^2.2.19"
   },

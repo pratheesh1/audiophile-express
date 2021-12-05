@@ -71,9 +71,9 @@ exports.postSignupForm = (req, res) => {
         );
         req.flash(
           "success",
-          "Your account has been created! Please check your email to verify your account!"
+          "You have successfully registered! You may want to verify your email by clicking the link in the email we sent you."
         );
-        res.redirect(req.session.urlToGoBack || "/products/home");
+        res.redirect(req.session.urlToGoBack || "/products/login");
       }
     },
     error: (form) => {

@@ -9,7 +9,7 @@
 
 ### 1.2 Routes
 
-This project has routes for server-side rendered pages and api routes for a react front-end. All api routes are in the `api` directory and all side routes are in the `http` directory. Some routes that doesn't fit either category are in the root directory.
+This project has routes for server-side rendered pages and api routes for a react front-end. All api routes are in the `api` directory and all server-side routes are in the `http` directory. Some routes that doesn't fit either category are in the root directory.
 
 ### 1.3 Directory Structure
 

@@ -90,8 +90,14 @@ Orders
                                 {{#if (comparison this.product.userId "===" @root.user.id)}}
                                 <div class="grid grid-cols-12 py-2 border-b">
                                     <div class="col-span-2">
+                                        {{#if this.product.image.length}}
                                         <img src="{{this.product.image.0.imageUrl}}" alt="{{this.product.name}}"
                                             class="w-10/12 h-full rounded-lg object-contain hover:scale-150" />
+                                        {{else}}
+                                        {{!-- use placeholder --}}
+                                        <img src="https://via.placeholder.com/150" alt="{{this.product.name}}"
+                                            class="w-10/12 h-full rounded-lg object-contain hover:scale-150" />
+                                        {{/if}}
                                     </div>
                                     <div class="col-span-10 grid grid-cols-12 pl-1">
                                         <div class="col-span-12 md:col-span-6 lg:border-r">

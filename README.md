@@ -1,50 +1,190 @@
-# Express API Template -Node.js/Express/Tailwind
+# Audiophile
 
-Express API Template with Node.js, Express, Tailwind and hbs as the template engine.
+## An eCommerce Platform for audio products.
 
-## Packages:
+This project is called `Audiophile` and is a simple eCommerce platform for selling audio products. The project is aimed at individual vendors who want to sell their products online and customers who want to shop for these products specifically. While many general eCommerce platforms exist, there are no major platforms that cater specifically for audio products and is designed with these kinds of products in mind.
 
-<!-- TODO: add prod package names -->
-<!-- TODO: add dev package names -->
+This project solves these pain points by providing a simple, yet powerful, eCommerce platform for audio products, which is accessible to both the vendor and the customer, and is designed to be easy to use and maintain.
 
-## CSS
+## Index
 
-This template is configured for tailwindcss and jit mode is enabled out of the box. No need to worry about file sizes during development.
+## 1. Project Design
 
-> jit only watches files in views folder (update tailwind.config.js to change this).
+There are two parts to this project. The product listing and order management is done with server-side rendered routes for which the code can be found in this repository. The front-end eCommerce platform is built with React.js, the source code and details of which can be found [here](https://github.com/pratheesh1/audiophile-react).
 
-> I assume you have nodemon installed globally. If not run `npm i -g nodemon` to install nodemon globally (edit scripts if you prefer not using nodemon).
+## 2. Deployment
 
-Run `npm install` to install all dependencies.
+The project is deployed on Heroku. The website can be accessed
 
-Run `npm run dev` to start the development server.
+ <!-- TODO: here -->
 
-Run `npm run build:css` at least once before deploying to production (start script is not configured to build css).
+## 3. Website Features and Navigation
 
-Run `npm start` to start the production server.
+The backend website of this project is used to manage the products and orders. All routes of the backend are accessible only to registered users.
 
-## Current Setup
+### 3.1 Features
 
-<!-- prettier ignore -->
+Features for the backend website are as follows:
+
+#### 3.1.1 User Account Management
+
+There are two primary types of users in this project. The first is the vendor who is the owner of the products and the second is the customer who is the shopper. An account registered with the font-end cannot be used to access the backend to list products. The user account management is done with the following features:
+
+- Registration
+- Login
+- Logout
+- Email Verification (optional - a verification email is sent to the user's email address, but the user can still access the website without verification)
+
+#### 3.1.2 Product Management
+
+A registered vendor can list products on the website. The products can be added to the cart and can be purchased by the customer. The products can be edited and deleted by the vendor provided that the product is not in the cart or is not purchased by the customer. The product management includes the following features:
+
+- Add product
+- Edit product
+- Delete product
+- Add product image
+- Delete product image
+- Add custom product attributes
+- Delete custom product attributes
+
+The website allows vendors to view all products including those that are listed by other vendors, but only the owner of the product can edit or delete it.
+
+#### 3.1.3 Order Management
+
+A product owner can view the orders placed by the customers and can edit the order status. Once the order is marked as completed, no further changes can be made to the order. The order management includes the following features:
+
+- View order
+- Edit order status
+
+#### 3.1.4 Product Search
+
+The product search feature is used to search for products based on the product name, brand, category, price, stock, and attributes.
+
+### 3.2 Navigation
+
+All routes except for the login and registration routes are accessible only to registered users. The navigation is as follows:
+
+#### 3.2.1 Login
+
+User is redirected to home page if already logged in and after login. User can enter the email address and password to login.
+
+#### 3.2.2 Register
+
+User is redirected to home page if already logged in and after registration. User can fill in the details to register.
+
+#### 3.2.3 Home
+
+Home page is the landing page of the website. All products owned by the vendor are displayed on the home page. There is a filter products section on the home page where the user can filter the products based on the criteria described above.
+
+- User is redirected to login page if not logged in.
+
+- From the homepage, user can use `Add New Listing` button or `Add Product` link on Navbar to add a new product.
+
+- Every product is displayed on the home page with the following information:
+
+  - Product id
+  - Product name
+  - Product cost
+  - Product image
+  - Product brand
+  - Product category
+  - Product custom tags
+  - Product stock
+  - Product Actions
+    > - View - User is redirected to product page on frontend
+    > - Edit - User is redirected to product edit page
+    > - Delete - User is prompted to confirm deletion
+
+#### 3.2.4 Add Product
+
+Add product have 3 pages to add a new product. All mandatory fields are only displayed on the first page. The second page is the product image upload page. The third page is the product attributes page. Images ans attributes are not mandatory for a listing.
+
+- User is redirected to login page if not logged in.
+- App product form is intuitive and self-explanatory. User can fill in the details to add a new product.
+
+#### 3.2.5 Orders
+
+- User is redirected to login page if not logged in.
+- User can view all orders placed by the customers.
+- User can edit the order status and details, as well as update the order status.
+
+The following tree shows a general direction in which one might navigate through the website:
 
 ```
-<!-- TODO: add tree here -->
+.
+├── Register
+├── Login
+├── Add Product
+├── All Listings
+│   ├── Add Product
+│   ├── Delete Listing
+│   ├── Filter Products
+│   ├── Orders
+│   ├── Update
+│   └── View Listing
+├── Your Listings
+│   ├── Add Product
+│   ├── Delete Listing
+│   ├── Filter Products
+│   ├── Orders
+│   ├── Update
+│   └── View Listing
+├── Orders
+│   ├── View Orders
+│   └── Update Order Status
+└── Logout
 
+Add new product sub-pages:
+
+├── Add Product
+│   └── Add New Product Details
+│       └── Add Images
+│           └── Add Custom Tags
+
+Update listing sub-pages:
+
+├── Update
+│   └── Update Listing
+│       └── Update Images
+│           └── Update Custom Tags
 ```
 
-### Current Setup - Detailed
+## 4. Technologies Used
 
-<!-- prettier ignore -->
+The technologies used in this project are as follows:
 
-```
-// default route
-<!-- TODO: add default route here -->
+| Technology                                                                         | Description                                                                                       |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [Express.js](https://expressjs.com/)                                               | A fast, unopinionated, minimalist web framework for Node.js                                       |
+| [Tailwindcss](https://tailwindcss.com/)                                            | A utility-first CSS framework for rapidly build modern websites without ever leaving your HTML.   |
+| [morgan](https://github.com/expressjs/morgan)                                      | A logger for Express.js for creating log files for the API.                                       |
+| [yup](https://github.com/jquense/yup)                                              | Schema validation library for Node.js. for validating request body, query and parameters headers. |
+| [bookshelf](https://bookshelfjs.org/)                                              | ORM for Node.js.                                                                                  |
+| [knex](https://knexjs.org/)                                                        | A SQL query builder for Node.js.                                                                  |
+| [cloudinary](https://cloudinary.com/)                                              | Cloud image hosting service.                                                                      |
+| [connect-flash](https://github.com/jaredhanson/connect-flash)                      | A middleware for Express.js to manage flash messages.                                             |
+| [cors](https://github.com/expressjs/cors)                                          | Middleware for Express.js to enable cross-origin resource sharing.                                |
+| [csurf](https://github.com/expressjs/csurf)                                        | Middleware for Express.js to enable cross-site request forgery protection.                        |
+| [date-fns](https://date-fns.org/)                                                  | A library for date manipulation in Node.js.                                                       |
+| [db-migrate](https://db-migrate.readthedocs.io/en/latest/Getting%20Started/usage/) | This project uses db-migrate, a database migration tool for Node.js.                              |
+| [db-migrate-mysql](https://github.com/db-migrate/mysql)                            | This project uses db-migrate-mysql, a database migration tool for MySQL.                          |
+| [dotenv](https://github.com/motdotla/dotenv)                                       | A library for loading environment variables from a .env file.                                     |
+| [express-async-errors](https://github.com/davidbanham/express-async-errors)        | A dead simple ES6 async/await support hack for ExpressJS                                          |
+| [express-session](https://github.com/expressjs/session)                            | Middleware for Express.js to manage sessions.                                                     |
+| [session-file-store](https://github.com/valery-barysok/session-file-store)         | A session file storage library fpr Express and Connect.                                           |
+| [forms](https://github.com/caolan/forms)                                           | Caolan's forms library for Node.js.                                                               |
+| [hbs](https://github.com/pillarjs/hbs)                                             | Express.js view engine for handlebars.js                                                          |
+| [handlebars-helpers](https://github.com/helpers/handlebars-helpers)                | Handlebars helpers for Node.js.                                                                   |
+| [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)                         | An implementation of JSON Web Tokens in Node.js.                                                  |
+| [mysql](https://github.com/mysqljs/mysql)                                          | A MySQL driver for Node.js.                                                                       |
+| [nodemailer](https://nodemailer.com/)                                              | A Node.js library for sending emails.                                                             |
+| [path](https://nodejs.org/docs/latest/api/path.html)                               | Node.js library for working with file and directory paths.                                        |
+| [signale](https://github.com/klaussinani/signale)                                  | Logging library for Node.js.                                                                      |
+| [stripe](https://stripe.com/)                                                      | A payment processing API for the Internet.                                                        |
+| [wax-on](https://github.com/keithws/wax-on)                                        | Wax On adds support to Handlebars for template inheritance with the block and extends helpers.    |
 
-//static folder
-app.use(express.static(path.join(__dirname, "/public")));
+## 5. UI/UX Design
 
-//wax-on set-up
-wax.on(hbs.handlebars);
-<!-- TODO: add layout and partials path -->
+## 6. Testing
 
-```
+## 7. Acknowledgements

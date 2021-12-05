@@ -10,7 +10,6 @@ describe("Renders register page", () => {
     cy.headerAndFooterVisible();
   });
 
-  //register page renders correctly
   it("Renders register page", () => {
     cy.contains("First name").should("be.visible");
     cy.contains("Last name").should("be.visible");
@@ -32,7 +31,6 @@ describe("Show error message when filed inputs are empty or invalid", () => {
     cy.visit("/users/register");
   });
 
-  //show error message when fields are empty
   it("show error message when first name is empty", () => {
     cy.get("button").contains("Register").click();
     cy.contains("First name: is required.").should("be.visible");
@@ -124,7 +122,7 @@ describe("Register user", () => {
     cy.visit("/users/register");
   });
 
-  it("register user", () => {
+  it("registers new user and redirects to login", () => {
     cy.get("input[name='firstName']").type(firstName);
     cy.get("input[name='lastName']").type(lastName);
     cy.get("input[name='email']").type(email);
@@ -134,5 +132,7 @@ describe("Register user", () => {
     cy.contains(
       "You have successfully registered! You may want to verify your email by clicking the link in the email we sent you."
     ).should("be.visible");
+    cy.contains("Login").should("be.visible");
+    cy.url().should("include", "/users/login");
   });
 });

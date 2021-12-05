@@ -10,7 +10,6 @@ describe("Render login page", () => {
     cy.headerAndFooterVisible();
   });
 
-  //test login page renders correctly
   it("should display login page", () => {
     cy.url().should("include", "/users/login");
     cy.contains("Login to your account").should("be.visible");
@@ -26,7 +25,6 @@ describe("show error message when email or password is invalid", () => {
     cy.viewport("macbook-13");
     cy.visit("/users/login");
   });
-  //test it displays error message when email is empty
   it("should display error message when email is empty", () => {
     cy.contains("button", "Login").click();
     cy.contains("Invalid email or password! Please try again!").should(
@@ -34,7 +32,6 @@ describe("show error message when email or password is invalid", () => {
     );
   });
 
-  //test it displays error message when password is empty
   it("should display error message when password is empty", () => {
     cy.contains("button", "Login").click();
     cy.contains("Invalid email or password! Please try again!").should(
@@ -43,7 +40,6 @@ describe("show error message when email or password is invalid", () => {
   });
 });
 
-//test it redirects to login page if user is not logged in
 describe("Redirects to login page if user is not logged in", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");

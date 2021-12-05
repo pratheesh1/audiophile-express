@@ -1,5 +1,5 @@
 {
   "viewportWidth": 1280,
   "viewportHeight": 1000,
-  "baseUrl": "https://ps-audiophile.herokuapp.com/"
+  "baseUrl": "http://localhost:3500/"
 }

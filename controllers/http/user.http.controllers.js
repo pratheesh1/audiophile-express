@@ -69,11 +69,12 @@ exports.postSignupForm = (req, res) => {
           newUser.user.get("email"),
           newUser.token
         );
+        //FIXME: flash message not working in some instances. Remove this log after fixing
         req.flash(
           "success",
           "You have successfully registered! You may want to verify your email by clicking the link in the email we sent you."
         );
-        res.redirect(req.session.urlToGoBack || "/products/login");
+        res.redirect("/users/login");
       }
     },
     error: (form) => {
@@ -96,7 +97,7 @@ exports.getLogout = (req, res) => {
 exports.getVerifyEmail = async (req, res) => {
   const { token } = req.params;
   const user = await verifyEmail(token);
-  //FIXME: flash message not working. Remove this log after fixing
+  //FIXME: flash message not working in some instances. Remove this log after fixing
   console.log(user);
   if (user) {
     req.flash("success", "Your email has been verified!");

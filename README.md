@@ -8,6 +8,8 @@ This project solves these pain points by providing a simple, yet powerful, eComm
 
 ## Index
 
+<!-- TODO: Add index -->
+
 ## 1. Project Design
 
 There are two parts to this project. The product listing and order management is done with server-side rendered routes for which the code can be found in this repository. The front-end eCommerce platform is built with React.js, the source code and details of which can be found [here](https://github.com/pratheesh1/audiophile-react).
@@ -97,7 +99,7 @@ Home page is the landing page of the website. All products owned by the vendor a
 
 #### 3.2.4 Add Product
 
-Add product have 3 pages to add a new product. All mandatory fields are only displayed on the first page. The second page is the product image upload page. The third page is the product attributes page. Images ans attributes are not mandatory for a listing.
+Add product have 3 pages to add a new product. All mandatory fields are only displayed on the first page. The second page is the product image upload page. The third page is the product attributes page. Images and attributes are not mandatory for a listing.
 
 - User is redirected to login page if not logged in.
 - App product form is intuitive and self-explanatory. User can fill in the details to add a new product.
@@ -183,7 +185,37 @@ The technologies used in this project are as follows:
 | [stripe](https://stripe.com/)                                                      | A payment processing API for the Internet.                                                        |
 | [wax-on](https://github.com/keithws/wax-on)                                        | Wax On adds support to Handlebars for template inheritance with the block and extends helpers.    |
 
-## 5. UI/UX Design
+## 5. Design
+
+### 5.1 UI/UX
+
+The UI/UX design for this project was done with ease of use in mind. The design process for the website are as follows:
+
+#### 5.1.1 User Interface
+
+User interface is designed to be intuitive and easy to use. The user can easily navigate through the website to add new products, view all listings, and view all orders. Most components are self-explanatory and easy to use.
+
+#### 5.2.2 User Experience
+
+Although the website makes prolific use of tables, most components except the tables are mobile-friendly. The website do not expect heavy traffic from mobile devices. All tables om mobile devices are set to scroll to provide a better user experience.
+
+The project uses tailwindcss to create a responsive design. The website is designed to be used on a desktop, laptop, and tablet. Tailwindcss default font family is already a good fit for this website and hence not modified.
+The default tailwind font family can be found in the documentation [here](https://tailwindcss.com/docs/font-family).
+
+| Class      | Property                                                                                                                                                                                                                      |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| font-sans  | font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; |
+| font-serif | font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;                                                                                                                                                     |
+| font-mono  | font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;                                                                                                              |
+
+#### 5.2.3 Light/Dark Mode
+
+This project also make use of tailwind classes to create a light/dark mode. The default theme is based on system preferences. User can change the theme by clicking on the light/dark mode button. If the user switches themes, this choice is saved in the local storage and will be used on the next visit.
+
+### 5.2. Database Design
+
+The database design for this project was done with ease of use in mind and also to provide room for expansion. The design is based on the database schema as shown in the schema diagram below.
+![Database Schema](https://res.cloudinary.com/dvam3s15z/image/upload/v1638683801/l8lde44nxvcnt4sx4fpu.png)
 
 ## 6. Testing
 

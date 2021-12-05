@@ -184,6 +184,7 @@ The technologies used in this project are as follows:
 | [signale](https://github.com/klaussinani/signale)                                  | Logging library for Node.js.                                                                      |
 | [stripe](https://stripe.com/)                                                      | A payment processing API for the Internet.                                                        |
 | [wax-on](https://github.com/keithws/wax-on)                                        | Wax On adds support to Handlebars for template inheritance with the block and extends helpers.    |
+| [font-awesome](https://fontawesome.com/)                                           | A library of icons and fonts.                                                                     |
 
 ## 5. Design
 
@@ -220,3 +221,6 @@ The database design for this project was done with ease of use in mind and also 
 ## 6. Testing
 
 ## 7. Acknowledgements
+
+- All the images used in this project are from [unsplash.com](https://unsplash.com/), placeholders are used for the missing images from [placeholder.com](https://placeholder.com/) and brand logs are from [clearbit.com](https://clearbit.com/logo).
+- All code snippets and templates used in this project are attributed in the source code where applicable.

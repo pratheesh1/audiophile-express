@@ -14,6 +14,8 @@ This project solves these pain points by providing a simple, yet powerful, eComm
 
 There are two parts to this project. The product listing and order management is done with server-side rendered routes for which the code can be found in this repository. The front-end eCommerce platform is built with React.js, the source code and details of which can be found [here](https://github.com/pratheesh1/audiophile-react).
 
+An initial thinking process and brainstorming document was created to help the team in the development of the project. The document can be found [here](https://docs.google.com/presentation/d/1WySc4aT7RTCMPersbQStq_BWSSCVUVimFh-vDrcteoU/edit?usp=sharing).
+
 ## 2. Deployment
 
 The project is deployed on Heroku. The website can be accessed

@@ -7,6 +7,7 @@ describe("Renders register page", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/register");
+    cy.scrollTo("top");
     cy.headerAndFooterVisible();
   });
 
@@ -29,6 +30,7 @@ describe("Show error message when filed inputs are empty or invalid", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/register");
+    cy.scrollTo("top");
   });
 
   it("show error message when first name is empty", () => {
@@ -96,6 +98,7 @@ describe("Show error message when email is already registered", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/register");
+    cy.scrollTo("top");
   });
 
   it("show error message when email is already registered", () => {
@@ -120,6 +123,7 @@ describe("Register user", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/register");
+    cy.scrollTo("top");
   });
 
   it("registers new user and redirects to login", () => {

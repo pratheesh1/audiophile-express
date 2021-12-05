@@ -7,6 +7,7 @@ describe("Render login page", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/login");
+    cy.scrollTo(0, 0);
     cy.headerAndFooterVisible();
   });
 
@@ -24,7 +25,9 @@ describe("show error message when email or password is invalid", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/login");
+    cy.scrollTo(0, 0);
   });
+
   it("should display error message when email is empty", () => {
     cy.contains("button", "Login").click();
     cy.contains("Invalid email or password! Please try again!").should(
@@ -55,6 +58,7 @@ describe("Redirects to login page if user is not logged in", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/");
+    cy.scrollTo(0, 0);
   });
 
   it("should redirect to login page if user is not logged in and click Your Listings", () => {
@@ -85,13 +89,14 @@ describe("Login with valid credentials", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
     cy.visit("/users/login");
+    cy.scrollTo(0, 0);
     cy.fixture("credentials").as("credentials");
   });
 
   it("should login with valid credentials", () => {
     cy.get("@credentials").then((credentials) => {
-      cy.get("input[name=email]").type(credentials.email);
-      cy.get("input[name=password]").type(credentials.password);
+      cy.get("input[name='email']").type(credentials.email);
+      cy.get("input[name='password']").type(credentials.password);
       cy.get("button").contains("Login").click();
       cy.url().should("include", "/products");
     });
@@ -99,10 +104,33 @@ describe("Login with valid credentials", () => {
 
   it("should display welcome message", () => {
     cy.get("@credentials").then((credentials) => {
-      cy.get("input[name=email]").type(credentials.email);
-      cy.get("input[name=password]").type(credentials.password);
+      cy.get("input[name='email']").type(credentials.email);
+      cy.get("input[name='password']").type(credentials.password);
       cy.get("button").contains("Login").click();
       cy.contains("Login successful! Welcome back").should("be.visible");
     });
+  });
+});
+
+describe("Logout user", () => {
+  beforeEach(() => {
+    cy.viewport("macbook-13");
+    cy.visit("/users/login");
+    cy.scrollTo(0, 0);
+    cy.fixture("credentials").as("credentials");
+
+    cy.get("@credentials").then((credentials) => {
+      cy.get("input[name='email']").type(credentials.email);
+      cy.get("input[name='password']").type(credentials.password);
+      cy.get("button").contains("Login").click();
+      cy.url().should("include", "/products");
+    });
+  });
+  it("user is able to logout", () => {
+    cy.get("#user-menu-dropdown").click();
+    cy.get('.absolute > [href="/products/home"]').should("be.visible");
+    cy.get('.absolute > [href="/users/logout"]').click();
+    cy.contains("You have successfully logged out!").should("be.visible");
+    cy.url().should("include", "/users/login");
   });
 });

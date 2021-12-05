@@ -7,3 +7,5 @@ test
 sessions
 .DS_Store
 test
+cypress/screenshots
+cypress/videos

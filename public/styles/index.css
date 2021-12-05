@@ -874,6 +874,12 @@ video {
 .min-h-full {
 	min-height: 100%;
 }
+.min-h-\[92vh\] {
+	min-height: 92vh;
+}
+.min-h-\[93vh\] {
+	min-height: 93vh;
+}
 .w-full {
 	width: 100%;
 }
@@ -2140,10 +2146,6 @@ video {
 
 	.md\:overflow-y-auto {
 		overflow-y: auto;
-	}
-
-	.md\:rounded-xl {
-		border-radius: 0.75rem;
 	}
 
 	.md\:pb-0 {

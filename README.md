@@ -18,9 +18,8 @@ An initial thinking process and brainstorming document was created to help the t
 
 ## 2. Deployment
 
-The project is deployed on Heroku. The website can be accessed
-
- <!-- TODO: here -->
+The project is deployed on Heroku. The website can be accessed at the following link:
+[https://ps-audiophile.herokuapp.com](https://ps-audiophile.herokuapp.com)
 
 ## 3. Website Features and Navigation
 

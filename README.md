@@ -160,6 +160,7 @@ The technologies used in this project are as follows:
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | [Express.js](https://expressjs.com/)                                               | A fast, unopinionated, minimalist web framework for Node.js                                       |
 | [Tailwindcss](https://tailwindcss.com/)                                            | A utility-first CSS framework for rapidly build modern websites without ever leaving your HTML.   |
+| [Alpine.js](https://alpinejs.dev/)                                                 | A minimal, fast, and secure JavaScript framework for Node.js                                      |
 | [morgan](https://github.com/expressjs/morgan)                                      | A logger for Express.js for creating log files for the API.                                       |
 | [yup](https://github.com/jquense/yup)                                              | Schema validation library for Node.js. for validating request body, query and parameters headers. |
 | [bookshelf](https://bookshelfjs.org/)                                              | ORM for Node.js.                                                                                  |
@@ -226,6 +227,30 @@ The database design for this project was done with ease of use in mind and also 
 ![Database Schema](https://res.cloudinary.com/dvam3s15z/image/upload/v1638683801/l8lde44nxvcnt4sx4fpu.png)
 
 ## 6. Testing
+
+There are no unit or integration tests for this project. E2E tests are done with [cypress](https://www.cypress.io/).
+Since cloudinary widgets are used for uploading images, some manual intervention is required during the test. The tests are written to pause the execution to allow the user to upload the image where required. The following google drive folder contains the videos for the tests. Each file corresponds to a test and the file names correspond to the test names.
+
+https://drive.google.com/drive/folders/1Olp86mZAHP3v4_eaAlStO8XBNOjLcZtm?usp=sharing
+
+Pre-requisite for running the tests:
+
+- All env variables are set in the .env file.
+- The database is set up with migrations and is up and running.
+- The database has at least one user, one product, and one incomplete order that belong to the user.
+- The database has at least one user, one product, and one incomplete order that do not belong to the user.
+- In the cypress/fixtures folder, there are the following files:
+  - credentials.json: contains the credentials for the user that will be used for the tests. (The user account must already be in the database)
+  - product.json: contains the product that will be used for the tests. (The product must already be in the database)
+
+To run the tests, run the following command in the terminal from the root directory of the project:
+
+```
+npm install
+npm run test
+```
+
+Follow the video instructions to run the tests.
 
 ## 7. Acknowledgements
 

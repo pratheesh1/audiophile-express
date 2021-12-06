@@ -4,9 +4,6 @@ import Chance from "chance";
 const chance = new Chance();
 
 describe("Render Products Page", () => {
-  beforeEach(() => {
-    cy.viewport("macbook-13");
-  });
   it("renders the products page", () => {
     cy.login();
     cy.visit("/products");

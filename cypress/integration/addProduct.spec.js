@@ -5,7 +5,6 @@ const chance = new Chance();
 
 describe("Add Product Renders Correctly", () => {
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.login();
     cy.contains("Add Product").click();
     cy.scrollTo(0, 0);
@@ -59,7 +58,6 @@ describe("Form Validation", () => {
   const productStock = chance.integer({ min: 1, max: 10000 });
 
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.login();
     cy.contains("Add Product").click();
     cy.scrollTo(0, 0);
@@ -100,7 +98,6 @@ describe("Form Validation", () => {
 
 describe("Image Upload", () => {
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.login();
     cy.contains("Add Product").click();
     cy.scrollTo("bottom");
@@ -119,7 +116,6 @@ describe("Image Upload", () => {
 
 describe("Add Images", () => {
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.login();
     cy.contains("Add Product").click();
     cy.scrollTo("bottom");
@@ -158,7 +154,6 @@ describe("Add Images", () => {
 
 describe("Add More Images", () => {
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.addProduct();
   });
 
@@ -176,7 +171,6 @@ describe("Add More Images", () => {
 
 describe("Remove Image", () => {
   beforeEach(() => {
-    cy.viewport("macbook-16");
     cy.addProduct();
   });
 

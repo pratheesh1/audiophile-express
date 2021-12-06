@@ -5,7 +5,6 @@ const chance = new Chance();
 
 describe("Renders register page", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/register");
     cy.scrollTo("top");
     cy.headerAndFooterVisible();
@@ -28,7 +27,6 @@ describe("Show error message when filed inputs are empty or invalid", () => {
   const email = chance.email();
 
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/register");
     cy.scrollTo("top");
   });
@@ -96,7 +94,6 @@ describe("Show error message when email is already registered", () => {
   const email = "john@geemail.com";
 
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/register");
     cy.scrollTo("top");
   });
@@ -121,7 +118,6 @@ describe("Register user", () => {
   const password = "password";
 
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/register");
     cy.scrollTo("top");
   });

@@ -5,7 +5,6 @@ const chance = new Chance();
 
 describe("Render login page", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/login");
     cy.scrollTo(0, 0);
     cy.headerAndFooterVisible();
@@ -23,7 +22,6 @@ describe("Render login page", () => {
 
 describe("show error message when email or password is invalid", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/login");
     cy.scrollTo(0, 0);
   });
@@ -56,7 +54,6 @@ describe("show error message when email or password is invalid", () => {
 
 describe("Redirects to login page if user is not logged in", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/");
     cy.scrollTo(0, 0);
   });
@@ -87,7 +84,6 @@ describe("Redirects to login page if user is not logged in", () => {
 
 describe("Login with valid credentials", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/login");
     cy.scrollTo(0, 0);
     cy.fixture("credentials").as("credentials");
@@ -124,7 +120,6 @@ describe("Login with valid credentials", () => {
 
 describe("Logout user", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.visit("/users/login");
     cy.scrollTo(0, 0);
     cy.fixture("credentials").as("credentials");
@@ -147,7 +142,6 @@ describe("Logout user", () => {
 
 describe("Accessing pages when user is logged in", () => {
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.login();
     cy.scrollTo(0, 0);
   });

@@ -4,10 +4,6 @@ import Chance from "chance";
 const chance = new Chance();
 
 describe("Render Home Page", () => {
-  beforeEach(() => {
-    cy.viewport("macbook-13");
-  });
-
   it("renders the home page", () => {
     cy.login();
     cy.visit("/products/home");
@@ -77,7 +73,6 @@ describe("Render Home Page", () => {
 describe("Filter Products", () => {
   const product = chance.word({ length: 10 });
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.login();
     cy.visit("/products/home");
     cy.scrollTo(0, 0);
@@ -169,7 +164,6 @@ describe("Reset Filter", () => {
   const product = chance.word({ length: 10 });
 
   beforeEach(() => {
-    cy.viewport("macbook-13");
     cy.login();
     cy.visit("/products/home");
     cy.scrollTo(0, 0);

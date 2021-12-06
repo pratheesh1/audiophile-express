@@ -235,8 +235,8 @@ https://drive.google.com/drive/folders/1Olp86mZAHP3v4_eaAlStO8XBNOjLcZtm?usp=sha
 
 Pre-requisite for running the tests:
 
-- All env variables are set in the .env file.
 - The database is set up with migrations and is up and running.
+- The project is deployed on a server. Update the server details in the `cypress.json` file.
 - The database has at least one user, one product, and one incomplete order that belong to the user.
 - The database has at least one user, one product, and one incomplete order that do not belong to the user.
 - In the cypress/fixtures folder, there are the following files:

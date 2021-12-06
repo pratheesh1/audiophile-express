@@ -10,8 +10,7 @@ describe("Add Product Renders Correctly", () => {
     cy.scrollTo(0, 0);
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("add product renders correctly", () => {
+  it("add product renders correctly", () => {
     cy.contains("Add new Product:").should("be.visible");
     cy.contains(" Fields marked with * are required.").should("be.visible");
 
@@ -63,8 +62,7 @@ describe("Form Validation", () => {
     cy.scrollTo(0, 0);
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("validates mandatory inputs", () => {
+  it("validates mandatory inputs", () => {
     cy.get("button").contains("Add Product").click();
     cy.contains("Product Name:* is required.").should("be.visible");
 
@@ -103,8 +101,7 @@ describe("Image Upload", () => {
     cy.scrollTo("bottom");
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("uploads image", () => {
+  it("uploads image", () => {
     cy.get("button").contains("Upload Image").click();
 
     //manually upload image
@@ -121,8 +118,7 @@ describe("Add Images", () => {
     cy.scrollTo("bottom");
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("renders add image form correctly", () => {
+  it("renders add image form correctly", () => {
     const productName = chance.string({ length: 10 });
     const productDescription = chance.string({ length: 10 });
     const productBaseCost = chance.integer({ min: 1, max: 10000 });
@@ -157,8 +153,7 @@ describe("Add More Images", () => {
     cy.addProduct();
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("adds more images", () => {
+  it("adds more images", () => {
     cy.get("button").contains("Upload More").click();
 
     //manually upload image
@@ -174,8 +169,7 @@ describe("Remove Image", () => {
     cy.addProduct();
   });
 
-  //TODO: remove the skip after all tests are completed
-  it.skip("removes image", () => {
+  it("removes image", () => {
     cy.get("button").contains("Upload More").click();
 
     //manually upload image
@@ -193,4 +187,53 @@ describe("Remove Image", () => {
   });
 });
 
-describe("Add Tags", () => {});
+describe("Add Tags", () => {
+  beforeEach(() => {
+    cy.addProduct();
+    cy.get("button").contains("Add Images").click();
+  });
+
+  it("renders add tags form correctly", () => {
+    cy.get("button").contains("Add New Tag").should("be.visible");
+    cy.get('[href="/products/home"]').contains("Cancel").should("be.visible");
+    cy.get('[href="/products/home"]').contains("Done").should("be.visible");
+    cy.contains("Adding custom tags for").should("be.visible");
+    cy.get("input[name=tagName]").should("be.visible");
+    cy.get("input[name=tagValue]").should("be.visible");
+    cy.get("textarea[name=tagDescription]").should("be.visible");
+  });
+
+  it("validates inputs", () => {
+    cy.get("button").contains("Add New Tag").click();
+    cy.contains("Tag Name:* is required.").should("be.visible");
+
+    cy.get("input[name=tagName]").type(chance.string({ length: 10 }));
+    cy.get("button").contains("Add New Tag").click();
+    cy.contains("Tag Value:* is required.").should("be.visible");
+  });
+
+  it("adds tags", () => {
+    const tagName = chance.string({ length: 10 });
+    const tagValue = chance.string({ length: 10 });
+    const tagDescription = chance.string({ length: 10 });
+
+    cy.get("input[name=tagName]").type(tagName);
+    cy.get("input[name=tagValue]").type(tagValue);
+    cy.get("textarea[name=tagDescription]").type(tagDescription);
+    cy.get("button").contains("Add New Tag").click();
+
+    cy.contains(tagName).should("be.visible");
+    cy.contains(tagValue).should("be.visible");
+    cy.contains(tagDescription).should("be.visible");
+    cy.contains("Tag added successfully!").should("be.visible");
+  });
+
+  it("removes tags", () => {
+    cy.addTag();
+    cy.get(".fa-times").each(($el, index, $list) => {
+      cy.get(".fa-times").click();
+    });
+    cy.get(".fa-times").should("not.exist");
+    cy.contains("Tag deleted successfully!").should("be.visible");
+  });
+});

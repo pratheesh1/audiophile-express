@@ -66,3 +66,14 @@ Cypress.Commands.add("addProductAndImage", () => {
   cy.addProduct();
   cy.get("button").contains("Add Images").click();
 });
+
+Cypress.Commands.add("addTag", () => {
+  const tagName = chance.string({ length: 10 });
+  const tagValue = chance.string({ length: 10 });
+  const tagDescription = chance.string({ length: 10 });
+
+  cy.get("input[name=tagName]").type(tagName);
+  cy.get("input[name=tagValue]").type(tagValue);
+  cy.get("textarea[name=tagDescription]").type(tagDescription);
+  cy.get("button").contains("Add New Tag").click();
+});

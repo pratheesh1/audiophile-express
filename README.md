@@ -19,6 +19,7 @@ An initial thinking process and brainstorming document was created to help the t
 ## 2. Deployment
 
 The project is deployed on Heroku. The website can be accessed at the following link:
+
 [https://ps-audiophile.herokuapp.com](https://ps-audiophile.herokuapp.com)
 
 ## 3. Website Features and Navigation
@@ -251,6 +252,31 @@ npm run test
 ```
 
 Follow the video instructions to run the tests.
+
+Env variables:
+
+```
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_DRIVER=
+DB_HOST=
+SESSION_SECRET=
+EMAIL_USER=
+EMAIL_PASS=
+BASE_URL=http://localhost:3500
+JWT_EMAIL_TOKEN=
+JWT_ACCESS_TOKEN=
+JWT_REFRESH_TOKEN=
+CLOUDINARY_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_UPLOAD_PRESET=
+STRIPE_ENDPOINT_SECRET=
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+FRONTEND_BASE_URL=http://localhost:3000/
+```
 
 ## 7. Acknowledgements
 

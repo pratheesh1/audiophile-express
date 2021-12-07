@@ -8,7 +8,13 @@ This project solves these pain points by providing a simple, yet powerful, eComm
 
 ## Index
 
-<!-- TODO: Add index -->
+1. [Project Design](#1-project-design)
+2. [Deployment](#2-deployment)
+3. [Website Features and Navigation](#3-website-features-and-navigation)
+4. [Technologies Used](#4-technologies-used)
+5. [Design](#5-design)
+6. [Testing](#6-testing)
+7. [Acknowledgements](#7-acknowledgements)
 
 ## 1. Project Design
 
@@ -21,6 +27,8 @@ An initial thinking process and brainstorming document was created to help the t
 The project is deployed on Heroku. The website can be accessed at the following link:
 
 [https://ps-audiophile.herokuapp.com](https://ps-audiophile.herokuapp.com)
+
+The project uses tailwindcss which require css to be compiled. The current version of compiled css can be found in the `public` directory. Before deployment run `npm run build:css` at least once.
 
 ## 3. Website Features and Navigation
 

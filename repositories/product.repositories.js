@@ -341,10 +341,18 @@ exports.getProducts = async (query) => {
         queryBuilder.where("userId", query.userId);
       }
       if (query?.name) {
-        queryBuilder.orWhere("name", "like", `%${query.name}%`);
+        queryBuilder.orWhereRaw(
+          "LOWER(name) like ?",
+          `%${query.name.toLowerCase()}%`
+        );
+
+        console.log(queryBuilder.toString());
       }
       if (query?.description) {
-        queryBuilder.orWhere("description", "like", `%${query.description}%`);
+        queryBuilder.orWhereRaw(
+          "LOWER(description) like ?",
+          `%${query.description.toLowerCase()}%`
+        );
       }
       if (query?.brand?.length) {
         queryBuilder.whereIn("brandId", query.brand);

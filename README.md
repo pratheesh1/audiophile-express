@@ -6,6 +6,8 @@ This project is called `Audiophile` and is a simple eCommerce platform for selli
 
 This project solves these pain points by providing a simple, yet powerful, eCommerce platform for audio products, which is accessible to both the vendor and the customer, and is designed to be easy to use and maintain.
 
+![A screenshot of the Audiophile homepage](https://res.cloudinary.com/dvam3s15z/image/upload/v1638966137/fj4pelqlonh4ob3jv08c.png)
+
 ## Index
 
 1. [Project Design](#1-project-design)

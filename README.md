@@ -251,8 +251,8 @@ Pre-requisite for running the tests:
 - The database has at least one user, one product, and one incomplete order that belong to the user.
 - The database has at least one user, one product, and one incomplete order that do not belong to the user.
 - In the cypress/fixtures folder, there are the following files:
-  - credentials.json: contains the credentials for the user that will be used for the tests. (The user account must already be in the database)
-  - product.json: contains the product that will be used for the tests. (The product must already be in the database)
+  - `credentials.json`: contains the credentials for the user that will be used for the tests. (The user account must already be in the database)
+  - `product.json`: contains the product that will be used for the tests. (The product must already be in the database)
 
 To run the tests, run the following command in the terminal from the root directory of the project:
 

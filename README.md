@@ -242,6 +242,8 @@ Since cloudinary widgets are used for uploading images, some manual intervention
 
 https://drive.google.com/drive/folders/1Olp86mZAHP3v4_eaAlStO8XBNOjLcZtm?usp=sharing
 
+This project uses express-flash to display flash messages. Flash messages are not reliable when working with hbs views. Therefore expect the tests to fail multiple times before getting a passing test. If a test fails, simply try re-running the test a few times and should be able to get a passing test.
+
 Pre-requisite for running the tests:
 
 - The database is set up with migrations and is up and running.
